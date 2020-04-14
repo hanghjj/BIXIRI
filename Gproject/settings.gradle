@@ -1,0 +1,2 @@
+rootProject.name='Gproject'
+include ':app'

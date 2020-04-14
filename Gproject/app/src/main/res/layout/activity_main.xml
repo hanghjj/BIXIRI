@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/design_default_color_on_secondary"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/Appname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="BIXIRI"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="120sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Appname"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginTop="-20dp">
+
+        <Button
+            android:id="@+id/op4"
+            android:layout_width="187dp"
+            android:layout_height="138dp"
+            android:layout_above="@id/time_table"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="150dp"
+            android:background="@mipmap/op4_foreground" />
+
+        <Button
+            android:id="@+id/op1"
+            android:layout_width="187dp"
+            android:layout_height="138dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:background="@mipmap/op1_foreground" />
+
+        <Button
+            android:id="@+id/op2"
+            android:layout_width="187dp"
+            android:layout_height="138dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:background="@mipmap/op2_foreground" />
+
+        <Button
+            android:id="@+id/op3"
+            android:layout_width="187dp"
+            android:layout_height="138dp"
+            android:layout_above="@id/time_table"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="150dp"
+            android:background="@mipmap/op3_foreground" />
+
+        <Button
+            android:id="@+id/time_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/design_default_color_on_secondary"
+            android:text="시간표"
+            android:textColor="@color/design_default_color_background"
+            android:textSize="30sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

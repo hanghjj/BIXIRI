@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="5"
+    android:background="#FFFFFF"
+    android:orientation="horizontal"
+    tools:context=".TimeTable2">
+
+    <Button
+        android:id="@+id/ReturnHome"
+        android:layout_width="27dp"
+        android:layout_height="30dp"
+
+        android:background="@drawable/abc_vector_test" />
+
+    <ListView
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"
+        />
+
+    <ListView
+        android:id="@+id/mon"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"/>
+
+    <ListView
+        android:id="@+id/tue"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"/>
+
+    <ListView
+        android:id="@+id/wed"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"/>
+
+    <ListView
+        android:id="@+id/thu"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"/>
+
+    <ListView
+        android:id="@+id/fri"
+        android:layout_width="0dp"
+        android:layout_height="700dp"
+        android:layout_weight="0.25"
+        android:scrollbars="none"/>
+</LinearLayout>
