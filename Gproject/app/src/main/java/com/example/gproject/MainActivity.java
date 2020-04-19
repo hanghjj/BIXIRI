@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         tt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,TimeTableActivity.class);
+                Intent intent = new Intent(MainActivity.this,TimeTable2.class);
                 startActivity(intent);
             }
         });
