@@ -41,23 +41,23 @@ public class option2Activity extends AppCompatActivity {
 
         // 새로고침 버튼
         binding.refresh.setOnClickListener(v -> {
-            // Thread 생성
+            // Thread 생성해서 실행
             new Thread(() -> {
                 List<MenuDAO.MenuItem> menuItems = db.menuDAO().findMenu(day, 2, 1);
                 StringBuilder stringBuilder1 = new StringBuilder();
-                for(MenuDAO.MenuItem menu : menuItems) {
+                for (MenuDAO.MenuItem menu : menuItems) {
                     stringBuilder1.append(menu.menuItem).append("\n");
                 }
 
                 menuItems = db.menuDAO().findMenu(day, 2, 2);
                 StringBuilder stringBuilder2 = new StringBuilder();
-                for(MenuDAO.MenuItem menu : menuItems) {
+                for (MenuDAO.MenuItem menu : menuItems) {
                     stringBuilder2.append(menu.menuItem).append("\n");
                 }
 
                 menuItems = db.menuDAO().findMenu(day, 2, 3);
                 StringBuilder stringBuilder3 = new StringBuilder();
-                for(MenuDAO.MenuItem menu : menuItems) {
+                for (MenuDAO.MenuItem menu : menuItems) {
                     stringBuilder3.append(menu.menuItem).append("\n");
                 }
 

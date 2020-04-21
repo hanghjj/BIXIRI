@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.timeTable.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TimeTableActivity.class);
+            Intent intent = new Intent(MainActivity.this, TimeTable2.class);
             startActivity(intent);
         });
     }
