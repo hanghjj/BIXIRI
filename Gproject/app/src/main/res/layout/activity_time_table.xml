@@ -8,11 +8,18 @@
     tools:context=".TimeTableActivity">
 
     <Button
-        android:id="@+id/ReturnHome"
-        android:layout_width="64dp"
+        android:id="@+id/change"
+        android:layout_width="62dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/abc_vector_test" />
+        android:layout_below="@+id/complete"
+        android:text="수정" />
+
+    <Button
+        android:id="@+id/complete"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ReturnHome"
+        android:text="완료" />
 
     <GridView
         android:id="@+id/gridview"
@@ -23,14 +30,30 @@
         android:background="#2196F3"
         android:horizontalSpacing="3dp"
         android:numColumns="5"
-        android:verticalSpacing="1dp"
-        />
+        android:verticalSpacing="1dp">
+
+    </GridView>
+
+    <View
+        android:id="@+id/clickable"
+        android:layout_width="347dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/time"/>
+
+    <Button
+        android:id="@+id/ReturnHome"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/abc_vector_test" />
 
     <ListView
         android:id="@+id/time"
         android:layout_toEndOf="@+id/ReturnHome"
         android:layout_toLeftOf="@+id/gridview"
         android:layout_width="50dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+    </ListView>
 
 </RelativeLayout>

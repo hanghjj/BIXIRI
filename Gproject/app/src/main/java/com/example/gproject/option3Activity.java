@@ -1,26 +1,24 @@
 package com.example.gproject;
 
+import android.os.Bundle;
+
+import com.example.gproject.databinding.ActivityOption3Binding;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
 public class option3Activity extends AppCompatActivity {
-
+    private ActivityOption3Binding binding; // View Binding
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_option3);
-        Button op3_backhome = (Button) findViewById(R.id.ReturnHome);
-        op3_backhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(option3Activity.this,MainActivity.class);
-                startActivity(intent);
-            }
+        // View Binding
+        binding = ActivityOption3Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // 뒤로가기 버튼
+        binding.ReturnHome.setOnClickListener(v -> {
+            finish();
         });
     }
 }
