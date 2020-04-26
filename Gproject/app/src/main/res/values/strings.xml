@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Gproject</string>
+    <string name="content_description">test</string>
+    <string name="op1_toolbar_title">대중교통 도착시간</string>
+    <string name="op1_departure_station">출발역</string>
+    <string name="default_departure_station">홍대입구</string>
+    <string name="op1_arrival_station">도착역</string>
+    <string name="default_arrival_station">동대문역사문화공원</string>
+    <string name="op1_arrival_station_exception">도착역은 같은 노선에 있는 역을 선택해야 합니다</string>
+    <string name="recyclerview_item_subway_arrival_title">현재위치: %s</string>
+    <string name="recyclerview_item_subway_arrival_content1">%s행, %s 후 도착</string>
+    <!-- 도착 데이터를 표시하기 위한 옵션, 현재 보류중 -->
+    <string name="recyclerview_item_subway_arrival_content2">%s행, 도착시간: %s</string>
+    <string name="info1">출발역과 도착역을 같게 설정하면 모든 도착 데이터가 표시됩니다</string>
+    <string name="info2">서울시 이외의 역구간은 미제공 됩니다. (예. 광명, 서동탄, 춘천 등)</string>
 </resources>

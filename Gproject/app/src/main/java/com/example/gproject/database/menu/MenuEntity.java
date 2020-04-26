@@ -1,4 +1,4 @@
-package com.example.gproject.database;
+package com.example.gproject.database.menu;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

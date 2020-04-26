@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- layout xml 에서 android:contentDescription 에 사용되는 string 모음 -->
+<resources>
+    <string name="op1_directions_subway">지하철역 이미지</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorToolbarBackground">@color/material_grey_900</color>
+</resources>

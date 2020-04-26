@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!-- sharedPreferences에 사용되는 key-value 만 작성 -->
+<resources>
+    <!-- 맨 위의 string은 sharedPreference 파일의 이름으로 사용한다 -->
+    <string name="sharedPreferences_name">pref</string>
+
+    <string name="key_firstRun">firstRun</string>
+    <string name="key_departureStation">departureStation</string>
+    <string name="key_arrivalStation">arrivalStation</string>
+    <string name="key_selectedLines">selectedLines</string>
+</resources>
