@@ -3,7 +3,6 @@ package com.example.gproject;
 import android.os.Bundle;
 
 import com.example.gproject.database.AppDatabase;
-import com.example.gproject.database.menu.MenuDAO;
 import com.example.gproject.databinding.ActivityOption2Binding;
 
 import java.text.SimpleDateFormat;
@@ -44,22 +43,22 @@ public class option2Activity extends AppCompatActivity {
                 case R.id.refresh:
                     // Thread 생성해서 실행
                     new Thread(() -> {
-                        List<MenuDAO.MenuItem> menuItems = db.menuDAO().findMenu(day, 2, 1);
+                        List<String> menuItems = db.menuDAO().findMenu(day, 2, 1);
                         StringBuilder stringBuilder1 = new StringBuilder();
-                        for (MenuDAO.MenuItem menu : menuItems) {
-                            stringBuilder1.append(menu.menuItem).append("\n");
+                        for (String menu : menuItems) {
+                            stringBuilder1.append(menu).append("\n");
                         }
 
                         menuItems = db.menuDAO().findMenu(day, 2, 2);
                         StringBuilder stringBuilder2 = new StringBuilder();
-                        for (MenuDAO.MenuItem menu : menuItems) {
-                            stringBuilder2.append(menu.menuItem).append("\n");
+                        for (String menu : menuItems) {
+                            stringBuilder2.append(menu).append("\n");
                         }
 
                         menuItems = db.menuDAO().findMenu(day, 2, 3);
                         StringBuilder stringBuilder3 = new StringBuilder();
-                        for (MenuDAO.MenuItem menu : menuItems) {
-                            stringBuilder3.append(menu.menuItem).append("\n");
+                        for (String menu : menuItems) {
+                            stringBuilder3.append(menu).append("\n");
                         }
 
                         // Main Thread에서 UI 변경

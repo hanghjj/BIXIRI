@@ -13,6 +13,9 @@ public interface SubwayStationDAO {
     @Query("SELECT DISTINCT statnNm FROM SubwayStationEntity")
     List<String> getAllNames();
 
+    @Query("SELECT * FROM SubwayStationEntity WHERE statnNm = :name")
+    List<SubwayStationEntity> getAllWithName(String name);
+
     @Query("SELECT DISTINCT subwayId FROM SubwayStationEntity WHERE statnNm = :name")
     List<Integer> getAllLinesWithName(String name);
 

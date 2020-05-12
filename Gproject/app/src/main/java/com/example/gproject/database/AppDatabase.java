@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.gproject.R;
+import com.example.gproject.database.busstop.BusStopDAO;
+import com.example.gproject.database.busstop.BusStopEntity;
 import com.example.gproject.database.menu.MenuDAO;
 import com.example.gproject.database.menu.MenuEntity;
 import com.example.gproject.database.subwaystation.SubwayStationDAO;
@@ -14,7 +16,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {MenuEntity.class, SubwayStationEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {MenuEntity.class, SubwayStationEntity.class, BusStopEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     // 싱글톤
     private static AppDatabase INSTANCE;
@@ -22,6 +24,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MenuDAO menuDAO();
 
     public abstract SubwayStationDAO subwayStationDAO();
+
+    public abstract BusStopDAO busStopDAO();
 
     // DB 객체생성 가져오기
     public static AppDatabase getInstance(Context context) {

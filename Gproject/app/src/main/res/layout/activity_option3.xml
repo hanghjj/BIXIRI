@@ -7,10 +7,91 @@
     android:background="#090909"
     tools:context=".option3Activity">
 
+    <TextView
+        android:id="@+id/averageTguide"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/ReturnHome"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp" />
+
     <Button
         android:id="@+id/ReturnHome"
         android:layout_width="74dp"
         android:layout_height="61dp"
         android:background="@drawable/abc_vector_test"
         android:backgroundTint="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/averageT"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/averageTguide"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/Rain_rate_guide"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/averageT"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+         />
+
+    <TextView
+        android:id="@+id/morning_Rain_rate"
+        android:layout_width="205dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Rain_rate_guide"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:layout_alignParentLeft="true"
+
+        />
+
+    <TextView
+        android:id="@+id/Afternoon_Rain_rate"
+        android:layout_width="205dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Rain_rate_guide"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/fashionGuide"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/morning_Rain_rate"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/fashion"
+        android:layout_width="205dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/fashionGuide"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView
+        android:id="@+id/getUmb"
+        android:layout_width="205dp"
+        android:layout_height="201dp"
+        android:layout_below="@+id/fashionGuide"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp"
+        android:background="@mipmap/op3_round" />
+
+    <TextView
+        android:id="@+id/hidegetUmb"
+        android:layout_width="205dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/fashionGuide"
+        android:layout_alignParentRight="true"
+        android:background="#000000" />
+
 </RelativeLayout>

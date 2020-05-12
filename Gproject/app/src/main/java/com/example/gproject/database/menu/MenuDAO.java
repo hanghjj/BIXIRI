@@ -27,12 +27,8 @@ public interface MenuDAO {
     void delete(MenuEntity db);
 
     @Query("SELECT menuItem FROM MenuEntity WHERE day = :day AND mealtime = :mealtime AND cafeteria = :cafeteria")
-    List<MenuItem> findMenu(int day, int mealtime, int cafeteria);
+    List<String> findMenu(int day, int mealtime, int cafeteria);
 
     @Query("DELETE FROM MenuEntity")
     void deleteAll();
-
-    class MenuItem {
-        public String menuItem;
-    }
 }

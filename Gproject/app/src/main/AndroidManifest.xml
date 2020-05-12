@@ -18,7 +18,7 @@
         <activity android:name=".TimeTableActivity" />
         <activity android:name=".option1Activity" />
         <activity
-            android:name=".StationSubwaySelectActivity"
+            android:name=".SelectActivity"
             android:parentActivityName=".option1Activity" />
         <activity android:name=".option4Activity" />
         <activity android:name=".option3Activity" />

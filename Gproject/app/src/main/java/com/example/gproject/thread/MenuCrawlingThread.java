@@ -33,7 +33,7 @@ public class MenuCrawlingThread {
                 for (Element menu : menuAll) {
                     mealtime = index / 6;
                     day = (index % 6) + 1;
-                    menus = menu.select("p").html().split("<br>");
+                    menus = menu.select("p").html().replace("amp;", "").split("<br>");
                     switch (mealtime) {
                         case 0: // 학생회관 점심
                             for (String menuItem : menus) {

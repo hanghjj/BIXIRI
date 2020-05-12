@@ -9,6 +9,9 @@ import com.example.gproject.database.AppSharedPreference;
 import com.example.gproject.databinding.ActivityMainBinding;
 import com.example.gproject.thread.MenuCrawlingThread;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         menuCrawlingThread = new MenuCrawlingThread();
         db = AppDatabase.getInstance(this);
 
-        
 
         AppSharedPreference pref = AppSharedPreference.getInstance(this);
         // 어플리케이션 최초 실행 확인
@@ -36,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
             pref.putBoolean(R.string.key_firstRun, false);
             pref.putString(R.string.key_departureStation, getString(R.string.default_departure_station));
             pref.putString(R.string.key_arrivalStation, getString(R.string.default_arrival_station));
+            List<Integer> lineList = new ArrayList<>();
+            lineList.add(1002);
+            pref.putIntList(R.string.key_selectedLines, lineList);
+            List<Integer> stationList = new ArrayList<>();
+            stationList.add(1002000239);
+            pref.putIntList(R.string.key_selectedStations, stationList);
+            pref.putString(R.string.key_busRoute, getString(R.string.default_busRoute));
+            pref.putString(R.string.key_busStop, getString(R.string.default_busStop));
+            pref.putString(R.string.key_busRouteId, getString(R.string.default_busRouteId));
+            pref.putString(R.string.key_busStId, getString(R.string.default_busStId));
+            pref.putString(R.string.key_busOrg, getString(R.string.default_busOrg));
         } else {
         }
 

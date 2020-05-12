@@ -7,4 +7,10 @@
     <string name="key_departureStation">departureStation</string>
     <string name="key_arrivalStation">arrivalStation</string>
     <string name="key_selectedLines">selectedLines</string>
+    <string name="key_selectedStations">selectedStations</string>
+    <string name="key_busRoute">busRoute</string>
+    <string name="key_busStop">busStop</string>
+    <string name="key_busRouteId">busRouteId</string>
+    <string name="key_busOrg">busOrg</string>
+    <string name="key_busStId">busStId</string>
 </resources>
