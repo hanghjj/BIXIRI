@@ -4,7 +4,7 @@
     package="com.example.gproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity android:name=".TimeTable2"></activity>
-        <activity android:name=".TimeTableActivity" />
         <activity android:name=".option1Activity" />
         <activity
             android:name=".SelectActivity"
@@ -26,10 +25,14 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                 <action android:name="android.intent.action.sec"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,6 +1,13 @@
 package com.example.gproject;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,9 +17,11 @@ import com.example.gproject.databinding.ActivityMainBinding;
 import com.example.gproject.thread.MenuCrawlingThread;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding; // ViewBinding 사용
@@ -30,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         menuCrawlingThread = new MenuCrawlingThread();
         db = AppDatabase.getInstance(this);
 
+        new AlarmHatt(getApplicationContext()).Alarm();
 
         AppSharedPreference pref = AppSharedPreference.getInstance(this);
         // 어플리케이션 최초 실행 확인
@@ -75,4 +85,48 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    public class AlarmHatt {
+            private Context context;
+            public AlarmHatt(Context context){
+                this.context = context;
+            }
+
+            public void Alarm() {
+                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(MainActivity.this,AlarmReceiver.class);
+
+                PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this,0,intent,0);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),00,40,0); //시간 설정 -> 여기를 변수로 바꾸면 시간 설정 가능
+                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+            }
+        }
+       /* 푸쉬알림 코드 -> AlarmReceiver 클래스로 복사해놓음
+        binding.button.setOnClickListener(v -> {
+            NotificationManager noti = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            Intent notiint  = new Intent(this, MainActivity.class);
+            notiint.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendint = PendingIntent.getActivity(this,0,notiint,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"10001").setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_arrow_back_24dp))
+                    .setContentTitle("Test").setContentText("test").setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendint).setAutoCancel(true);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    builder.setSmallIcon(R.drawable.op2_background);
+                    CharSequence channalName = "TEST";
+                    String description = "test";
+                    int imp = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel ch = new NotificationChannel("10001",channalName,imp);
+                    ch.setDescription(description);
+
+                    assert noti != null;
+                    noti.createNotificationChannel(ch);
+
+                }else builder.setSmallIcon(R.mipmap.ic_launcher);
+
+                assert noti != null;
+                noti.notify(1234,builder.build());
+        });*/
+
 }

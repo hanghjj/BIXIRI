@@ -69,6 +69,12 @@
             android:text="시간표"
             android:textColor="@color/design_default_color_background"
             android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/time_table"/>
     </RelativeLayout>
 
 </RelativeLayout>

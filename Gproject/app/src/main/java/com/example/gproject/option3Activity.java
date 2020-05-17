@@ -1,7 +1,18 @@
 package com.example.gproject;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 
 import com.example.gproject.databinding.ActivityOption3Binding;
@@ -13,6 +24,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class option3Activity extends AppCompatActivity {
@@ -25,7 +42,6 @@ public class option3Activity extends AppCompatActivity {
             "\n\n얇은 가디건\n 긴팔티\n 면바지\n 청바지\n",
             "\n\n반팔\n 얇은 셔츠\n 반바지\n 면바지",
             "\n\n민소매\n 반팔\n 반바지\n 치마"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +58,7 @@ public class option3Activity extends AppCompatActivity {
         binding.averageTguide.setText("오늘 평균 온도");
         binding.RainRateGuide.setText("오전 강수확률   /   오후 강수확률");
         binding.fashionGuide.setText("옷차림 추천");
+        //new AlarmHatt(getApplicationContext()).Alarm();
 
         new Thread(() -> {
             try{
@@ -91,4 +108,21 @@ public class option3Activity extends AppCompatActivity {
             finish();
         });
     }
+    /*public class AlarmHatt{
+        private Context context;
+        public AlarmHatt(Context context){
+            this.context = context;
+        }
+
+        public void Alarm() {
+            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(option3Activity.this,AlarmReceiver.class);
+
+            PendingIntent sender = PendingIntent.getBroadcast(option3Activity.this,0,intent,0);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),00,31,0); //시간 설정 -> 여기를 변수로 바꾸면 시간 설정 가능
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+        }
+    }*/
+
 }
