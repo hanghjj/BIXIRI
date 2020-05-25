@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,10 +25,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 public class MainActivity extends AppCompatActivity {
+    int hour=21,min=28,sec=0;
+
+    Calendar calendar = Calendar.getInstance();
     private ActivityMainBinding binding; // ViewBinding 사용
     private MenuCrawlingThread menuCrawlingThread; // 학교 식단을 크롤링하는 클래스
     private static AppDatabase db; // 싱글톤 db 객체
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +38,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        //알람 관련 SHEF
+        SharedPreferences sharepref = getSharedPreferences("ALARM",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharepref.edit();
         menuCrawlingThread = new MenuCrawlingThread();
         db = AppDatabase.getInstance(this);
-
+        int cnt = sharepref.getInt("ALARM",0);
+        if(calendar.get(Calendar.MINUTE)==min&&cnt==0){
         new AlarmHatt(getApplicationContext()).Alarm();
+        cnt+=1;
+        editor.putInt("ALARM",cnt);
+        editor.apply();
+        }
 
         AppSharedPreference pref = AppSharedPreference.getInstance(this);
         // 어플리케이션 최초 실행 확인
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class AlarmHatt {
             private Context context;
+
             public AlarmHatt(Context context){
                 this.context = context;
             }
@@ -97,9 +108,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,AlarmReceiver.class);
 
                 PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this,0,intent,0);
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),00,40,0); //시간 설정 -> 여기를 변수로 바꾸면 시간 설정 가능
-                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+
+                calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),hour,min,sec); //시간 설정 -> 여기를 변수로 바꾸면 시간 설정 가능
+                if(calendar.get(calendar.HOUR_OF_DAY)==hour&&calendar.get(calendar.MINUTE)==min)
+                   // if(calendar.get(Calendar.MINUTE)!=min) alarmManager.cancel(sender);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
+
             }
         }
        /* 푸쉬알림 코드 -> AlarmReceiver 클래스로 복사해놓음
