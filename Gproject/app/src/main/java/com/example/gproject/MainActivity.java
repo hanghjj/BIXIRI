@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.gproject.database.AppDatabase;
 import com.example.gproject.database.AppSharedPreference;
@@ -25,8 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 public class MainActivity extends AppCompatActivity {
-    int hour=21,min=28,sec=0;
-
+    int hour=6;
+    int min=0;
+    int sec=0;
+    private long backbuttonduration=0;
+    private Toast toast;
     Calendar calendar = Calendar.getInstance();
     private ActivityMainBinding binding; // ViewBinding 사용
     private MenuCrawlingThread menuCrawlingThread; // 학교 식단을 크롤링하는 클래스
@@ -41,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
         //알람 관련 SHEF
         SharedPreferences sharepref = getSharedPreferences("ALARM",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharepref.edit();
+        //Shef 선언 끝
         menuCrawlingThread = new MenuCrawlingThread();
         db = AppDatabase.getInstance(this);
+        //기능3 시간설정
+        hour = ((option3Activity)option3Activity.context).sethour;
+        min =((option3Activity)option3Activity.context).setmin;
+        binding.op3alarm.setText("기능3 알람시간 : "+hour+"시"+min+"분");
+        //
         int cnt = sharepref.getInt("ALARM",0);
         if(calendar.get(Calendar.MINUTE)==min&&cnt==0){
         new AlarmHatt(getApplicationContext()).Alarm();
@@ -50,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("ALARM",cnt);
         editor.apply();
         }
-
+        if(min != calendar.get(Calendar.MINUTE)){
+            editor.putInt("ALARM",0);
+            editor.apply();
+        }
         AppSharedPreference pref = AppSharedPreference.getInstance(this);
         // 어플리케이션 최초 실행 확인
         if (pref.getBoolean(R.string.key_firstRun, true)) {
@@ -84,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
         binding.op3.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, option3Activity.class);
+            finish();
             startActivity(intent);
         });
         binding.op4.setOnClickListener(v -> {
@@ -113,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 if(calendar.get(calendar.HOUR_OF_DAY)==hour&&calendar.get(calendar.MINUTE)==min)
                    // if(calendar.get(Calendar.MINUTE)!=min) alarmManager.cancel(sender);
                     alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
-
             }
         }
        /* 푸쉬알림 코드 -> AlarmReceiver 클래스로 복사해놓음
@@ -142,5 +155,18 @@ public class MainActivity extends AppCompatActivity {
                 assert noti != null;
                 noti.notify(1234,builder.build());
         });*/
+       @Override
+       public void onBackPressed(){
+           if(System.currentTimeMillis()>backbuttonduration+2000){
+               backbuttonduration = System.currentTimeMillis();
+               toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT);
+               toast.show();
+               return;
+           }
+           if(System.currentTimeMillis()<=backbuttonduration+2000){
+               finish();
+               toast.cancel();
+           }
 
+       }
 }

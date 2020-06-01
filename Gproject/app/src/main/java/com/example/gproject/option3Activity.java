@@ -1,22 +1,19 @@
 package com.example.gproject;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.widget.DatePicker;
+import android.view.View;
 import android.widget.TimePicker;
 
 
 import com.example.gproject.databinding.ActivityOption3Binding;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jsoup.Jsoup;
@@ -24,12 +21,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class option3Activity extends AppCompatActivity {
@@ -42,6 +33,9 @@ public class option3Activity extends AppCompatActivity {
             "\n\n얇은 가디건\n 긴팔티\n 면바지\n 청바지\n",
             "\n\n반팔\n 얇은 셔츠\n 반바지\n 면바지",
             "\n\n민소매\n 반팔\n 반바지\n 치마"};
+    public static int sethour, setmin;
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +53,14 @@ public class option3Activity extends AppCompatActivity {
         binding.RainRateGuide.setText("오전 강수확률   /   오후 강수확률");
         binding.fashionGuide.setText("옷차림 추천");
         //new AlarmHatt(getApplicationContext()).Alarm();
-
+        SharedPreferences sharepref = getSharedPreferences("op3Time", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharepref.edit();
+        sethour = sharepref.getInt("op3hour", 6);
+        setmin = sharepref.getInt("op3min", 0);
+        binding.showsettext.setText("설정한 시간 = " + sethour + "시 " + setmin + "분 ");
+        context = this;
         new Thread(() -> {
-            try{
+            try {
                 Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%82%A0%EC%94%A8").get();
                 Elements temp_contents = doc1.select(".merge");
                 Elements rain_contents = doc1.select(".rain_rate > .num");
@@ -74,40 +73,74 @@ public class option3Activity extends AppCompatActivity {
 
                 //온도 측정
                 String text = temp_contents.text();
-                text = text.replace("˚"," ");
-                text = text.replace("/"," ");
+                text = text.replace("˚", " ");
+                text = text.replace("/", " ");
                 StringTokenizer token = new StringTokenizer(text);
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
-                double averageT = (Double.parseDouble(mintempT)*1.2+Double.parseDouble(maxtempT))/2;
-                String AvgT = String.valueOf(averageT)+"도";
+                double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
+                String AvgT = String.valueOf(averageT) + "도";
 
                 //옷차림 정하기
-                if(averageT<=4) binding.fashion.setText(AvF[0]);
-                else if(averageT>=5&&averageT<=8) binding.fashion.setText(AvF[1]);
-                else if(averageT>=9&&averageT<=11) binding.fashion.setText(AvF[2]);
-                else if(averageT>=12&&averageT<=16) binding.fashion.setText(AvF[3]);
-                else if(averageT>=17&&averageT<=19) binding.fashion.setText(AvF[4]);
-                else if(averageT>=20&&averageT<=22) binding.fashion.setText(AvF[5]);
-                else if(averageT>=23&&averageT<=27) binding.fashion.setText(AvF[6]);
+                if (averageT <= 4) binding.fashion.setText(AvF[0]);
+                else if (averageT >= 5 && averageT <= 8) binding.fashion.setText(AvF[1]);
+                else if (averageT >= 9 && averageT <= 11) binding.fashion.setText(AvF[2]);
+                else if (averageT >= 12 && averageT <= 16) binding.fashion.setText(AvF[3]);
+                else if (averageT >= 17 && averageT <= 19) binding.fashion.setText(AvF[4]);
+                else if (averageT >= 20 && averageT <= 22) binding.fashion.setText(AvF[5]);
+                else if (averageT >= 23 && averageT <= 27) binding.fashion.setText(AvF[6]);
                 else binding.fashion.setText(AvF[7]);
 
                 //우산 여부
-                if(Double.parseDouble(MornRR)>=60||Double.parseDouble(AftRR)>=60)
+                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60)
                     binding.hidegetUmb.setBackgroundColor(00000000);
                 binding.averageT.setText(AvgT);
                 binding.morningRainRate.setText(MornRR);
                 binding.AfternoonRainRate.setText(AftRR);
-            }catch(IOException e){e.printStackTrace();}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }).start();
+        binding.settimepicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                TimePickerDialog timePickerDialog = new TimePickerDialog(option3Activity.this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        sethour = view.getHour();
+                        setmin = view.getMinute();
+                        editor.putInt("op3hour", sethour);
+                        editor.putInt("op3min", setmin);
+                        editor.apply();
+                        binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 ");
+                    }
+                }, sethour, setmin, false);
+                timePickerDialog.show();
+
+            }
+        });
 
         // 뒤로가기 버튼
         binding.ReturnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(option3Activity.this, MainActivity.class);
             finish();
+            startActivity(intent);
         });
+
+
     }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(option3Activity.this, MainActivity.class);
+        finish();
+        startActivity(intent);
+        super.onBackPressed();
+    }
+
     /*public class AlarmHatt{
         private Context context;
         public AlarmHatt(Context context){

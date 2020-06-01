@@ -94,4 +94,17 @@
         android:layout_alignParentRight="true"
         android:background="#000000" />
 
+    <Button
+        android:id="@+id/settimepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시간 설정"
+        android:layout_below="@id/getUmb"/>
+
+    <TextView
+        android:id="@+id/showsettext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settimepicker"
+        android:textColor="#FAFAFA" />
 </RelativeLayout>

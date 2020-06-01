@@ -70,11 +70,12 @@
             android:textColor="@color/design_default_color_background"
             android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/button"
+        <TextView
+            android:id="@+id/op3alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/time_table"/>
+            android:layout_above="@id/time_table"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
 
 </RelativeLayout>
