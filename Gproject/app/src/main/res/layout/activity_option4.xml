@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#777777"
     tools:context=".option4Activity">
 
     <Button
@@ -12,5 +12,20 @@
         android:layout_width="67dp"
         android:layout_height="61dp"
         android:background="@drawable/abc_vector_test" />
+
+    <TimePicker
+        android:id="@+id/time_op4_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ReturnHome"
+        android:timePickerMode="spinner" />
+
+    <Button
+        android:id="@+id/btn_op4_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_op4_test"
+        android:layout_marginTop="2dp"
+        android:text="Save" />
 
 </RelativeLayout>

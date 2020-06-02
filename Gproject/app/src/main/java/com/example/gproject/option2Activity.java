@@ -3,12 +3,9 @@ package com.example.gproject;
 
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 
 import com.example.gproject.database.AppDatabase;
-import com.example.gproject.database.menu.MenuDAO;
 import com.example.gproject.databinding.ActivityOption2Binding;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,8 +25,6 @@ public class option2Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         AppDatabase db = AppDatabase.getInstance(this);
-
-
 
         binding.setnoti.setText("알림");
         binding.caf1.setText("학생회관 식당");
@@ -104,6 +99,4 @@ public class option2Activity extends AppCompatActivity {
             }
         });*/
     }
-
-
 }

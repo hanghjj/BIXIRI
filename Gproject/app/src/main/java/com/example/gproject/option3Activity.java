@@ -1,5 +1,7 @@
 package com.example.gproject;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 
 public class option3Activity extends AppCompatActivity {
@@ -35,6 +38,9 @@ public class option3Activity extends AppCompatActivity {
             "\n\n민소매\n 반팔\n 반바지\n 치마"};
     public static int sethour, setmin;
     public static Context context;
+    String AvgT;
+    String UmborNot = "\n우산 필요 없습니다.";
+    String TodayF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +58,15 @@ public class option3Activity extends AppCompatActivity {
         binding.averageTguide.setText("오늘 평균 온도");
         binding.RainRateGuide.setText("오전 강수확률   /   오후 강수확률");
         binding.fashionGuide.setText("옷차림 추천");
-        //new AlarmHatt(getApplicationContext()).Alarm();
+
+        //알람 시간 관련 shaF
         SharedPreferences sharepref = getSharedPreferences("op3Time", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharepref.edit();
         sethour = sharepref.getInt("op3hour", 6);
         setmin = sharepref.getInt("op3min", 0);
+        //선언 및 변수 로드
+
         binding.showsettext.setText("설정한 시간 = " + sethour + "시 " + setmin + "분 ");
-        context = this;
         new Thread(() -> {
             try {
                 Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%82%A0%EC%94%A8").get();
@@ -79,21 +87,23 @@ public class option3Activity extends AppCompatActivity {
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
                 double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
-                String AvgT = String.valueOf(averageT) + "도";
+                AvgT = String.valueOf(averageT) + "도";
 
                 //옷차림 정하기
-                if (averageT <= 4) binding.fashion.setText(AvF[0]);
-                else if (averageT >= 5 && averageT <= 8) binding.fashion.setText(AvF[1]);
-                else if (averageT >= 9 && averageT <= 11) binding.fashion.setText(AvF[2]);
-                else if (averageT >= 12 && averageT <= 16) binding.fashion.setText(AvF[3]);
-                else if (averageT >= 17 && averageT <= 19) binding.fashion.setText(AvF[4]);
-                else if (averageT >= 20 && averageT <= 22) binding.fashion.setText(AvF[5]);
-                else if (averageT >= 23 && averageT <= 27) binding.fashion.setText(AvF[6]);
-                else binding.fashion.setText(AvF[7]);
+                if (averageT <= 4) {binding.fashion.setText(AvF[0]);TodayF = AvF[0];}
+                else if (averageT >= 5 && averageT <= 8) {binding.fashion.setText(AvF[1]);TodayF = AvF[1];}
+                else if (averageT >= 9 && averageT <= 11) {binding.fashion.setText(AvF[2]);TodayF = AvF[2];}
+                else if (averageT >= 12 && averageT <= 16) {binding.fashion.setText(AvF[3]);TodayF = AvF[3];}
+                else if (averageT >= 17 && averageT <= 19){ binding.fashion.setText(AvF[4]);TodayF = AvF[4];}
+                else if (averageT >= 20 && averageT <= 22) {binding.fashion.setText(AvF[5]);TodayF = AvF[5];}
+                else if (averageT >= 23 && averageT <= 27) {binding.fashion.setText(AvF[6]);TodayF = AvF[6];}
+                else {binding.fashion.setText(AvF[7]);TodayF = AvF[7];}
 
                 //우산 여부
-                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60)
+                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60){
                     binding.hidegetUmb.setBackgroundColor(00000000);
+                    UmborNot = "\n우산 챙기는 날입니다.";
+                }
                 binding.averageT.setText(AvgT);
                 binding.morningRainRate.setText(MornRR);
                 binding.AfternoonRainRate.setText(AftRR);
@@ -102,6 +112,8 @@ public class option3Activity extends AppCompatActivity {
             }
 
         }).start();
+
+        context = this;
         binding.settimepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +127,26 @@ public class option3Activity extends AppCompatActivity {
                         editor.putInt("op3hour", sethour);
                         editor.putInt("op3min", setmin);
                         editor.apply();
+                        //시간 설정
+                        Calendar alarmTime = Calendar.getInstance();
+                        alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
+                        alarmTime.set(Calendar.MINUTE, setmin);
+                        alarmTime.set(Calendar.SECOND, 0);
+                        alarmTime.set(Calendar.MILLISECOND, 0);
+                        // 시작할 인텐트 지정
+                        Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
+                        alarmIntent.putExtra("requestCode",3);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 0, alarmIntent, 0);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        if (alarmManager != null) {
+                            // 버전에 따라 다르게 구현
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+                            } else {
+                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(),
+                                        AlarmManager.INTERVAL_DAY, pendingIntent);
+                            }
+                        }
                         binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 ");
                     }
                 }, sethour, setmin, false);
@@ -123,13 +155,13 @@ public class option3Activity extends AppCompatActivity {
             }
         });
 
+
         // 뒤로가기 버튼
         binding.ReturnHome.setOnClickListener(v -> {
             Intent intent = new Intent(option3Activity.this, MainActivity.class);
             finish();
             startActivity(intent);
         });
-
 
     }
 
@@ -140,22 +172,5 @@ public class option3Activity extends AppCompatActivity {
         startActivity(intent);
         super.onBackPressed();
     }
-
-    /*public class AlarmHatt{
-        private Context context;
-        public AlarmHatt(Context context){
-            this.context = context;
-        }
-
-        public void Alarm() {
-            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(option3Activity.this,AlarmReceiver.class);
-
-            PendingIntent sender = PendingIntent.getBroadcast(option3Activity.this,0,intent,0);
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),00,31,0); //시간 설정 -> 여기를 변수로 바꾸면 시간 설정 가능
-            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),sender);
-        }
-    }*/
 
 }
