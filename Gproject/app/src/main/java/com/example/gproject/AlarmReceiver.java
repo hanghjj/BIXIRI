@@ -14,6 +14,7 @@ import com.example.gproject.thread.SubwayApiThread;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -129,7 +130,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             String op3U = ((option3Activity)option3Activity.context).UmborNot;
             String op3F = ((option3Activity)option3Activity.context).TodayF;
             if(op3T != null)
-            sendNotification(context, "op3", "오늘의 날씨", 1, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U);
+            sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U);
         }
     }
 

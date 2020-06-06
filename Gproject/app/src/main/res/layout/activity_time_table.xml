@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/design_default_color_primary_variant"
-    tools:context=".TimeTableActivity">
+    tools:context=".TimeTable2">
 
     <Button
         android:id="@+id/change"
@@ -55,5 +55,12 @@
         android:layout_height="match_parent" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/change"
+        android:text="TextView" />
 
 </RelativeLayout>

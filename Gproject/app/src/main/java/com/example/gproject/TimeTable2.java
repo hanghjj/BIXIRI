@@ -19,6 +19,7 @@ public class TimeTable2 extends AppCompatActivity {
     private ActivityTimeTableBinding binding; // View Binding
     public static Context context;
     public final int[] finishtime = new int[5];
+    public final int[] mealtime = new int [5];
     public int onoff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,7 @@ public class TimeTable2 extends AppCompatActivity {
 
 
         //끝나는 시간 구하기
-        for(int i=0; i<title.length; i++){
+        for(int i=6; i<title.length; i++){
             if(title[i].equals("수업")){
                 switch (i%5){
                     case 0:
@@ -133,8 +134,71 @@ public class TimeTable2 extends AppCompatActivity {
             }
         }
         //finishtime에 끝나는 시간 저장[월,화,수,목,금]
+        //mealtime 구하기
+        int mon = 5,tue=6,wed=7,thu=8,fri=9,
+                monmin=999,monfirst=0,
+                tuemin=999,tuefirst=0,
+                wedmin=999,wedfirst=0,
+                thumin=999,thufirst=0,
+                frimin=999,frifirst=0;
 
-
+        for(;mon<title.length;mon+=5){
+                    if(title[mon].equals("수업"))
+                    {   monfirst = mon;
+                        break;   }
+            }
+            for(mon = monfirst; mon<title.length;mon+=5)
+            {   if(title[mon].equals("수업"))continue;
+                else{
+                if(monmin>(mon/5+8))
+                monmin = (mon/5+8);
+            }}
+         for(;tue<title.length;tue+=5){
+                    if(title[tue].equals("수업"))
+                    {   tuefirst = tue;
+                        break;   }
+                }
+         for(tue = tuefirst; tue<title.length;tue+=5)
+                {   if(title[tue].equals("수업"))continue;
+                else{
+                    if(tuemin>(tue/5+8))
+                        tuemin = (tue/5+8);
+                }}
+         for(;wed<title.length;wed+=5){
+                        if(title[wed].equals("수업"))
+                        {   wedfirst = wed;
+                            break;   }
+                    }
+          for(wed = wedfirst; wed<title.length;wed+=5)
+                    {   if(title[wed].equals("수업"))continue;
+                    else{
+                        if(wedmin>(wed/5+8))
+                            wedmin = (wed/5+8);
+                    }}
+          for(;thu<title.length;thu+=5){
+                            if(title[thu].equals("수업"))
+                            {   thufirst = thu;
+                                break;   }
+                        }
+          for(thu = thufirst; thu<title.length;thu+=5)
+                        {   if(title[thu].equals("수업"))continue;
+                        else{
+                            if(thumin>(thu/5+8))
+                                thumin = (thu/5+8);
+                        }}
+          for(;fri<title.length;fri+=5){
+                                if(title[fri].equals("수업"))
+                                {   frifirst = fri;
+                                    break;   }
+                            }
+          for(fri = frifirst; fri<title.length;fri+=5)
+                            {   if(title[fri].equals("수업"))continue;
+                            else{
+                                if(frimin>(fri/5+8))
+                                    frimin = (fri/5+8);
+                            }
+                            }binding.textView.setText("식사 시간 : \n" + Integer.toString(monmin)+"\n"+Integer.toString(tuemin)+"\n"+Integer.toString(wedmin)+"\n"+Integer.toString(thumin)+"\n"+Integer.toString(frimin)+"\n"+
+                            "하교 시간 : \n" + Integer.toString(finishtime[0])+"\n"+Integer.toString(finishtime[1])+"\n"+Integer.toString(finishtime[2])+"\n"+Integer.toString(finishtime[3])+"\n"+Integer.toString(finishtime[4]));
         binding.ReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

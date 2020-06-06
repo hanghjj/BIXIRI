@@ -34,12 +34,12 @@ public class option3Activity extends AppCompatActivity {
             "\n\n자켓\n 가디건\n 야상\n 맨투맨\n 니트\n 스타킹\n 청바지\n 면바지",
             "\n\n얇은 니트\n 가디건\n 맨투맨\n 얇은 자켓\n 면바지\n 청바지",
             "\n\n얇은 가디건\n 긴팔티\n 면바지\n 청바지\n",
-            "\n\n반팔\n 얇은 셔츠\n 반바지\n 면바지",
+            "\n 반팔\n 얇은 셔츠\n 반바지\n 면바지",
             "\n\n민소매\n 반팔\n 반바지\n 치마"};
     public static int sethour, setmin;
     public static Context context;
     String AvgT;
-    String UmborNot = "\n우산 필요 없습니다.";
+    String UmborNot = "\n 우산 필요 없습니다.";
     String TodayF;
 
     @Override
@@ -87,7 +87,7 @@ public class option3Activity extends AppCompatActivity {
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
                 double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
-                AvgT = String.valueOf(averageT) + "도";
+                AvgT = String.format("%.1f",averageT) + "도";
 
                 //옷차림 정하기
                 if (averageT <= 4) {binding.fashion.setText(AvF[0]);TodayF = AvF[0];}
@@ -129,14 +129,20 @@ public class option3Activity extends AppCompatActivity {
                         editor.apply();
                         //시간 설정
                         Calendar alarmTime = Calendar.getInstance();
+                        Calendar test = Calendar.getInstance();
+                        int today = Calendar.DAY_OF_YEAR;
+                        alarmTime.set(Calendar.DAY_OF_YEAR,today);
+                        if(Calendar.HOUR_OF_DAY<=sethour&&Calendar.MINUTE<setmin)
+                            alarmTime.add(Calendar.DAY_OF_YEAR,1);
                         alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
                         alarmTime.set(Calendar.MINUTE, setmin);
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
                         // 시작할 인텐트 지정
+                        if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
                         Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
                         alarmIntent.putExtra("requestCode",3);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 0, alarmIntent, 0);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 3, alarmIntent, 0);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         if (alarmManager != null) {
                             // 버전에 따라 다르게 구현
@@ -147,7 +153,8 @@ public class option3Activity extends AppCompatActivity {
                                         AlarmManager.INTERVAL_DAY, pendingIntent);
                             }
                         }
-                        binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 ");
+                    }
+                        binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
                     }
                 }, sethour, setmin, false);
                 timePickerDialog.show();
