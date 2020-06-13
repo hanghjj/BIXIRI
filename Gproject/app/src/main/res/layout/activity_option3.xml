@@ -84,7 +84,7 @@
         android:layout_below="@+id/fashionGuide"
         android:layout_alignParentRight="true"
         android:layout_marginRight="0dp"
-        android:background="@mipmap/op3_round" />
+        android:background="@mipmap/umb_round" />
 
     <TextView
         android:id="@+id/hidegetUmb"

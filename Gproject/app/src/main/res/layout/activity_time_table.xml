@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_primary_variant"
+    android:background="#A0CCC8"
     tools:context=".TimeTable2">
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
         android:layout_toEndOf="@+id/time"
-        android:background="#2196F3"
+        android:background="#607E97"
         android:horizontalSpacing="3dp"
         android:numColumns="5"
         android:verticalSpacing="1dp">
@@ -38,7 +38,7 @@
         android:id="@+id/clickable"
         android:layout_width="347dp"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/time"/>
+        android:layout_toEndOf="@+id/time" />
 
     <Button
         android:id="@+id/ReturnHome"
@@ -49,10 +49,10 @@
 
     <ListView
         android:id="@+id/time"
-        android:layout_toEndOf="@+id/ReturnHome"
-        android:layout_toLeftOf="@+id/gridview"
         android:layout_width="50dp"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/gridview"
+        android:layout_toEndOf="@+id/ReturnHome">
 
     </ListView>
 

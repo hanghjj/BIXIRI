@@ -26,7 +26,6 @@ public class option2Activity extends AppCompatActivity {
 
         AppDatabase db = AppDatabase.getInstance(this);
 
-        binding.setnoti.setText("알림");
         binding.caf1.setText("학생회관 식당");
         binding.caf1.setGravity(Gravity.CENTER_HORIZONTAL);
         binding.caf2.setText("교직원식당");
@@ -84,19 +83,6 @@ public class option2Activity extends AppCompatActivity {
             }
             return false;
         });
-        /* 푸시알림 시도 후 실패한 코드
-        binding.setnoti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 NotificationManager notificationManager = (NotificationManager)option2Activity.this.getSystemService(option2Activity.this.NOTIFICATION_SERVICE);
-                 Intent intent = new Intent(option2Activity.this.getApplicationContext(),option2Activity.class);
-                 Notification.Builder builder = new Notification.Builder((getApplicationContext()));
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                PendingIntent pendnoti = PendingIntent.getActivity(option2Activity.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                builder.setSmallIcon(R.drawable.ic_arrow_back_24dp).setTicker("Ticker").setWhen(System.currentTimeMillis()).setNumber(1).setContentTitle("Title").setContentText("Text").setContentIntent(pendnoti).setAutoCancel(true).setOngoing(true);
-                assert notificationManager != null;
-                notificationManager.notify(5,builder.build());
-            }
-        });*/
+
     }
 }

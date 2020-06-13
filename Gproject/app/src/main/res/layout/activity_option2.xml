@@ -28,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appBarLayout2"
-        android:layout_toRightOf="@id/setnoti"
         android:background="#101010"
         android:orientation="vertical">
 
@@ -82,10 +81,5 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/setnoti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/appBarLayout2" />
 
 </RelativeLayout>

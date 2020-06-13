@@ -139,7 +139,7 @@ public class option3Activity extends AppCompatActivity {
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
                         // 시작할 인텐트 지정
-                        if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
+                      //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
                         Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
                         alarmIntent.putExtra("requestCode",3);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 3, alarmIntent, 0);
@@ -153,7 +153,7 @@ public class option3Activity extends AppCompatActivity {
                                         AlarmManager.INTERVAL_DAY, pendingIntent);
                             }
                         }
-                    }
+                    //}
                         binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
                     }
                 }, sethour, setmin, false);
