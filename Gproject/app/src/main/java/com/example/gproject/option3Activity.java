@@ -1,11 +1,9 @@
 package com.example.gproject;
 
-<<<<<<< Updated upstream
 import android.os.Bundle;
 
 import com.example.gproject.databinding.ActivityOption3Binding;
 
-=======
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -20,7 +18,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TimePicker;
 
+
 import com.example.gproject.databinding.ActivityOption3Binding;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,12 +32,21 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
-import androidx.annotation.RequiresApi;
->>>>>>> Stashed changes
-import androidx.appcompat.app.AppCompatActivity;
-
 public class option3Activity extends AppCompatActivity {
     private ActivityOption3Binding binding; // View Binding
+    String[] AvF = {"\n\n패딩\n 두꺼운 코트\n 목도리\n + 기모제품",
+            "\n\n코트\n 히트텍\n 니트\n 청바지\n 레깅스",
+            "\n\n자켓\n 트렌치코트\n 야상\n 니트\n 스타킹\n 청바지\n 면바지",
+            "\n\n자켓\n 가디건\n 야상\n 맨투맨\n 니트\n 스타킹\n 청바지\n 면바지",
+            "\n\n얇은 니트\n 가디건\n 맨투맨\n 얇은 자켓\n 면바지\n 청바지",
+            "\n\n얇은 가디건\n 긴팔티\n 면바지\n 청바지\n",
+            "\n 반팔\n 얇은 셔츠\n 반바지\n 면바지",
+            "\n\n민소매\n 반팔\n 반바지\n 치마"};
+    public static int sethour, setmin;
+    public static Context context;
+    String AvgT;
+    String UmborNot = "\n 우산 필요 없습니다.";
+    String TodayF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +54,6 @@ public class option3Activity extends AppCompatActivity {
         // View Binding
         binding = ActivityOption3Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-<<<<<<< Updated upstream
-=======
         binding.averageT.setGravity(Gravity.CENTER_HORIZONTAL);
         binding.morningRainRate.setGravity(Gravity.CENTER_HORIZONTAL);
         binding.AfternoonRainRate.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -84,37 +93,20 @@ public class option3Activity extends AppCompatActivity {
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
                 double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
-                AvgT = String.format("%.1f", averageT) + "도";
+                AvgT = String.format("%.1f",averageT) + "도";
 
                 //옷차림 정하기
-                if (averageT <= 4) {
-                    binding.fashion.setText(AvF[0]);
-                    TodayF = AvF[0];
-                } else if (averageT >= 5 && averageT <= 8) {
-                    binding.fashion.setText(AvF[1]);
-                    TodayF = AvF[1];
-                } else if (averageT >= 9 && averageT <= 11) {
-                    binding.fashion.setText(AvF[2]);
-                    TodayF = AvF[2];
-                } else if (averageT >= 12 && averageT <= 16) {
-                    binding.fashion.setText(AvF[3]);
-                    TodayF = AvF[3];
-                } else if (averageT >= 17 && averageT <= 19) {
-                    binding.fashion.setText(AvF[4]);
-                    TodayF = AvF[4];
-                } else if (averageT >= 20 && averageT <= 22) {
-                    binding.fashion.setText(AvF[5]);
-                    TodayF = AvF[5];
-                } else if (averageT >= 23 && averageT <= 27) {
-                    binding.fashion.setText(AvF[6]);
-                    TodayF = AvF[6];
-                } else {
-                    binding.fashion.setText(AvF[7]);
-                    TodayF = AvF[7];
-                }
+                if (averageT <= 4) {binding.fashion.setText(AvF[0]);TodayF = AvF[0];}
+                else if (averageT >= 5 && averageT <= 8) {binding.fashion.setText(AvF[1]);TodayF = AvF[1];}
+                else if (averageT >= 9 && averageT <= 11) {binding.fashion.setText(AvF[2]);TodayF = AvF[2];}
+                else if (averageT >= 12 && averageT <= 16) {binding.fashion.setText(AvF[3]);TodayF = AvF[3];}
+                else if (averageT >= 17 && averageT <= 19){ binding.fashion.setText(AvF[4]);TodayF = AvF[4];}
+                else if (averageT >= 20 && averageT <= 22) {binding.fashion.setText(AvF[5]);TodayF = AvF[5];}
+                else if (averageT >= 23 && averageT <= 27) {binding.fashion.setText(AvF[6]);TodayF = AvF[6];}
+                else {binding.fashion.setText(AvF[7]);TodayF = AvF[7];}
 
                 //우산 여부
-                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60) {
+                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60){
                     binding.hidegetUmb.setBackgroundColor(00000000);
                     UmborNot = "\n우산 챙기는 날입니다.";
                 }
@@ -145,25 +137,17 @@ public class option3Activity extends AppCompatActivity {
                         Calendar alarmTime = Calendar.getInstance();
                         Calendar test = Calendar.getInstance();
                         int today = Calendar.DAY_OF_YEAR;
-                        alarmTime.set(Calendar.DAY_OF_YEAR, today);
-                        if (Calendar.HOUR_OF_DAY <= sethour && Calendar.MINUTE < setmin)
-                            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+                        alarmTime.set(Calendar.DAY_OF_YEAR,today);
+                        if(Calendar.HOUR_OF_DAY<=sethour&&Calendar.MINUTE<setmin)
+                            alarmTime.add(Calendar.DAY_OF_YEAR,1);
                         alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
                         alarmTime.set(Calendar.MINUTE, setmin);
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
                         // 시작할 인텐트 지정
-                        //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
-
-                        // 스마트폰이 재부팅될 시에 DeviceBootReceiver 설정
-                        PackageManager pm = getPackageManager();
-                        ComponentName receiver = new ComponentName(option3Activity.this, DeviceBootReceiver.class);
-                        pm.setComponentEnabledSetting(receiver,
-                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                                PackageManager.DONT_KILL_APP);
-
+                      //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
                         Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
-                        alarmIntent.putExtra("requestCode", 3);
+                        alarmIntent.putExtra("requestCode",3);
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 3, alarmIntent, 0);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         if (alarmManager != null) {
@@ -175,32 +159,20 @@ public class option3Activity extends AppCompatActivity {
                                         AlarmManager.INTERVAL_DAY, pendingIntent);
                             }
                         }
-                        //}
-                        binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY) + "시" + test.get(Calendar.MINUTE) + "분");
+                    //}
+                        binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
                     }
                 }, sethour, setmin, false);
                 timePickerDialog.show();
 
             }
         });
-
->>>>>>> Stashed changes
-
         // 뒤로가기 버튼
         binding.ReturnHome.setOnClickListener(v -> {
             finish();
         });
     }
-<<<<<<< Updated upstream
-=======
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(option3Activity.this, MainActivity.class);
-        finish();
-        startActivity(intent);
-        super.onBackPressed();
-    }
-
->>>>>>> Stashed changes
 }

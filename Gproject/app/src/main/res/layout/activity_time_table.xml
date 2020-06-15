@@ -4,8 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_primary_variant"
-    tools:context=".TimeTableActivity">
+    android:background="#A0CCC8"
+    tools:context=".TimeTable2">
+
+    <Button
+        android:id="@+id/change"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/complete"
+        android:text="수정" />
+
+    <Button
+        android:id="@+id/complete"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ReturnHome"
+        android:text="완료" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="347dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/time"
+        android:background="#607E97"
+        android:horizontalSpacing="3dp"
+        android:numColumns="5"
+        android:verticalSpacing="1dp">
+
+    </GridView>
+
+    <View
+        android:id="@+id/clickable"
+        android:layout_width="347dp"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/time" />
 
     <Button
         android:id="@+id/ReturnHome"
@@ -14,23 +47,20 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/abc_vector_test" />
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="347dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="0dp"
-        android:layout_toEndOf="@+id/time"
-        android:background="#2196F3"
-        android:horizontalSpacing="3dp"
-        android:numColumns="5"
-        android:verticalSpacing="1dp"
-        />
-
     <ListView
         android:id="@+id/time"
-        android:layout_toEndOf="@+id/ReturnHome"
-        android:layout_toLeftOf="@+id/gridview"
         android:layout_width="50dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/gridview"
+        android:layout_toEndOf="@+id/ReturnHome">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/change"
+        android:text="TextView" />
 
 </RelativeLayout>
