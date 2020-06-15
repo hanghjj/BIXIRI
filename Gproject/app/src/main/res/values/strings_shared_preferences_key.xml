@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!-- sharedPreferences에 사용되는 key-value 만 작성 -->
+<resources>
+    <!-- 맨 위의 string은 sharedPreference 파일의 이름으로 사용한다 -->
+    <string name="sharedPreferences_name">pref</string>
+
+    <string name="key_firstRun">firstRun</string>
+    <string name="key_departureStation">departureStation</string>
+    <string name="key_arrivalStation">arrivalStation</string>
+    <string name="key_selectedLines">selectedLines</string>
+    <string name="key_selectedStations">selectedStations</string>
+    <string name="key_busRoute">busRoute</string>
+    <string name="key_busStop">busStop</string>
+    <string name="key_busRouteId">busRouteId</string>
+    <string name="key_busOrg">busOrg</string>
+    <string name="key_busStId">busStId</string>
+    <!-- op3 -->
+    <string name="key_op3hour">op3hour</string>
+    <string name="key_op3min">op3min</string>
+    <!-- op4 -->
+    <string name="key_testAlarmSet">testAlarmSet</string>
+    <string name="key_testAlarmTime">testAlarmTime</string>
+</resources>
