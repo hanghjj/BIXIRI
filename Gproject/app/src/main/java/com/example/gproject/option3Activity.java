@@ -1,28 +1,18 @@
 package com.example.gproject;
 
-import android.os.Bundle;
-
-import com.example.gproject.databinding.ActivityOption3Binding;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TimePicker;
 
-
 import com.example.gproject.databinding.ActivityOption3Binding;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,6 +21,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.StringTokenizer;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class option3Activity extends AppCompatActivity {
     private ActivityOption3Binding binding; // View Binding
@@ -147,8 +140,8 @@ public class option3Activity extends AppCompatActivity {
                         // 시작할 인텐트 지정
                       //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
                         Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
-                        alarmIntent.putExtra("requestCode",3);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 3, alarmIntent, 0);
+                        alarmIntent.putExtra("requestCode",0);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 0, alarmIntent, 0);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         if (alarmManager != null) {
                             // 버전에 따라 다르게 구현
@@ -172,7 +165,4 @@ public class option3Activity extends AppCompatActivity {
             finish();
         });
     }
-
-    @Override
-    public void onBackPressed() {
 }
