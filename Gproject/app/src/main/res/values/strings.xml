@@ -12,6 +12,8 @@
     <string name="recyclerview_item_subway_arrival_content1">%s행, %s 후 도착</string>
     <string name="recyclerview_item_bus_arrival_title">현재위치: %s</string>
     <string name="recyclerview_item_bus_arrival_content1">%s, %s, %s 후 도착 [%d정거장 전]</string>
+    <string name="op4_wol_on">전원 켜기</string>
+    <string name="op4_wol_toast">WOL 패킷을 전송했습니다</string>
     <!-- 초기 실행 시 기본값 -->
     <string name="default_departure_station">홍대입구</string>
     <string name="default_arrival_station">동대문역사문화공원</string>
