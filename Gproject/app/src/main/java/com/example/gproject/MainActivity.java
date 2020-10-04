@@ -2,6 +2,7 @@ package com.example.gproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -9,12 +10,18 @@ import com.example.gproject.database.AppDatabase;
 import com.example.gproject.database.AppSharedPreference;
 import com.example.gproject.databinding.ActivityMainBinding;
 import com.example.gproject.thread.MenuCrawlingThread;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
     private long backbuttonduration = 0;
@@ -23,7 +30,19 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding; // ViewBinding 사용
     private MenuCrawlingThread menuCrawlingThread; // 학교 식단을 크롤링하는 클래스
     private static AppDatabase db; // 싱글톤 db 객체
-
+    private BottomNavigationView bottomNavigationView;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private frag1 frag1;
+    private frag3 frag3;
+    private mainfrag mainfrag;
+    private boolean loadF(Fragment f){
+        if(f!=null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,f).commit();
+            return true;
+        }
+        return false;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +50,34 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        mainfrag = new mainfrag();
+        loadF(new mainfrag());
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment frag = null;
+                switch(item.getItemId()) {
+                    case R.id.main:
+                        frag = new mainfrag();
+                        break;
+                    case R.id.act1:
+                        frag = new frag1();
+                        break;
+                    case R.id.act2:
+                        frag = new frag2();
+                        break;
+                    case R.id.act3:
+                        frag = new frag3();
+                        break;
+                }
+                return loadF(frag);
+            }
+
+        });
+
+
 
         //Shef 선언 끝
         menuCrawlingThread = new MenuCrawlingThread();
@@ -56,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
         }
 
-        binding.op1.setOnClickListener(v -> {
+     /*   binding.op1.setOnClickListener(v -> {
             // new SubwayApiThread().getSubwayFromApi("수락산");
             Intent intent = new Intent(MainActivity.this, option1Activity.class);
             startActivity(intent);
@@ -74,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
         binding.op4.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, option4Activity.class);
             startActivity(intent);
-        });
-        binding.timeTable.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TimeTable2.class);
-            startActivity(intent);
+        });*/
+        binding.time.setOnClickListener(v -> {
+            startActivity(new Intent(this, TimeTable2.class));
         });
     }
+
     // 뒤로가기 버튼 두번 연달아 누르면 앱 종료
     @Override
     public void onBackPressed() {

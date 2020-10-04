@@ -4,78 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_on_secondary"
+    android:background="@color/design_default_color_background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/Appname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="BIXIRI"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="120sp" />
 
-    <RelativeLayout
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/Appname"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="-20dp">
+        android:layout_marginStart="-2dp">
 
         <Button
-            android:id="@+id/op4"
-            android:layout_width="187dp"
-            android:layout_height="138dp"
-            android:layout_above="@id/time_table"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="150dp"
-            android:background="@mipmap/op4_foreground" />
-
-        <Button
-            android:id="@+id/op1"
-            android:layout_width="187dp"
-            android:layout_height="138dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:background="@mipmap/op1_foreground" />
-
-        <Button
-            android:id="@+id/op2"
-            android:layout_width="187dp"
-            android:layout_height="138dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:background="@mipmap/op2_foreground" />
-
-        <Button
-            android:id="@+id/op3"
-            android:layout_width="187dp"
-            android:layout_height="138dp"
-            android:layout_above="@id/time_table"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="150dp"
-            android:background="@mipmap/op3_foreground" />
-
-        <Button
-            android:id="@+id/time_table"
-            android:layout_width="match_parent"
+            android:id="@+id/time"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/design_default_color_on_secondary"
-            android:text="시간표"
-            android:textColor="@color/design_default_color_background"
-            android:textSize="30sp" />
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="60dp"
+
+            android:background="@drawable/ic_baseline_query_builder_24" />
 
         <TextView
-            android:id="@+id/op3alarm"
-            android:layout_width="wrap_content"
+            android:id="@+id/Appname"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/time_table"
-            android:textColor="#FFFFFF" />
-    </RelativeLayout>
+            android:fontFamily="@font/apple"
+            android:gravity="center_horizontal"
+            android:text="BIXIRI"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="30sp" />
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@android:color/white"
+        app:itemIconTint="#000000"
+        app:itemTextColor="#000000"
+        app:menu="@menu/bottom"
+        tools:layout_editor_absoluteX="16dp" />
+
+
+
 
 </RelativeLayout>

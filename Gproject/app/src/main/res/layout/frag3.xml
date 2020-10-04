@@ -12,9 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
-        android:layout_marginTop="50dp"/>
+        android:textSize="25sp" />
 
 
     <TextView
@@ -23,8 +21,7 @@
         android:layout_height="50dp"
         android:layout_below="@id/averageTguide"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/Rain_rate_guide"
@@ -32,8 +29,7 @@
         android:layout_height="40dp"
         android:layout_below="@+id/averageT"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/morning_Rain_rate"
@@ -42,8 +38,7 @@
         android:layout_below="@+id/Rain_rate_guide"
         android:layout_alignParentLeft="true"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
+        android:textSize="40sp"
 
         />
 
@@ -54,17 +49,15 @@
         android:layout_below="@+id/Rain_rate_guide"
         android:layout_alignParentRight="true"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/fashionGuide"
-        android:layout_width="205dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/morning_Rain_rate"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/fashion"
@@ -73,8 +66,7 @@
         android:layout_below="@+id/fashionGuide"
         android:layout_alignParentLeft="true"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="10sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/getUmb"
@@ -82,44 +74,28 @@
         android:layout_height="201dp"
         android:layout_below="@+id/fashionGuide"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_baseline_beach_access_24" />
+        android:layout_marginRight="0dp"
+        android:background="@mipmap/umb_round" />
 
     <TextView
         android:id="@+id/hidegetUmb"
         android:layout_width="205dp"
-        android:layout_height="201dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/fashionGuide"
         android:layout_alignParentRight="true"
-        android:background="@color/design_default_color_background"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#000000"
-        />
+        android:textColor="#000000" />
 
     <Button
         android:id="@+id/settimepicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/getUmb"
-        android:text="시간 설정"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:text="시간 설정" />
 
     <TextView
         android:id="@+id/showsettext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/settimepicker"
-        android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-    <TextView
-        android:id="@+id/umbguide"
-        android:layout_width="205dp"
-        android:layout_height="40dp"
-
-        android:layout_toRightOf="@id/fashionGuide"
-        android:layout_below="@id/Afternoon_Rain_rate"
-        android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
-        />
+        android:textColor="#000000" />
 </RelativeLayout>

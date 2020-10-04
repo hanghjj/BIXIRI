@@ -1,8 +1,15 @@
 package com.example.gproject;
 
-
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 
 import com.example.gproject.database.AppDatabase;
 import com.example.gproject.databinding.ActivityOption2Binding;
@@ -12,19 +19,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class frag2 extends Fragment {
+    private ActivityOption2Binding binding;
+    private View view;
 
-public class option2Activity extends AppCompatActivity {
-    private ActivityOption2Binding binding; // View Binding
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // View Binding
-        binding = ActivityOption2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        AppDatabase db = AppDatabase.getInstance(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate){
+        binding = ActivityOption2Binding.inflate(inflater,container,false);
+        view = binding.getRoot();
+        return view;
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        AppDatabase db = AppDatabase.getInstance(getContext());
 
         binding.caf1.setText("학생회관 식당");
         binding.caf1.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -42,17 +51,21 @@ public class option2Activity extends AppCompatActivity {
         // 현재 시간
         int hour = Integer.parseInt(hourFormat.format(date));
 
+        // 뒤로가기 버튼
+        binding.topAppBar2.setNavigationOnClickListener(v -> {
+            getActivity().finish();
+        });
         binding.topAppBar2.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.refresh:
                     // Thread 생성해서 실행
                     new Thread(() -> {
+
                         List<String> menuItems = db.menuDAO().findMenu(day, 2, 1);
                         StringBuilder stringBuilder1 = new StringBuilder();
                         for (String menu : menuItems) {
                             stringBuilder1.append(menu).append("\n");
                         }
-
                         menuItems = db.menuDAO().findMenu(day, 2, 2);
                         StringBuilder stringBuilder2 = new StringBuilder();
                         for (String menu : menuItems) {
@@ -66,7 +79,7 @@ public class option2Activity extends AppCompatActivity {
                         }
 
                         // Main Thread에서 UI 변경
-                        runOnUiThread(() -> {
+                        getActivity().runOnUiThread(() -> {
                             binding.cafeteria1.setText(stringBuilder1.toString());
                             binding.cafeteria1.setGravity(Gravity.CENTER_HORIZONTAL);
                             binding.cafeteria2.setText(stringBuilder2.toString());
@@ -81,4 +94,5 @@ public class option2Activity extends AppCompatActivity {
         });
 
     }
+
 }
