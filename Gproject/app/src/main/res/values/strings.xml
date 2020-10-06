@@ -13,6 +13,7 @@
     <string name="recyclerview_item_bus_arrival_title">현재위치: %s</string>
     <string name="recyclerview_item_bus_arrival_content1">%s, %s, %s 후 도착 [%d정거장 전]</string>
     <string name="op4_wol_on">전원 켜기</string>
+    <string name="op4_toolbar_title">원격 전원 켜기</string>
     <string name="op4_wol_toast">WOL 패킷을 전송했습니다</string>
     <!-- 초기 실행 시 기본값 -->
     <string name="default_departure_station">홍대입구</string>
@@ -26,4 +27,6 @@
     <string name="recyclerview_item_subway_arrival_content2">%s행, 도착시간: %s</string>
     <string name="info1">출발역과 도착역을 같게 설정하면 모든 도착 데이터가 표시됩니다</string>
     <string name="info2">서울시 이외의 역구간은 미제공 됩니다. (예. 광명, 서동탄, 춘천 등)</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

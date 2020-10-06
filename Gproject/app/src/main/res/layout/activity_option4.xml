@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#777777"
-    tools:context=".option4Activity">
+    android:theme="@style/Theme.Material">
 
-    <Button
-        android:id="@+id/ReturnHome"
-        android:layout_width="67dp"
-        android:layout_height="61dp"
-        android:background="@drawable/abc_vector_test" />
-
-    <TimePicker
-        android:id="@+id/time_op4_test"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_op4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ReturnHome"
-        android:timePickerMode="spinner" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_op4_save"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbar_op4"
+            style="@style/MaterialToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_arrow_back_24dp"
+            app:title="@string/op4_toolbar_title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/framelayout_op4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/time_op4_test"
-        android:layout_marginTop="2dp"
-        android:text="Save" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_op4">
 
-    <Button
-        android:id="@+id/btn_op4_wol_on"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_op4_save"
-        android:text="@string/op4_wol_on" />
+        <fragment
+            android:id="@+id/fragment_op4_main"
+            android:name="com.example.gproject.fragment.Op4MainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
