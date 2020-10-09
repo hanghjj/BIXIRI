@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 
@@ -157,14 +159,20 @@ public class frag3 extends Fragment
                         alarmTime.set(Calendar.MINUTE, setmin);
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
+
                         // 시작할 인텐트 지정
-                        //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
-                        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+                        //if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
+                        Intent alarmIntent = new Intent(getContext(),AlarmReceiver.class);
                         alarmIntent.putExtra("requestCode",3);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 3, alarmIntent, 0);
-                        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                        alarmIntent.putExtra("AVGT",AvgT);
+                        alarmIntent.putExtra("UmborNot",UmborNot);
+                        alarmIntent.putExtra("TodayF",TodayF);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), 3, alarmIntent, 0);
+                        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(Context.ALARM_SERVICE);
+
                         if (alarmManager != null) {
                             // 버전에 따라 다르게 구현
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
                             } else {
@@ -173,7 +181,7 @@ public class frag3 extends Fragment
                             }
                         }
                         //}
-                        binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
+                       binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
                     }
                 }, sethour, setmin, false);
                 timePickerDialog.show();

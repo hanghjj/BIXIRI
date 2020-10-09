@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 
 public class mainfrag extends Fragment {
     private View view;
-    public mainfrag(){ }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate){

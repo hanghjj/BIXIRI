@@ -8,5 +8,7 @@
         android:icon="@drawable/ic_refresh_24dp"
         android:title="@string/app_name"
         app:showAsAction="always"
+        
+
         />
 </menu>

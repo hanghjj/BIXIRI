@@ -4,6 +4,7 @@
     </style>
 
     <style name="MaterialToolbar" parent="Widget.MaterialComponents.Toolbar.PrimarySurface">
-        <item name="android:background">@color/colorToolbarBackground</item>
+        <item name="android:background">#000000</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

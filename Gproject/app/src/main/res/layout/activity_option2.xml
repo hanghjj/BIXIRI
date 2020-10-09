@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#FFFFFF" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>
 
         <TextView
             android:id="@+id/caf2"
@@ -62,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#FFFFFF" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
         <TextView
             android:id="@+id/caf3"
@@ -70,7 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.01"
-            android:background="#FFFFFF" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
         <TextView
             android:id="@+id/cafeteria3"
@@ -78,7 +81,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#FFFFFF" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
     </LinearLayout>
+
+
 </RelativeLayout>
