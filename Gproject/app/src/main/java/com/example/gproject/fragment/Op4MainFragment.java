@@ -30,7 +30,7 @@ public class Op4MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         binding.floatingActionButton.setOnClickListener(v -> {
             WolProfileDialogFragment fragment = new WolProfileDialogFragment();
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().add(R.id.framelayout_op4, fragment).addToBackStack(null).commit();
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_op4, fragment).addToBackStack(null).commit();
         });
     }
 }

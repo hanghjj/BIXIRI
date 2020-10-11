@@ -2,8 +2,10 @@ package com.example.gproject;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.gproject.databinding.ActivityOption4Binding;
+import com.example.gproject.thread.WakeOnLanThread;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,12 +53,12 @@ public class option4Activity extends AppCompatActivity {
 
 //        // WOL 전원 켜는 버튼
 //        binding.btnOp4WolOn.setOnClickListener(v -> {
-//            // Thread 만들어서 실행, WakeOnLanThread.java 참조
-//            WakeOnLanThread wakeOnLanThread = new WakeOnLanThread("220.72.71.137", "D0:50:99:48:B1:76", 13898);
-//            wakeOnLanThread.start();
-//            // 확인 메시지 출력
-//            Toast myToast = Toast.makeText(this.getApplicationContext(), R.string.op4_wol_toast, Toast.LENGTH_SHORT);
-//            myToast.show();
+            // Thread 만들어서 실행, WakeOnLanThread.java 참조
+            WakeOnLanThread wakeOnLanThread = new WakeOnLanThread("220.72.71.137", "D0:50:99:48:B1:76", 13898);
+            wakeOnLanThread.start();
+            // 확인 메시지 출력
+            Toast myToast = Toast.makeText(this.getApplicationContext(), R.string.op4_wol_toast, Toast.LENGTH_SHORT);
+            myToast.show();
 //        });
 
         // 뒤로가기 버튼
