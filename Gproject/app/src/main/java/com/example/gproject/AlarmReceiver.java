@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.gproject.database.AppDatabase;
 import com.example.gproject.database.AppSharedPreference;
@@ -14,25 +16,20 @@ import com.example.gproject.thread.SubwayApiThread;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import androidx.core.app.NotificationCompat;
 
-// 지정한 시간이 되면 푸시알림을 보내는 클래스
-// intent에 저장한 requestCode에 따라 다른 알림을 보낸다
-// requestCode = 0 : 전부
-// requsetCode = 1 : 학식메뉴만
-// requestCode = 2: 대중교통 도착정보만
-// requestCode = 3 : 날씨정보만
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.v("알람","클래스 진입");
         AppDatabase db = AppDatabase.getInstance(context);
         AppSharedPreference pref = AppSharedPreference.getInstance(context);
         int requestCode = intent.getIntExtra("requestCode", 0);
-
         // 학식 메뉴 정보 받아서 푸쉬알림
         if (requestCode == 0 || requestCode == 1) {
             // 현재 시간을 구한다
@@ -69,9 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }).start();
         }
 
-        // 대중교통 도착정보 푸시알림
         if (requestCode == 0 || requestCode == 2) {
-            // 지하철 도착정보 받아온다
             {
                 String departureStation = pref.getString(R.string.key_departureStation, "");
                 String arrivalStation = pref.getString(R.string.key_arrivalStation, "");
@@ -108,7 +103,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 subwayApiThread.start();
             }
 
-            // 버스 도착정보 받아온다
             {
                 String busStId = pref.getString(R.string.key_busStId, "");
                 String busRouteId = pref.getString(R.string.key_busRouteId, "");
@@ -133,18 +127,17 @@ public class AlarmReceiver extends BroadcastReceiver {
                 busApiThread.start();
             }
         }
-
-        // 기상정보를 받아온다
         if (requestCode == 0 || requestCode == 3) {
-            String op3T = ((option3Activity)option3Activity.context).AvgT;
-            String op3U = ((option3Activity)option3Activity.context).UmborNot;
-            String op3F = ((option3Activity)option3Activity.context).TodayF;
+            String op3T = intent.getStringExtra("AVGT");
+            String op3U = intent.getStringExtra("UmborNot");
+            String op3F = intent.getStringExtra("TodayF");;
+
             if(op3T != null)
             sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U);
         }
     }
 
-    // 푸시알림을 내보내는 코드
+
     void sendNotification(Context context, String channelId, String channelName, int id, String title, String text) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //        Intent notificationIntent = new Intent(context, MainActivity.class);

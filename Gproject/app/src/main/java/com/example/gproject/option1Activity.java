@@ -40,7 +40,7 @@ public class option1Activity extends AppCompatActivity {
         pref = AppSharedPreference.getInstance(this);
 
         // 뒤로가기 버튼
-        binding.materialtoolbarOp1.setNavigationOnClickListener(v -> {
+        binding.materialToolbarOp1.setNavigationOnClickListener(v -> {
             finish();
         });
 
@@ -98,7 +98,7 @@ public class option1Activity extends AppCompatActivity {
             });
         }
 
-        binding.materialtoolbarOp1.setOnMenuItemClickListener(menuItem -> {
+        binding.materialToolbarOp1.setOnMenuItemClickListener(menuItem -> {
             // 새로고침 버튼
             if (menuItem.getItemId() == R.id.refresh) {
                 {

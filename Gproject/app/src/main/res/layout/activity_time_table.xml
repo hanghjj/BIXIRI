@@ -4,33 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A0CCC8"
+    android:background="#FFFFFF"
     tools:context=".TimeTable2">
 
     <Button
         android:id="@+id/change"
         android:layout_width="62dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/complete"
-        android:text="수정" />
+        android:background="@color/design_default_color_background"
+        android:text="Configure" />
 
     <Button
         android:id="@+id/complete"
         android:layout_width="62dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/ReturnHome"
-        android:text="완료" />
+        android:background="@color/design_default_color_background"
+        android:text="Complete" />
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="347dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="1dp"
         android:layout_toEndOf="@+id/time"
-        android:background="#607E97"
-        android:horizontalSpacing="3dp"
         android:numColumns="5"
-        android:verticalSpacing="1dp">
+        >
 
     </GridView>
 
@@ -43,16 +43,18 @@
     <Button
         android:id="@+id/ReturnHome"
         android:layout_width="64dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/abc_vector_test" />
+        android:background="@drawable/ic_arrow_back_24dp" />
 
     <ListView
         android:id="@+id/time"
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/gridview"
-        android:layout_toEndOf="@+id/ReturnHome">
+        android:layout_toEndOf="@+id/ReturnHome"
+        android:layout_centerInParent="true"
+        >
 
     </ListView>
 

@@ -42,10 +42,6 @@ public class option2Activity extends AppCompatActivity {
         // 현재 시간
         int hour = Integer.parseInt(hourFormat.format(date));
 
-        // 뒤로가기 버튼
-        binding.topAppBar2.setNavigationOnClickListener(v -> {
-            finish();
-        });
         binding.topAppBar2.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.refresh:

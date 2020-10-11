@@ -1,11 +1,13 @@
 package com.example.gproject;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
@@ -15,15 +17,18 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TimeTable2 extends AppCompatActivity {
+public class TimeTable2 extends Activity {
     private ActivityTimeTableBinding binding; // View Binding
     public static Context context;
     public final int[] finishtime = new int[5];
     public final int[] mealtime = new int [5];
+    public final String[] finishstring = new String[5];
+    public final String[] mealstring = new String[5];
     public int onoff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         // View Binding
         binding = ActivityTimeTableBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,7 +47,7 @@ public class TimeTable2 extends AppCompatActivity {
 
 
         //view , adapter 선언
-        final String[] title = {"월", "화", "수", "목", "금", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
+        final String[] title = {"MON", "TUE", "WED", "THU", "FRI", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
         final ArrayAdapter<String> ad = new ArrayAdapter<String>(this, R.layout.gridviewcustom, title);
         String[] times = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
         ArrayAdapter<String> timead = new ArrayAdapter<>(this, R.layout.gridviewcustom, times);
@@ -133,9 +138,15 @@ public class TimeTable2 extends AppCompatActivity {
                 }
             }
         }
+        for(int i=0; i<5; i++){
+            if(finishtime[i]==0){
+                finishstring[i] = "공강";
+            }
+            else finishstring[i] = Integer.toString(finishtime[i]);
+        }
         //finishtime에 끝나는 시간 저장[월,화,수,목,금]
         //mealtime 구하기
-        int mon = 5,tue=6,wed=7,thu=8,fri=9,
+        int mon =5,tue=6,wed=7,thu=8,fri=9,
                 monmin=999,monfirst=0,
                 tuemin=999,tuefirst=0,
                 wedmin=999,wedfirst=0,
@@ -197,8 +208,30 @@ public class TimeTable2 extends AppCompatActivity {
                                 if(frimin>(fri/5+8))
                                     frimin = (fri/5+8);
                             }
-                            }binding.textView.setText("식사 시간 : \n" + Integer.toString(monmin)+"\n"+Integer.toString(tuemin)+"\n"+Integer.toString(wedmin)+"\n"+Integer.toString(thumin)+"\n"+Integer.toString(frimin)+"\n"+
-                            "하교 시간 : \n" + Integer.toString(finishtime[0])+"\n"+Integer.toString(finishtime[1])+"\n"+Integer.toString(finishtime[2])+"\n"+Integer.toString(finishtime[3])+"\n"+Integer.toString(finishtime[4]));
+                            }
+          for(int i=0;i<5;i++){
+              switch(i){
+                  case 0:
+                      mealstring[i] = Integer.toString(monmin);
+                      break;
+                  case 1:
+                      mealstring[i] = Integer.toString(tuemin);
+                      break;
+                  case 2:
+                      mealstring[i] = Integer.toString(wedmin);
+                      break;
+                  case 3:
+                      mealstring[i] = Integer.toString(thumin);
+                      break;
+                  case 4:
+                      mealstring[i] = Integer.toString(frimin);
+                      break;
+              }
+              if(finishstring[i].equals("공강")) mealstring[i] = "공강";
+
+          }
+          binding.textView.setText("식사 시간 : \n" + mealstring[0]+"\n"+mealstring[1]+"\n"+mealstring[2]+"\n"+mealstring[3]+"\n"+mealstring[4]+"\n"+
+                            "하교 시간 : \n" + finishstring[0] +"\n"+ finishstring[1]+"\n"+finishstring[2]+"\n"+finishstring[3]+"\n"+finishstring[4]);
         binding.ReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
+    android:background="@color/design_default_color_background"
     android:theme="@style/Theme.Material">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -17,8 +17,8 @@
             style="@style/MaterialToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="#000000"
             app:menu="@menu/top_app_bar"
-            app:navigationIcon="@drawable/ic_arrow_back_24dp"
             app:title="학교 식단" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -26,9 +26,10 @@
     <LinearLayout
         android:id="@+id/resultLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="675dp"
         android:layout_below="@id/appBarLayout2"
-        android:background="#101010"
+        android:layout_marginBottom="110dp"
+        android:background="#000000"
         android:orientation="vertical">
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.01"
-            android:background="#8BC34A" />
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/cafeteria1"
@@ -45,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#3E7102" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>
 
         <TextView
             android:id="@+id/caf2"
@@ -53,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.01"
-            android:background="#8BC34A" />
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/cafeteria2"
@@ -61,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#3E7102" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
         <TextView
             android:id="@+id/caf3"
@@ -69,7 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.01"
-            android:background="#8BC34A" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
         <TextView
             android:id="@+id/cafeteria3"
@@ -77,7 +81,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:layout_weight="0.239"
-            android:background="#3E7102" />
+            android:background="#FFFFFF"
+            android:textSize="13dp"/>/>
 
     </LinearLayout>
+
+
 </RelativeLayout>

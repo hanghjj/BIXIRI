@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
     android:theme="@style/Theme.Material">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appBarLayout_op1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,14 +15,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialtoolbar_op1"
+            android:id="@+id/materialToolbar_op1"
             style="@style/MaterialToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/top_app_bar"
-            app:navigationIcon="@drawable/ic_arrow_back_24dp"
-            app:title="@string/op1_toolbar_title" />
-
+            app:title="@string/op1_toolbar_title"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -32,10 +29,8 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_op1">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_op1_station_select"
@@ -57,14 +52,14 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintlayout_op1_departure_station"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp">
+                    android:layout_height="36dp">
 
                     <ImageView
                         android:id="@+id/imageview_op1_departure_station"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:contentDescription="@string/op1_directions_subway"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -74,11 +69,11 @@
                         android:id="@+id/textview_op1_departure_station_description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="36dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="20dp"
                         android:gravity="bottom"
                         android:text="@string/op1_departure_station"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -88,11 +83,11 @@
                         android:id="@+id/textview_op1_departure_station_selected"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="bottom"
                         android:text="@string/default_departure_station"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -102,14 +97,14 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintlayout_op1_arrival_station"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp">
+                    android:layout_height="36dp">
 
                     <ImageView
                         android:id="@+id/imageview_op1_arrival_station"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:contentDescription="@string/op1_directions_subway"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -119,11 +114,11 @@
                         android:id="@+id/textview_op1_arrival_station_description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="36dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="20dp"
                         android:gravity="bottom"
                         android:text="@string/op1_arrival_station"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -133,11 +128,11 @@
                         android:id="@+id/textview_op1_arrival_station_selected"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="bottom"
                         android:text="@string/default_arrival_station"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -150,11 +145,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_op1_bus_select"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            style="@style/Theme.Material.Card_List"
             android:layout_marginBottom="0dp">
 
             <LinearLayout
@@ -168,14 +159,14 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintlayout_op1_busRoute"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp">
+                    android:layout_height="36dp">
 
                     <ImageView
                         android:id="@+id/imageview_op1_busRoute"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:contentDescription="@string/op1_directions_subway"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -185,11 +176,11 @@
                         android:id="@+id/textview_op1_busRoute"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="36dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="20dp"
                         android:gravity="bottom"
                         android:text="@string/op1_busRoute"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -199,11 +190,11 @@
                         android:id="@+id/textview_op1_busRouteSeleted"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="bottom"
                         android:text="@string/default_busRoute"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -213,14 +204,14 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintlayout_op1_busStop"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp">
+                    android:layout_height="36dp">
 
                     <ImageView
                         android:id="@+id/imageview_op1_busStop"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:contentDescription="@string/op1_directions_subway"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -230,11 +221,11 @@
                         android:id="@+id/textview_op1_busStop"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="36dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="20dp"
                         android:gravity="bottom"
                         android:text="@string/op1_busStop"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -244,11 +235,11 @@
                         android:id="@+id/textview_op1_busStopSelected"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
                         android:gravity="bottom"
                         android:text="@string/default_busStop"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -271,7 +262,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_op1_busResult"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="120dp" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -286,7 +277,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_op1_subway_result"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="120dp" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
