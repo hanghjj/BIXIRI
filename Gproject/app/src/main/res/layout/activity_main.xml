@@ -8,21 +8,20 @@
     tools:context=".MainActivity">
 
 
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigation"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="-2dp">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
         <Button
             android:id="@+id/time"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="60dp"
-
+            android:layout_gravity="bottom|end"
             android:background="@drawable/ic_baseline_query_builder_24" />
 
         <TextView
@@ -48,8 +47,5 @@
         app:itemTextColor="#000000"
         app:menu="@menu/bottom"
         tools:layout_editor_absoluteX="16dp" />
-
-
-
 
 </RelativeLayout>

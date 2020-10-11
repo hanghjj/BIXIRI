@@ -1,12 +1,7 @@
 package com.example.gproject;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,18 +9,17 @@ import com.example.gproject.database.AppDatabase;
 import com.example.gproject.database.AppSharedPreference;
 import com.example.gproject.databinding.ActivityMainBinding;
 import com.example.gproject.thread.MenuCrawlingThread;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+/*
+    TODO: 버튼 클릭 시 효과 주기
+ */
 
 public class MainActivity extends AppCompatActivity {
     private long backbuttonduration = 0;
@@ -34,19 +28,20 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding; // ViewBinding 사용
     private MenuCrawlingThread menuCrawlingThread; // 학교 식단을 크롤링하는 클래스
     private static AppDatabase db; // 싱글톤 db 객체
-    private BottomNavigationView bottomNavigationView;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private frag1 frag1;
+    private frag2 frag2;
     private frag3 frag3;
+    private frag4 frag4;
     private mainfrag mainfrag;
-    private boolean loadF(Fragment f){
-        if(f!=null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,f).commit();
+
+    private boolean loadF(Fragment f) {
+        if (f != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, f).commit();
             return true;
         }
         return false;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,33 +50,34 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        // 미리 fragment 생성해놓고 버튼 누를시에 교체
         mainfrag = new mainfrag();
+        frag1 = new frag1();
+        frag2 = new frag2();
+        frag3 = new frag3();
+        frag4 = new frag4();
         loadF(new mainfrag());
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment frag = null;
-                switch(item.getItemId()) {
-                    case R.id.main:
-                        frag = new mainfrag();
-                        break;
-                    case R.id.act1:
-                        frag = new frag1();
-                        break;
-                    case R.id.act2:
-                        frag = new frag2();
-                        break;
-                    case R.id.act3:
-                        frag = new frag3();
-                        break;
-                }
-                return loadF(frag);
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            Fragment frag = null;
+            switch (item.getItemId()) {
+                case R.id.main:
+                    frag = mainfrag;
+                    break;
+                case R.id.act1:
+                    frag = frag1;
+                    break;
+                case R.id.act2:
+                    frag = frag2;
+                    break;
+                case R.id.act3:
+                    frag = frag3;
+                    break;
+                case R.id.act4:
+                    frag = frag4;
+                    break;
             }
-
+            return loadF(frag);
         });
-
-
 
         //Shef 선언 끝
         menuCrawlingThread = new MenuCrawlingThread();
@@ -138,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
             backbuttonduration = System.currentTimeMillis();
             toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT);
             toast.show();
-            return;
         } else {
             finish();
             toast.cancel();
         }
+//        super.onBackPressed();
     }
 }

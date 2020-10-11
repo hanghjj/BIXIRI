@@ -18,6 +18,8 @@ public class WakeOnLanThread extends Thread {
         this.ipAddress = ipAddress;
         this.macAddress = macAddress;
         this.port = port;
+        Log.d(getClass().getName(), "ip: " + ipAddress);
+        Log.d(getClass().getName(), "mac: " + macAddress);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class WakeOnLanThread extends Thread {
         byte[] bytes = new byte[6];
         String[] hex = macStr.split(":");
         if (hex.length != 6) {
+            Log.d(getClass().getName(), macStr);
             throw new IllegalArgumentException("Invalid MAC address.");
         }
         try {

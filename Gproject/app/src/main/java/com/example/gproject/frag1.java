@@ -5,13 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gproject.database.AppDatabase;
 import com.example.gproject.database.AppSharedPreference;
@@ -26,130 +19,137 @@ import com.example.gproject.thread.SubwayApiThread;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class frag1 extends Fragment {
     private View view;
     private ActivityOption1Binding binding; // View Binding
     AppDatabase db;
     AppSharedPreference pref;
     SubwayApiThread subwayApiThread;
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate){
-        binding = ActivityOption1Binding.inflate(inflater,container,false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate) {
+        binding = ActivityOption1Binding.inflate(inflater, container, false);
         view = binding.getRoot();
         return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    db = AppDatabase.getInstance(getActivity());
-    pref = AppSharedPreference.getInstance(getActivity());
+        db = AppDatabase.getInstance(getActivity());
+        pref = AppSharedPreference.getInstance(getActivity());
 
-
-    // 출발역
-    {
-        binding.textviewOp1DepartureStationSelected.setText(pref.getString(R.string.key_departureStation, ""));
-        // SelectActivity를 불러오는데 requestCode로 출발역을 선택하는 건지 도착역을 선택하는 건지 구분
-        binding.constraintlayoutOp1DepartureStation.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SelectActivity.class);
-            intent.putExtra("title", "출발역을 선택하세요");
-            // requestCode가 1이면 출발역 선택
-            intent.putExtra("requestCode", 1);
-            startActivityForResult(intent, 1);
-        });
-    }
-
-    // 도착역
-    {
-        binding.textviewOp1ArrivalStationSelected.setText(pref.getString(R.string.key_arrivalStation, ""));
-        // SelectActivity를 불러오는데 requestCode로 출발역을 선택하는 건지 도착역을 선택하는 건지 구분
-        binding.constraintlayoutOp1ArrivalStation.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SelectActivity.class);
-            intent.putExtra("title", "도착역을 선택하세요");
-            // 선택된 출발역 데이터도 전달
-            intent.putExtra("selectedData", pref.getString(R.string.key_departureStation, getString(R.string.default_departure_station)));
-            // requestCode가 2이면 도착역 선택
-            intent.putExtra("requestCode", 2);
-            startActivityForResult(intent, 2);
-        });
-    }
-
-    // 버스노선
-    {
-        binding.textviewOp1BusRouteSeleted.setText(pref.getString(R.string.key_busRoute, ""));
-        // requestCode 3 사용
-        binding.constraintlayoutOp1BusRoute.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SelectActivity.class);
-            intent.putExtra("title", "버스노선을 선택하세요");
-            intent.putExtra("requestCode", 3);
-            startActivityForResult(intent, 3);
-        });
-    }
-
-    // 버스정류장
-    {
-        binding.textviewOp1BusStopSelected.setText(pref.getString(R.string.key_busStop, ""));
-        // requestCode 4 사용
-        binding.constraintlayoutOp1BusStop.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SelectActivity.class);
-            intent.putExtra("title", "버스정류장을 선택하세요");
-            // 선택된 버스노선 데이터도 전달
-            intent.putExtra("selectedData", pref.getString(R.string.key_busRoute, getString(R.string.default_busRoute)));
-            intent.putExtra("requestCode", 4);
-            startActivityForResult(intent, 4);
-        });
-    }
-
-        binding.materialtoolbarOp1.setOnMenuItemClickListener(menuItem -> {
-        // 새로고침 버튼
-        if (menuItem.getItemId() == R.id.refresh) {
-            {
-                String departureStation = pref.getString(R.string.key_departureStation, "");
-                String arrivalStation = pref.getString(R.string.key_arrivalStation, "");
-                // SubwayApiThread를 통해서 받아올 리스트
-                List<SubwayApiThread.SubwayArrival> arrivalList = new ArrayList<>();
-                // recyclerView에 띄울 리스트
-
-                // SubwayApiThread에서 리스트 받아온 이후로 실행할 내용
-                Runnable afterRun = () -> {
-                    // recyclerView에 부착하는건 메인 Thread에서만 가능하다
-                    getActivity().runOnUiThread(() -> {
-                        binding.recyclerviewOp1SubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        final frag1.RecyclerViewAdapterSubwayResult adapter = new frag1.RecyclerViewAdapterSubwayResult(arrivalList);
-                        binding.recyclerviewOp1SubwayResult.setAdapter(adapter);
-                    });
-                };
-
-                // Thread를 실행한다
-                subwayApiThread = new SubwayApiThread(getContext(), arrivalList, departureStation, arrivalStation, afterRun);
-                subwayApiThread.start();
-            }
-
-            {
-                String busStId = pref.getString(R.string.key_busStId, "");
-                String busRouteId = pref.getString(R.string.key_busRouteId, "");
-                String busOrd = pref.getString(R.string.key_busOrg, "");
-                // BusApiThread를 통해서 받아올 리스트
-                List<BusApiThread.BusArrival> arrivalList = new ArrayList<>();
-
-                Runnable afterRun = () -> {
-                    getActivity().runOnUiThread(() -> {
-                        binding.recyclerviewOp1BusResult.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        final frag1.RecyclerViewAdapterBusResult adapter = new frag1.RecyclerViewAdapterBusResult(arrivalList);
-                        binding.recyclerviewOp1BusResult.setAdapter(adapter);
-                    });
-                };
-
-                BusApiThread busApiThread = new BusApiThread(arrivalList, busStId, busRouteId, busOrd, afterRun);
-                busApiThread.start();
-            }
-
-            return true;
+        // 출발역
+        {
+            binding.textviewOp1DepartureStationSelected.setText(pref.getString(R.string.key_departureStation, ""));
+            // SelectActivity를 불러오는데 requestCode로 출발역을 선택하는 건지 도착역을 선택하는 건지 구분
+            binding.constraintlayoutOp1DepartureStation.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), SelectActivity.class);
+                intent.putExtra("title", "출발역을 선택하세요");
+                // requestCode가 1이면 출발역 선택
+                intent.putExtra("requestCode", 1);
+                startActivityForResult(intent, 1);
+            });
         }
-        return false;
-    });
-}
+
+        // 도착역
+        {
+            binding.textviewOp1ArrivalStationSelected.setText(pref.getString(R.string.key_arrivalStation, ""));
+            // SelectActivity를 불러오는데 requestCode로 출발역을 선택하는 건지 도착역을 선택하는 건지 구분
+            binding.constraintlayoutOp1ArrivalStation.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), SelectActivity.class);
+                intent.putExtra("title", "도착역을 선택하세요");
+                // 선택된 출발역 데이터도 전달
+                intent.putExtra("selectedData", pref.getString(R.string.key_departureStation, getString(R.string.default_departure_station)));
+                // requestCode가 2이면 도착역 선택
+                intent.putExtra("requestCode", 2);
+                startActivityForResult(intent, 2);
+            });
+        }
+
+        // 버스노선
+        {
+            binding.textviewOp1BusRouteSeleted.setText(pref.getString(R.string.key_busRoute, ""));
+            // requestCode 3 사용
+            binding.constraintlayoutOp1BusRoute.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), SelectActivity.class);
+                intent.putExtra("title", "버스노선을 선택하세요");
+                intent.putExtra("requestCode", 3);
+                startActivityForResult(intent, 3);
+            });
+        }
+
+        // 버스정류장
+        {
+            binding.textviewOp1BusStopSelected.setText(pref.getString(R.string.key_busStop, ""));
+            // requestCode 4 사용
+            binding.constraintlayoutOp1BusStop.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), SelectActivity.class);
+                intent.putExtra("title", "버스정류장을 선택하세요");
+                // 선택된 버스노선 데이터도 전달
+                intent.putExtra("selectedData", pref.getString(R.string.key_busRoute, getString(R.string.default_busRoute)));
+                intent.putExtra("requestCode", 4);
+                startActivityForResult(intent, 4);
+            });
+        }
+
+        binding.materialToolbarOp1.setOnMenuItemClickListener(menuItem -> {
+            // 새로고침 버튼
+            if (menuItem.getItemId() == R.id.refresh) {
+                {
+                    String departureStation = pref.getString(R.string.key_departureStation, "");
+                    String arrivalStation = pref.getString(R.string.key_arrivalStation, "");
+                    // SubwayApiThread를 통해서 받아올 리스트
+                    List<SubwayApiThread.SubwayArrival> arrivalList = new ArrayList<>();
+                    // recyclerView에 띄울 리스트
+
+                    // SubwayApiThread에서 리스트 받아온 이후로 실행할 내용
+                    Runnable afterRun = () -> {
+                        // recyclerView에 부착하는건 메인 Thread에서만 가능하다
+                        getActivity().runOnUiThread(() -> {
+                            binding.recyclerviewOp1SubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            final frag1.RecyclerViewAdapterSubwayResult adapter = new frag1.RecyclerViewAdapterSubwayResult(arrivalList);
+                            binding.recyclerviewOp1SubwayResult.setAdapter(adapter);
+                        });
+                    };
+
+                    // Thread를 실행한다
+                    subwayApiThread = new SubwayApiThread(getContext(), arrivalList, departureStation, arrivalStation, afterRun);
+                    subwayApiThread.start();
+                }
+
+                {
+                    String busStId = pref.getString(R.string.key_busStId, "");
+                    String busRouteId = pref.getString(R.string.key_busRouteId, "");
+                    String busOrd = pref.getString(R.string.key_busOrg, "");
+                    // BusApiThread를 통해서 받아올 리스트
+                    List<BusApiThread.BusArrival> arrivalList = new ArrayList<>();
+
+                    Runnable afterRun = () -> {
+                        getActivity().runOnUiThread(() -> {
+                            binding.recyclerviewOp1BusResult.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            final frag1.RecyclerViewAdapterBusResult adapter = new frag1.RecyclerViewAdapterBusResult(arrivalList);
+                            binding.recyclerviewOp1BusResult.setAdapter(adapter);
+                        });
+                    };
+
+                    BusApiThread busApiThread = new BusApiThread(arrivalList, busStId, busRouteId, busOrd, afterRun);
+                    busApiThread.start();
+                }
+
+                return true;
+            }
+            return false;
+        });
+    }
 
     // 출발역, 도착역, 버스노선, 버스정류장을 선택한 결과 처리
     @Override
@@ -240,104 +240,104 @@ public class frag1 extends Fragment {
         }).start();
     }
 
-// RecyclerView
-class RecyclerViewAdapterBusResult extends RecyclerView.Adapter<frag1.RecyclerViewAdapterBusResult.ViewHolder> {
-    List<BusApiThread.BusArrival> arrivalList;
+    // RecyclerView
+    class RecyclerViewAdapterBusResult extends RecyclerView.Adapter<frag1.RecyclerViewAdapterBusResult.ViewHolder> {
+        List<BusApiThread.BusArrival> arrivalList;
 
-    RecyclerViewAdapterBusResult(List<BusApiThread.BusArrival> arrivalList) {
-        this.arrivalList = arrivalList;
-    }
+        RecyclerViewAdapterBusResult(List<BusApiThread.BusArrival> arrivalList) {
+            this.arrivalList = arrivalList;
+        }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        RecyclerviewItemBusArrivalBinding binding;
+        class ViewHolder extends RecyclerView.ViewHolder {
+            RecyclerviewItemBusArrivalBinding binding;
 
-        ViewHolder(RecyclerviewItemBusArrivalBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+            ViewHolder(RecyclerviewItemBusArrivalBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+            }
+        }
+
+        @NonNull
+        @Override
+        public frag1.RecyclerViewAdapterBusResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            RecyclerviewItemBusArrivalBinding binding = RecyclerviewItemBusArrivalBinding.
+                    inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new frag1.RecyclerViewAdapterBusResult.ViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull frag1.RecyclerViewAdapterBusResult.ViewHolder holder, int position) {
+            holder.binding.textViewRecyclerviewItemBusArrivalTitle.setText(getString(R.string.recyclerview_item_bus_arrival_title,
+                    arrivalList.get(position).getStationNm()));
+            holder.binding.textViewRecyclerviewItemBusArrivalTitle.setTextSize(12);
+            holder.binding.textViewRecyclerviewItemBusArrivalContent.setText(getString(R.string.recyclerview_item_bus_arrival_content1,
+                    arrivalList.get(position).getBusType(),
+                    arrivalList.get(position).getRerideNum(),
+                    arrivalList.get(position).getTraTime(),
+                    arrivalList.get(position).getOrdDiff()));
+            holder.binding.textViewRecyclerviewItemBusArrivalContent.setTextSize(10);
+        }
+
+        @Override
+        public int getItemCount() {
+            return arrivalList.size();
         }
     }
 
-    @NonNull
-    @Override
-    public frag1.RecyclerViewAdapterBusResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecyclerviewItemBusArrivalBinding binding = RecyclerviewItemBusArrivalBinding.
-                inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new frag1.RecyclerViewAdapterBusResult.ViewHolder(binding);
-    }
+    // RecyclerView
+    class RecyclerViewAdapterSubwayResult extends RecyclerView.Adapter<frag1.RecyclerViewAdapterSubwayResult.ViewHolder> {
+        private List<SubwayApiThread.SubwayArrival> arrivalList;
 
-    @Override
-    public void onBindViewHolder(@NonNull frag1.RecyclerViewAdapterBusResult.ViewHolder holder, int position) {
-        holder.binding.textViewRecyclerviewItemBusArrivalTitle.setText(getString(R.string.recyclerview_item_bus_arrival_title,
-                arrivalList.get(position).getStationNm()));
-        holder.binding.textViewRecyclerviewItemBusArrivalTitle.setTextSize(12);
-        holder.binding.textViewRecyclerviewItemBusArrivalContent.setText(getString(R.string.recyclerview_item_bus_arrival_content1,
-                arrivalList.get(position).getBusType(),
-                arrivalList.get(position).getRerideNum(),
-                arrivalList.get(position).getTraTime(),
-                arrivalList.get(position).getOrdDiff()));
-        holder.binding.textViewRecyclerviewItemBusArrivalContent.setTextSize(10);
-    }
+        class ViewHolder extends RecyclerView.ViewHolder {
+            RecyclerviewItemSubwayArrivalBinding binding;
 
-    @Override
-    public int getItemCount() {
-        return arrivalList.size();
-    }
-}
-
-// RecyclerView
-class RecyclerViewAdapterSubwayResult extends RecyclerView.Adapter<frag1.RecyclerViewAdapterSubwayResult.ViewHolder> {
-    private List<SubwayApiThread.SubwayArrival> arrivalList;
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        RecyclerviewItemSubwayArrivalBinding binding;
-
-        ViewHolder(RecyclerviewItemSubwayArrivalBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+            ViewHolder(RecyclerviewItemSubwayArrivalBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+            }
         }
-    }
 
-    RecyclerViewAdapterSubwayResult(List<SubwayApiThread.SubwayArrival> arrivalList) {
-        this.arrivalList = arrivalList;
-    }
-
-    @NonNull
-    @Override
-    public frag1.RecyclerViewAdapterSubwayResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecyclerviewItemSubwayArrivalBinding binding = RecyclerviewItemSubwayArrivalBinding.
-                inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new frag1.RecyclerViewAdapterSubwayResult.ViewHolder(binding);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull frag1.RecyclerViewAdapterSubwayResult.ViewHolder holder, int position) {
-        holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setText(getString(R.string.recyclerview_item_subway_arrival_title, arrivalList.get(position).getCurrentLocation()));
-        holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setTextSize(12);
-        int arrivalTime = arrivalList.get(position).getArrivalTime();
-        int minute = (int) arrivalTime / 60;
-        int second = arrivalTime % 60;
-        String arrivalText; // 00분 00초 후 도착으로 표시
-        if (second == 0) {
-            arrivalText = minute + "분";
-        } else if (minute == 0) {
-            arrivalText = second + "초";
-        } else {
-            arrivalText = minute + "분 " + second + "초";
+        RecyclerViewAdapterSubwayResult(List<SubwayApiThread.SubwayArrival> arrivalList) {
+            this.arrivalList = arrivalList;
         }
-        // 도착시간: 00시 00분 00초로 표시하기 위한 옵션
+
+        @NonNull
+        @Override
+        public frag1.RecyclerViewAdapterSubwayResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            RecyclerviewItemSubwayArrivalBinding binding = RecyclerviewItemSubwayArrivalBinding.
+                    inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new frag1.RecyclerViewAdapterSubwayResult.ViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull frag1.RecyclerViewAdapterSubwayResult.ViewHolder holder, int position) {
+            holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setText(getString(R.string.recyclerview_item_subway_arrival_title, arrivalList.get(position).getCurrentLocation()));
+            holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setTextSize(12);
+            int arrivalTime = arrivalList.get(position).getArrivalTime();
+            int minute = (int) arrivalTime / 60;
+            int second = arrivalTime % 60;
+            String arrivalText; // 00분 00초 후 도착으로 표시
+            if (second == 0) {
+                arrivalText = minute + "분";
+            } else if (minute == 0) {
+                arrivalText = second + "초";
+            } else {
+                arrivalText = minute + "분 " + second + "초";
+            }
+            // 도착시간: 00시 00분 00초로 표시하기 위한 옵션
 //            Date arrivalDate = new Date(System.currentTimeMillis() + arrivalTime * 1000);
 //            SimpleDateFormat format = new SimpleDateFormat("hh시 mm분 ss초", Locale.getDefault());
 //            arrivalText = format.format(arrivalDate);
 
-        holder.binding.textViewRecyclerviewItemSubwayArrivalContent.setText(getString(R.string.recyclerview_item_subway_arrival_content1,
-                arrivalList.get(position).getDestination(),
-                arrivalText));
-        holder.binding.textViewRecyclerviewItemSubwayArrivalContent.setTextSize(10);
-    }
+            holder.binding.textViewRecyclerviewItemSubwayArrivalContent.setText(getString(R.string.recyclerview_item_subway_arrival_content1,
+                    arrivalList.get(position).getDestination(),
+                    arrivalText));
+            holder.binding.textViewRecyclerviewItemSubwayArrivalContent.setTextSize(10);
+        }
 
-    @Override
-    public int getItemCount() {
-        return arrivalList.size();
+        @Override
+        public int getItemCount() {
+            return arrivalList.size();
+        }
     }
-}
 }

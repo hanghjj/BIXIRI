@@ -8,18 +8,19 @@ public class WolProfileEntity {
     @NonNull
     private String name; // 프로필 이름
     private int favorite; // 프로필 즐겨찾기 여부, 0이면 false, 1: true, 즐겨찾기 되어있으면 메인화면에 띄워짐
-    private int macAddress; // mac 주소
-    private int ipAddress; // ip 주소
+    private String macAddress; // mac 주소
+    private String ipAddress; // ip 주소
     private int port; // 포트번호
 
-    public WolProfileEntity(String name, int favorite, int macAddress, int ipAddress, int port) {
+    public WolProfileEntity(String name, int favorite, String ipAddress, String macAddress, int port) {
         this.name = name;
         this.favorite = favorite;
-        this.macAddress = macAddress;
         this.ipAddress = ipAddress;
+        this.macAddress = macAddress;
         this.port = port;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
@@ -36,19 +37,19 @@ public class WolProfileEntity {
         this.favorite = favorite;
     }
 
-    public int getMacAddress() {
+    public String getMacAddress() {
         return macAddress;
     }
 
-    public void setMacAddress(int macAddress) {
+    public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
     }
 
-    public int getIpAddress() {
+    public String getIpAddress() {
         return ipAddress;
     }
 
-    public void setIpAddress(int ipAddress) {
+    public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
 

@@ -13,6 +13,9 @@
     <string name="key_busRouteId">busRouteId</string>
     <string name="key_busOrg">busOrg</string>
     <string name="key_busStId">busStId</string>
+    <!-- op3 -->
+    <string name="key_op3hour">op3hour</string>
+    <string name="key_op3min">op3min</string>
     <!-- op4 -->
     <string name="key_testAlarmSet">testAlarmSet</string>
     <string name="key_testAlarmTime">testAlarmTime</string>

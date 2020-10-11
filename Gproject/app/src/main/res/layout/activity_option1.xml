@@ -20,9 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/top_app_bar"
-            app:title="@string/op1_toolbar_title"
-            android:background="#000000"/>
-
+            app:title="@string/op1_toolbar_title"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -31,11 +29,8 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginBottom="110dp">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_op1">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_op1_station_select"

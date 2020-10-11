@@ -7,8 +7,5 @@
         android:contentDescription="@string/content_description"
         android:icon="@drawable/ic_refresh_24dp"
         android:title="@string/app_name"
-        app:showAsAction="always"
-        
-
-        />
+        app:showAsAction="always" />
 </menu>
