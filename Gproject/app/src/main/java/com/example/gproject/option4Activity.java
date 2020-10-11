@@ -1,15 +1,11 @@
 package com.example.gproject;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.gproject.databinding.ActivityOption4Binding;
-
-import java.util.Calendar;
+import com.example.gproject.thread.WakeOnLanThread;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +21,7 @@ public class option4Activity extends AppCompatActivity {
         binding = ActivityOption4Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /*
         // save 버튼 눌렀을 시
         binding.btnOp4Save.setOnClickListener(v -> {
             // 사용자가 지정한 시간에 인텐트 실행
@@ -52,9 +49,20 @@ public class option4Activity extends AppCompatActivity {
                 }
             }
         });
+         */
+
+//        // WOL 전원 켜는 버튼
+//        binding.btnOp4WolOn.setOnClickListener(v -> {
+            // Thread 만들어서 실행, WakeOnLanThread.java 참조
+            WakeOnLanThread wakeOnLanThread = new WakeOnLanThread("220.72.71.137", "D0:50:99:48:B1:76", 13898);
+            wakeOnLanThread.start();
+            // 확인 메시지 출력
+            Toast myToast = Toast.makeText(this.getApplicationContext(), R.string.op4_wol_toast, Toast.LENGTH_SHORT);
+            myToast.show();
+//        });
 
         // 뒤로가기 버튼
-        binding.ReturnHome.setOnClickListener(v -> {
+        binding.materialToolbarOp4.setNavigationOnClickListener(v -> {
             finish();
         });
     }

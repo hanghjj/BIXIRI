@@ -18,11 +18,15 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity android:name=".TimeTable2" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".option1Activity" />
+        <activity android:name=".option1Activity"
+            android:theme="@style/Theme.Material" />
         <activity
             android:name=".SelectActivity"
-            android:parentActivityName=".option1Activity" />
-        <activity android:name=".option4Activity" />
+            android:parentActivityName=".option1Activity"
+            android:theme="@style/Theme.Material" />
+        <activity
+            android:name=".option4Activity"
+            android:theme="@style/Theme.Material" />
         <activity android:name=".option3Activity" />
         <activity android:name=".option2Activity" />
         <activity android:name=".MainActivity">

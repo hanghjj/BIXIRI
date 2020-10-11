@@ -2,4 +2,5 @@
 <!-- layout xml 에서 android:contentDescription 에 사용되는 string 모음 -->
 <resources>
     <string name="op1_directions_subway">지하철역 이미지</string>
+    <string name="op4_power_settings_new">전원 켜는 버튼</string>
 </resources>

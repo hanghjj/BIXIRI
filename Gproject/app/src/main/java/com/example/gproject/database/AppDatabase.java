@@ -11,21 +11,21 @@ import com.example.gproject.database.menu.MenuDAO;
 import com.example.gproject.database.menu.MenuEntity;
 import com.example.gproject.database.subwaystation.SubwayStationDAO;
 import com.example.gproject.database.subwaystation.SubwayStationEntity;
+import com.example.gproject.database.wolprofile.WolProfileDAO;
+import com.example.gproject.database.wolprofile.WolProfileEntity;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {MenuEntity.class, SubwayStationEntity.class, BusStopEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {MenuEntity.class, SubwayStationEntity.class, BusStopEntity.class, WolProfileEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     // 싱글톤
     private static AppDatabase INSTANCE;
-
     public abstract MenuDAO menuDAO();
-
     public abstract SubwayStationDAO subwayStationDAO();
-
     public abstract BusStopDAO busStopDAO();
+    public abstract WolProfileDAO wolProfileDAO();
 
     // DB 객체생성 가져오기
     public static AppDatabase getInstance(Context context) {
