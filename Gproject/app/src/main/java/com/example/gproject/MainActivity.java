@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
         binding.op4.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, option4Activity.class);
             startActivity(intent);
-        });*/
+        });
         binding.time.setOnClickListener(v -> {
             startActivity(new Intent(this, TimeTable2.class));
-        });
+        });*/
     }
 
     // 뒤로가기 버튼 두번 연달아 누르면 앱 종료
