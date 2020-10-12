@@ -28,7 +28,8 @@
         <activity android:name=".option3Activity" />
         <activity android:name=".option2Activity" />
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.Material">
+            android:theme="@style/Theme.Material"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
