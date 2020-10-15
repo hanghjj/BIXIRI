@@ -39,4 +39,8 @@
     <string name="info2">서울시 이외의 역구간은 미제공 됩니다. (예. 광명, 서동탄, 춘천 등)</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+<<<<<<< Updated upstream
+=======
+    <string name="title_activity_maps">Map</string>
+>>>>>>> Stashed changes
 </resources>

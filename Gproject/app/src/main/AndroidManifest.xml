@@ -3,8 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.gproject">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+<<<<<<< Updated upstream
+=======
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+>>>>>>> Stashed changes
 
     <application
         android:allowBackup="false"
@@ -16,10 +27,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+<<<<<<< Updated upstream
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity android:name=".TimeTable2" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".option1Activity"
+=======
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC_5YmCtnBm4OK0BvpVjVYM4AOf4IE_0rw" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".ActLocation" />
+        <activity
+            android:name=".TimeTable2"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".option1Activity"
+>>>>>>> Stashed changes
             android:theme="@style/Theme.Material" />
         <activity
             android:name=".SelectActivity"
@@ -27,8 +64,15 @@
             android:theme="@style/Theme.Material" />
         <activity android:name=".option3Activity" />
         <activity android:name=".option2Activity" />
+<<<<<<< Updated upstream
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.Material">
+=======
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.Material"
+            android:windowSoftInputMode="adjustPan">
+>>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +80,13 @@
             </intent-filter>
         </activity>
 
+<<<<<<< Updated upstream
         <receiver android:name=".AlarmReceiver" android:enabled="true"/>
+=======
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true" />
+>>>>>>> Stashed changes
     </application>
 
 </manifest>

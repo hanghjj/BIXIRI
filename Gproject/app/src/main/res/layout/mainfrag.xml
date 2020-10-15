@@ -3,7 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="30dp"
+<<<<<<< Updated upstream
     >
 
+=======
+    android:layout_marginBottom="40dp"
+    >
+    <Button
+        android:id="@+id/time"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/ic_baseline_query_builder_24" />
+    <Button
+        android:id="@+id/test"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/ic_baseline_room_24"/>
+>>>>>>> Stashed changes
 
 </FrameLayout>
