@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.gproject">
+    package="com.bixiri.gproject">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -11,11 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-<<<<<<< Updated upstream
-=======
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
->>>>>>> Stashed changes
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="false"
@@ -27,13 +24,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-<<<<<<< Updated upstream
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-
-        <activity android:name=".TimeTable2" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".option1Activity"
-=======
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,48 +35,52 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC_5YmCtnBm4OK0BvpVjVYM4AOf4IE_0rw" />
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/actions" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-        <activity android:name=".ActLocation" />
         <activity
-            android:name=".TimeTable2"
+            android:name="com.bixiri.gproject.TimeTable2"
             android:theme="@android:style/Theme.Dialog" />
+        <activity android:name="com.bixiri.gproject.option1Activity" />
+        <activity android:name="com.bixiri.gproject.ActLocation" />
         <activity
-            android:name=".option1Activity"
->>>>>>> Stashed changes
+            android:name="com.bixiri.gproject.SelectActivity"
+            android:parentActivityName="com.bixiri.gproject.option1Activity"
             android:theme="@style/Theme.Material" />
+        <activity android:name="com.bixiri.gproject.option3Activity" />
+        <activity android:name="com.bixiri.gproject.option2Activity">
+        </activity>
         <activity
-            android:name=".SelectActivity"
-            android:parentActivityName=".option1Activity"
-            android:theme="@style/Theme.Material" />
-        <activity android:name=".option3Activity" />
-        <activity android:name=".option2Activity" />
-<<<<<<< Updated upstream
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.Material">
-=======
-        <activity
-            android:name=".MainActivity"
+            android:name="com.bixiri.gproject.MainActivity"
             android:theme="@style/Theme.Material"
             android:windowSoftInputMode="adjustPan">
->>>>>>> Stashed changes
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.WOL" />
+                <data
+                    android:host="example"
+                    android:scheme="test" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 
-<<<<<<< Updated upstream
-        <receiver android:name=".AlarmReceiver" android:enabled="true"/>
-=======
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="com.bixiri.gproject.AlarmReceiver"
             android:enabled="true" />
->>>>>>> Stashed changes
-    </application>
+        <receiver android:name="com.bixiri.gproject.receiver.WolReceiver">
 
+        </receiver>
+    </application>
 </manifest>
