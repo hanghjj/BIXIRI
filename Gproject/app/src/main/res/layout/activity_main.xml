@@ -17,16 +17,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true">
 
-<<<<<<< Updated upstream
-        <Button
-            android:id="@+id/time"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:background="@drawable/ic_baseline_query_builder_24" />
-
-=======
->>>>>>> Stashed changes
         <TextView
             android:id="@+id/Appname"
             android:layout_width="match_parent"

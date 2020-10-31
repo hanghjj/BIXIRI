@@ -26,11 +26,13 @@ public class gpsTracker extends Service implements LocationListener {
         this.context = context;
         getLocation();
     }
+
     public Location getLocation(){
         try{
             locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
             boolean isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean isNetworkEnable = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
             if(!isGPSEnable&&!isNetworkEnable){}
             else{
                 int hasFinePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -40,7 +42,7 @@ public class gpsTracker extends Service implements LocationListener {
             if(isNetworkEnable){
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES,this);
                 if(locationManager!=null){
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if(location != null){
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
@@ -65,6 +67,7 @@ public class gpsTracker extends Service implements LocationListener {
         }
         return location;
     }
+
     public double getLatitude() {
         if(location != null) {
             latitude = location.getLatitude();
@@ -87,10 +90,4 @@ public class gpsTracker extends Service implements LocationListener {
             locationManager.removeUpdates(gpsTracker.this);
         }
     }
-
-
-
-
-
-
 }

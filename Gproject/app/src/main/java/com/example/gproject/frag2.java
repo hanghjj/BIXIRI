@@ -1,6 +1,9 @@
 package com.example.gproject;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gproject.database.AppDatabase;
 import com.example.gproject.databinding.ActivityOption2Binding;
+import com.example.gproject.thread.MenuCrawlingThread;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,13 +26,22 @@ import java.util.Locale;
 public class frag2 extends Fragment {
     private ActivityOption2Binding binding;
     private View view;
-
+    Activity activity;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate){
         binding = ActivityOption2Binding.inflate(inflater,container,false);
         view = binding.getRoot();
         return view;
+    }
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        if(context instanceof Activity){
+            activity = (Activity)context;
+        }
+
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -41,7 +54,7 @@ public class frag2 extends Fragment {
         binding.caf2.setGravity(Gravity.CENTER_HORIZONTAL);
         binding.caf3.setText("제 2기숙사 식당");
         binding.caf3.setGravity(Gravity.CENTER_HORIZONTAL);
-
+        new MenuCrawlingThread().getMenuFromWeb(db.menuDAO());
         // 현재 시간을 구한다
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat dayFormat = new SimpleDateFormat("u", Locale.getDefault());
@@ -51,16 +64,11 @@ public class frag2 extends Fragment {
         // 현재 시간
         int hour = Integer.parseInt(hourFormat.format(date));
 
-        // 뒤로가기 버튼
-        binding.topAppBar2.setNavigationOnClickListener(v -> {
-            getActivity().finish();
-        });
         binding.topAppBar2.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.refresh:
                     // Thread 생성해서 실행
                     new Thread(() -> {
-
                         List<String> menuItems = db.menuDAO().findMenu(day, 2, 1);
                         StringBuilder stringBuilder1 = new StringBuilder();
                         for (String menu : menuItems) {
@@ -79,7 +87,8 @@ public class frag2 extends Fragment {
                         }
 
                         // Main Thread에서 UI 변경
-                        getActivity().runOnUiThread(() -> {
+                        if(activity!=null)
+                        activity.runOnUiThread(() -> {
                             binding.cafeteria1.setText(stringBuilder1.toString());
                             binding.cafeteria1.setGravity(Gravity.CENTER_HORIZONTAL);
                             binding.cafeteria2.setText(stringBuilder2.toString());
