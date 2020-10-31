@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".PlaceinfoActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -46,18 +47,21 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity android:name=".ActLocation"/>
         <activity
             android:name="com.bixiri.gproject.TimeTable2"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="com.bixiri.gproject.option1Activity" />
         <activity android:name="com.bixiri.gproject.ActLocation" />
         <activity
-            android:name="com.bixiri.gproject.SelectActivity"
-            android:parentActivityName="com.bixiri.gproject.option1Activity"
+            android:name=".option1Activity"
             android:theme="@style/Theme.Material" />
-        <activity android:name="com.bixiri.gproject.option3Activity" />
-        <activity android:name="com.bixiri.gproject.option2Activity">
-        </activity>
+        <activity
+            android:name=".SelectActivity"
+            android:parentActivityName=".option1Activity"
+            android:theme="@style/Theme.Material" />
+        <activity android:name=".option3Activity" />
+        <activity android:name=".option2Activity" />
         <activity
             android:name="com.bixiri.gproject.MainActivity"
             android:theme="@style/Theme.Material"
@@ -79,7 +83,7 @@
         <receiver
             android:name="com.bixiri.gproject.AlarmReceiver"
             android:enabled="true" />
-        <receiver android:name="com.bixiri.gproject.receiver.WolReceiver">
+    </application>
 
         </receiver>
     </application>

@@ -2,6 +2,8 @@ package com.bixiri.gproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +41,9 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
     String realadd= " "; //주석처리된 부분을 위한 변수
     double lati;
     double longi;
+    String pid;
     List<Marker> previous_marker = new ArrayList<>();
+    HashMap<String,String> pinfo = new HashMap<String,String>();
     private GoogleMap map;
 
     @Override
@@ -84,17 +89,17 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
             e.printStackTrace();
         }
 */
-/*
+
 //네이버 API를 이용해 검색하기
-        Thread thread = new Thread(new Runnable() {
+        /*Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                String result = naverapi(realadd);
+                //String result = naverapi(realadd);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        binding.result1.setText(result);
+
                     }
                 });
               }catch(Exception e){
@@ -113,7 +118,20 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
         markerOptions.title("현재 위치");
         markerOptions.snippet("Your Location");
         map.addMarker(markerOptions);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocate,10));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocate,15));
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent= new Intent(getBaseContext(),PlaceinfoActivity.class);
+                String t = marker.getTitle();
+                String a = marker.getSnippet();
+                intent.putExtra("title",t);
+                intent.putExtra("address",a);
+                String temp = (String) pinfo.get(t);
+                intent.putExtra("pid",temp);
+                startActivity(intent);
+            }
+        });
     }
     //Places override
     @Override
@@ -128,11 +146,12 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
                 for(noman.googleplaces.Place place : places){
                     LatLng latLng = new LatLng(place.getLatitude(),place.getLongitude());
                     String markerSnippet = getCurrentAddress(latLng);
-
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng);
                     markerOptions.title(place.getName());
                     markerOptions.snippet(markerSnippet);
+                    pid = place.getPlaceId();
+                    pinfo.put(place.getName(),pid);
                     Marker item = map.addMarker(markerOptions);
                     previous_marker.add(item);
                 }
@@ -168,21 +187,20 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
             return "잘못된 GPS 좌표";
             }
             if(geoResult ==null||geoResult.size()==0){
-                Toast.makeText(this,"주소 미발견",Toast.LENGTH_LONG).show();
                 return "주소 미발견";
             }else{
                 Address address = geoResult.get(0);
                 return address.getAddressLine(0).toString();
             }
         }
-    }
-/* 네이버 API 사용 함수
+/*
+ //네이버 API 사용 함수
     public String naverapi(String key){
         String clientId = "MfikIi83tGt5CI313IdT";
         String clientSecret = "B96Golukkq";
         StringBuffer buff = new StringBuffer();
         try{
-            String temp = URLEncoder.encode(key+"주변 맛집" ,"UTF-8");
+            String temp = URLEncoder.encode(key ,"UTF-8");
             String queryURL = "https://openapi.naver.com/v1/search/blog.xml?query="+temp+"&display=5&start = 1&sort = random";
             URL url = new URL(queryURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -223,6 +241,6 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
             return e.toString();
         }
         return buff.toString();
-    }
-*/
+    }*/
+}
 

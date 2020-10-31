@@ -12,14 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.gproject.databinding.MainfragBinding;
+
 public class mainfrag extends Fragment {
     private MainfragBinding binding;
     private View view;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate) {
-        binding = MainfragBinding.inflate(inflater, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedinstancestate){
+        binding = MainfragBinding.inflate(inflater,container,false);
         return binding.getRoot();
     }
 
