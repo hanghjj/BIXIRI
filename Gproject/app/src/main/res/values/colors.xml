@@ -2,7 +2,7 @@
 <resources>
     <!-- 보라색 : #6200EE -->
     <color name="colorToolbarBackground">#000000</color>
-    <color name="colorPrimaryDark">@color/indigo_500</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorPrimary">@color/indigo_500</color>
     <color name="colorSecondary">@color/indigo_500</color>
     <color name="colorOnBackground">#FFFFFF</color>

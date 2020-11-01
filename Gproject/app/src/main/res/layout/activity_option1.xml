@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
@@ -23,263 +24,264 @@
             app:title="@string/op1_toolbar_title"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout_op1">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_op1_station_select"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearlayout_op1_card"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="?android:dividerHorizontal"
-                android:orientation="vertical"
-                android:showDividers="middle">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_op1_station_select"
+                style="@style/Theme.Material.Card_List"
+                android:layout_marginBottom="0dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintlayout_op1_departure_station"
+                <LinearLayout
+                    android:id="@+id/linearlayout_op1_card"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="match_parent"
+                    android:divider="?android:dividerHorizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
 
-                    <ImageView
-                        android:id="@+id/imageview_op1_departure_station"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="@string/op1_directions_subway"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_directions_subway_24dp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintlayout_op1_departure_station"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp">
 
-                    <TextView
-                        android:id="@+id/textview_op1_departure_station_description"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="bottom"
-                        android:text="@string/op1_departure_station"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_departure_station" />
+                        <ImageView
+                            android:id="@+id/imageview_op1_departure_station"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@string/op1_directions_subway"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_directions_subway_24dp" />
 
-                    <TextView
-                        android:id="@+id/textview_op1_departure_station_selected"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="bottom"
-                        android:text="@string/default_departure_station"
-                        android:textSize="10sp"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_departure_station" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/textview_op1_departure_station_description"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="bottom"
+                            android:text="@string/op1_departure_station"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_departure_station" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintlayout_op1_arrival_station"
+                        <TextView
+                            android:id="@+id/textview_op1_departure_station_selected"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="bottom"
+                            android:text="@string/default_departure_station"
+                            android:textSize="10sp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_departure_station" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintlayout_op1_arrival_station"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp">
+
+                        <ImageView
+                            android:id="@+id/imageview_op1_arrival_station"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@string/op1_directions_subway"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_directions_subway_24dp" />
+
+                        <TextView
+                            android:id="@+id/textview_op1_arrival_station_description"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="bottom"
+                            android:text="@string/op1_arrival_station"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_arrival_station" />
+
+                        <TextView
+                            android:id="@+id/textview_op1_arrival_station_selected"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="bottom"
+                            android:text="@string/default_arrival_station"
+                            android:textSize="10sp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_arrival_station" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_op1_bus_select"
+                style="@style/Theme.Material.Card_List"
+                android:layout_marginBottom="0dp">
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_op1_bus"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="match_parent"
+                    android:divider="?android:dividerHorizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
 
-                    <ImageView
-                        android:id="@+id/imageview_op1_arrival_station"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="@string/op1_directions_subway"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_directions_subway_24dp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintlayout_op1_busRoute"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp">
 
-                    <TextView
-                        android:id="@+id/textview_op1_arrival_station_description"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="bottom"
-                        android:text="@string/op1_arrival_station"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_arrival_station" />
+                        <ImageView
+                            android:id="@+id/imageview_op1_busRoute"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@string/op1_directions_subway"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_directions_bus_24dp" />
 
-                    <TextView
-                        android:id="@+id/textview_op1_arrival_station_selected"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="bottom"
-                        android:text="@string/default_arrival_station"
-                        android:textSize="10sp"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_arrival_station" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/textview_op1_busRoute"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="bottom"
+                            android:text="@string/op1_busRoute"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_busRoute" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/textview_op1_busRouteSeleted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="bottom"
+                            android:text="@string/default_busRoute"
+                            android:textSize="10sp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_busRoute" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintlayout_op1_busStop"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_op1_bus_select"
-            style="@style/Theme.Material.Card_List"
-            android:layout_marginBottom="0dp">
+                        <ImageView
+                            android:id="@+id/imageview_op1_busStop"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@string/op1_directions_subway"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_directions_bus_24dp" />
 
-            <LinearLayout
-                android:id="@+id/linearlayout_op1_bus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="?android:dividerHorizontal"
-                android:orientation="vertical"
-                android:showDividers="middle">
+                        <TextView
+                            android:id="@+id/textview_op1_busStop"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="bottom"
+                            android:text="@string/op1_busStop"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_busStop" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintlayout_op1_busRoute"
+                        <TextView
+                            android:id="@+id/textview_op1_busStopSelected"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="bottom"
+                            android:text="@string/default_busStop"
+                            android:textSize="10sp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageview_op1_busStop" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_op1_busResult"
+                style="@style/Theme.Material.Card_List"
+                android:layout_marginBottom="0dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_op1_busResult"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.card.MaterialCardView>
 
-                    <ImageView
-                        android:id="@+id/imageview_op1_busRoute"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="@string/op1_directions_subway"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_directions_bus_24dp" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_op1_subway_result"
+                style="@style/Theme.Material.Card_List"
+                android:layout_marginBottom="0dp">
 
-                    <TextView
-                        android:id="@+id/textview_op1_busRoute"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="bottom"
-                        android:text="@string/op1_busRoute"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_busRoute" />
-
-                    <TextView
-                        android:id="@+id/textview_op1_busRouteSeleted"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="bottom"
-                        android:text="@string/default_busRoute"
-                        android:textSize="10sp"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_busRoute" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintlayout_op1_busStop"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_op1_subway_result"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.card.MaterialCardView>
 
-                    <ImageView
-                        android:id="@+id/imageview_op1_busStop"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="@string/op1_directions_subway"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_directions_bus_24dp" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_op1_subway_result2"
+                style="@style/Theme.Material.Card_List"
+                android:layout_marginBottom="0dp">
 
-                    <TextView
-                        android:id="@+id/textview_op1_busStop"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="bottom"
-                        android:text="@string/op1_busStop"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_busStop" />
-
-                    <TextView
-                        android:id="@+id/textview_op1_busStopSelected"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="bottom"
-                        android:text="@string/default_busStop"
-                        android:textSize="10sp"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageview_op1_busStop" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_op1_busResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_op1_busResult"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_op1_subway_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_op1_subway_result"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_op1_subway_result2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

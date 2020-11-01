@@ -116,8 +116,10 @@ public class frag1 extends Fragment {
                         // recyclerView에 부착하는건 메인 Thread에서만 가능하다
                         getActivity().runOnUiThread(() -> {
                             binding.recyclerviewOp1SubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
-                            final frag1.RecyclerViewAdapterSubwayResult adapter = new frag1.RecyclerViewAdapterSubwayResult(arrivalList);
+                            final RecyclerViewAdapterSubwayResult adapter = new RecyclerViewAdapterSubwayResult(arrivalList);
                             binding.recyclerviewOp1SubwayResult.setAdapter(adapter);
+//                            binding.recyclerviewOp1SubwayResult2.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                            binding.recyclerviewOp1SubwayResult2.setAdapter(adapter);
                         });
                     };
 
@@ -285,7 +287,7 @@ public class frag1 extends Fragment {
     }
 
     // RecyclerView
-    class RecyclerViewAdapterSubwayResult extends RecyclerView.Adapter<frag1.RecyclerViewAdapterSubwayResult.ViewHolder> {
+    class RecyclerViewAdapterSubwayResult extends RecyclerView.Adapter<RecyclerViewAdapterSubwayResult.ViewHolder> {
         private List<SubwayApiThread.SubwayArrival> arrivalList;
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -303,14 +305,14 @@ public class frag1 extends Fragment {
 
         @NonNull
         @Override
-        public frag1.RecyclerViewAdapterSubwayResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public RecyclerViewAdapterSubwayResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             RecyclerviewItemSubwayArrivalBinding binding = RecyclerviewItemSubwayArrivalBinding.
                     inflate(LayoutInflater.from(parent.getContext()), parent, false);
-            return new frag1.RecyclerViewAdapterSubwayResult.ViewHolder(binding);
+            return new RecyclerViewAdapterSubwayResult.ViewHolder(binding);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull frag1.RecyclerViewAdapterSubwayResult.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerViewAdapterSubwayResult.ViewHolder holder, int position) {
             holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setText(getString(R.string.recyclerview_item_subway_arrival_title, arrivalList.get(position).getCurrentLocation()));
             holder.binding.textViewRecyclerviewItemSubwayArrivalTitle.setTextSize(12);
             int arrivalTime = arrivalList.get(position).getArrivalTime();
