@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Material">
+    android:theme="@style/Theme.Material"
+    android:background="@color/colorOnBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_main"

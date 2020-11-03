@@ -17,8 +17,6 @@ import com.bixiri.gproject.database.wolprofile.WolProfileEntity;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {MenuEntity.class, SubwayStationEntity.class, BusStopEntity.class, WolProfileEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -38,12 +36,12 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.sharedPreferences_name), Activity.MODE_PRIVATE);
 
-            final Migration MIGRATION_1_2 = new Migration(1, 2) {
-                @Override
-                public void migrate(SupportSQLiteDatabase database) {
-                    database.execSQL("CREATE TABLE `WolProfileEntity` (`name` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `macAddress` INTEGER NOT NULL, `ipAddress` INTEGER NOT NULL, `port` INTEGER NOT NULL, PRIMARY KEY(`name`))");
-                }
-            };
+//            final Migration MIGRATION_1_2 = new Migration(1, 2) {
+//                @Override
+//                public void migrate(SupportSQLiteDatabase database) {
+//                    database.execSQL("CREATE TABLE `WolProfileEntity` (`name` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `macAddress` INTEGER NOT NULL, `ipAddress` INTEGER NOT NULL, `port` INTEGER NOT NULL, PRIMARY KEY(`name`))");
+//                }
+//            };
 
             // 어플리케이션 최초 실행시에만 외부 DB를 가져온다
             if (pref.getBoolean("firstDB", true)) {

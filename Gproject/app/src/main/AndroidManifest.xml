@@ -47,6 +47,7 @@
             android:required="false" />
 
         <activity android:name=".ActLocation" />
+        <activity android:name=".PlaceinfoActivity" />
         <activity
             android:name="com.bixiri.gproject.TimeTable2"
             android:theme="@android:style/Theme.Dialog" />
