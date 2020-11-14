@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!-- This is a sample actions.xml -->
+<actions>
+    <action intentName="actions.intent.GET_SERVICE_OBSERVATION">
+
+        <!-- Provide a fallback fulfillment with no required parameters. For example, to your app search or router deeplink -->
+        <fulfillment urlTemplate="test://example" />
+    </action>
+</actions>

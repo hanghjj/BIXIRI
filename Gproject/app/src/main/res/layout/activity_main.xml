@@ -15,20 +15,7 @@
         android:layout_above="@+id/bottomNavigation"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:id="@+id/Appname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/apple"
-            android:gravity="center_horizontal"
-            android:text="BIXIRI"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="30sp" />
-
-    </FrameLayout>
+        android:layout_alignParentEnd="true"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

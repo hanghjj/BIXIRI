@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">Gproject</string>
+    <string name="app_name">BIXIRI</string>
     <string name="content_description">test</string>
+    <string name="main_button_time">시간표 설정</string>
+    <string name="main_button_map">맛집 탐색</string>
+    <string name="main_textview_subway_arrival">지하철 도착시간</string>
+    <string name="main_textview_bus_arrival">버스 도착시간</string>
+    <string name="main_textview_menu">식단</string>
+    <string name="main_textview_weather">날씨</string>
+    <string name="main_textview_wol">컴퓨터 원격 켜기</string>
+    <string name="recyclerview_item_arrival">%s: %s 후 도착</string>
+    <string name="recyclerview_item_menu">%s: %s</string>
     <string name="op1_toolbar_title">대중교통 도착시간</string>
     <string name="op1_departure_station">출발역</string>
     <string name="op1_arrival_station">도착역</string>
@@ -39,4 +48,5 @@
     <string name="info2">서울시 이외의 역구간은 미제공 됩니다. (예. 광명, 서동탄, 춘천 등)</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
