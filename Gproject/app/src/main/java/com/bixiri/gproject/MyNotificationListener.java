@@ -1,7 +1,7 @@
 package com.bixiri.gproject;
 
 import android.app.Notification;
-import android.os.Bundle;
+import android.os.Build;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.speech.tts.TextToSpeech;
@@ -9,29 +9,59 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import androidx.annotation.RequiresApi;
+
 public class MyNotificationListener extends NotificationListenerService {
-    private String mContent;
-    private TextToSpeech textToSpeech;
+    private CharSequence mContent;
+    private TextToSpeech ttsKOR;
+    private TextToSpeech ttsENG;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+        ttsKOR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                textToSpeech.setLanguage(Locale.KOREAN);
+                ttsKOR.setLanguage(Locale.KOREAN);
+            }
+        });
+
+        ttsENG = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                ttsENG.setLanguage(Locale.ENGLISH);
             }
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-        Bundle extras = sbn.getNotification().extras;
-        String title = extras.getString(Notification.EXTRA_TITLE);
-        CharSequence text = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
-        CharSequence subText = extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
-        Log.d("test", text.toString());
-        textToSpeech.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null);
+        String pkg = sbn.getOpPkg();
+        if (!pkg.isEmpty()) {
+            Log.d(pkg, pkg);
+        }
+
+        switch (sbn.getOpPkg()) {
+            case "com.android.systemui":
+                String tag = sbn.getTag();
+                Log.d(tag, tag);
+                break;
+            case "com.Slack":
+                mContent = sbn.getNotification().extras.getCharSequence(Notification.EXTRA_TEXT);
+                runTTS(ttsENG, mContent.toString());
+                break;
+//            case "com.kakao.talk":
+            default:
+                mContent = sbn.getNotification().extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
+                if (mContent != null)
+                    runTTS(ttsKOR, mContent.toString());
+                break;
+        }
+    }
+
+    void runTTS(TextToSpeech tts, String text) {
+        tts.speak(text, TextToSpeech.QUEUE_ADD, null,"TTSNotification");
     }
 }
