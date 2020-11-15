@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         if (!permissionGrantred())
             startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
 
@@ -144,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         }
 //        super.onBackPressed();
     }
-
     private boolean permissionGrantred() {
         Set<String> sets = NotificationManagerCompat.getEnabledListenerPackages(this);
         if (sets != null && sets.contains(getPackageName())) {

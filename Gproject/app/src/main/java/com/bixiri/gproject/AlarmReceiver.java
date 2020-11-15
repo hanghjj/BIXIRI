@@ -4,13 +4,13 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.speech.tts.TextToSpeech;
 import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -32,15 +32,12 @@ import androidx.core.app.NotificationCompat;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
-<<<<<<< Updated upstream
+    Context context1;
     TextToSpeech tts;
 
-=======
-    Context context1;
->>>>>>> Stashed changes
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v("알람", "클래스 진입");
+        Log.v("알람","클래스 진입");
         AppDatabase db = AppDatabase.getInstance(context);
         AppSharedPreference pref = AppSharedPreference.getInstance(context);
 
@@ -143,22 +140,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 busApiThread.start();
             }
         }
-
         if (requestCode == 0 || requestCode == 3) {
             String op3T = intent.getStringExtra("AVGT");
             String op3U = intent.getStringExtra("UmborNot");
-            String op3F = intent.getStringExtra("TodayF");
+            String op3F = intent.getStringExtra("TodayF");;
 
-<<<<<<< Updated upstream
-            if (op3T != null) {
-                sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T + "\n\n오늘의 의상 추천 " + op3F + op3U);
-            }
-=======
             if(op3T != null)
             sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U,3);
 
 
->>>>>>> Stashed changes
         }
 
     }

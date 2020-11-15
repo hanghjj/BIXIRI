@@ -82,7 +82,6 @@
         <receiver
             android:name="com.bixiri.gproject.AlarmReceiver"
             android:enabled="true" />
-
         <service
             android:name=".MyNotificationListener"
             android:label="My Notification Listener"
