@@ -3,12 +3,19 @@ package com.bixiri.gproject;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+<<<<<<< Updated upstream
+=======
+
+import android.util.Log;
+>>>>>>> Stashed changes
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,16 +162,25 @@ public class frag3 extends Fragment {
                         editor.apply();
                         //시간 설정
                         Calendar alarmTime = Calendar.getInstance();
+<<<<<<< Updated upstream
                         Calendar test = Calendar.getInstance();
                         int today = Calendar.DAY_OF_YEAR;
                         alarmTime.set(Calendar.DAY_OF_YEAR, today);
                         if (Calendar.HOUR_OF_DAY <= sethour && Calendar.MINUTE < setmin)
                             alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+=======
+>>>>>>> Stashed changes
                         alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
                         alarmTime.set(Calendar.MINUTE, setmin);
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
+                        if (alarmTime.before(Calendar.getInstance()))
+                            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+                        Log.v("알람", "설정시간 :".concat(String.valueOf(alarmTime.getTimeInMillis())));
+                        Log.v("알람", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                         accessNotiM(alarmTime);
 
+<<<<<<< Updated upstream
                         // 시작할 인텐트 지정
                         //if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
                         Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
@@ -185,11 +201,44 @@ public class frag3 extends Fragment {
                             }
                         }
                         binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY) + "시" + test.get(Calendar.MINUTE) + "분");
+=======
+
+
+                       binding.showsettext.setText("설정한 시간 : "+alarmTime.get(Calendar.HOUR_OF_DAY) + "시 " +alarmTime.get(Calendar.MINUTE) +
+                               "분 \n 현재시간은 " + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+"시"+Calendar.getInstance().get(Calendar.MINUTE)+"분");
+>>>>>>> Stashed changes
                     }
-                }, sethour, setmin, false);
+                }, sethour, setmin, true);
                 timePickerDialog.show();
             }
         });
+<<<<<<< Updated upstream
+=======
+
+
+    }
+    void accessNotiM(Calendar c){
+        Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
+        alarmIntent.putExtra("requestCode",3);
+        alarmIntent.putExtra("AVGT",AvgT);
+        alarmIntent.putExtra("UmborNot",UmborNot);
+        alarmIntent.putExtra("TodayF",TodayF);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), 3, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(c.getTimeInMillis(),pendingIntent);
+        if (alarmManager != null) {
+            // 버전에 따라 다르게 구현
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.v("알람","if문");
+            //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                alarmManager.setAlarmClock(ac,pendingIntent);
+            }else { Log.v("알람","else 문 ");
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
+>>>>>>> Stashed changes
     }
 }
 
