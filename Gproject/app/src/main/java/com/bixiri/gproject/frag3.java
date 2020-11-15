@@ -3,17 +3,26 @@ package com.bixiri.gproject;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 
 import com.bixiri.gproject.databinding.ActivityOption3Binding;
 
@@ -26,13 +35,9 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 
-
-public class frag3 extends Fragment {
+public class frag3 extends Fragment
+{
     private View view;
     private ActivityOption3Binding binding; // View Binding
     String[] AvF = {"패딩\n 두꺼운 코트\n 목도리\n + 기모제품",
@@ -51,8 +56,9 @@ public class frag3 extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = ActivityOption3Binding.inflate(inflater, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        binding = ActivityOption3Binding.inflate(inflater,container,false);
         view = binding.getRoot();
         return view;
 
@@ -92,8 +98,8 @@ public class frag3 extends Fragment {
                 StringTokenizer Rtoken = new StringTokenizer(rain_text);
                 String MornRR = Rtoken.nextToken(" ");
                 String AftRR = Rtoken.nextToken(" ");
-                binding.morningRainRate.setText(MornRR + "%");
-                binding.AfternoonRainRate.setText(AftRR + "%");
+                binding.morningRainRate.setText(MornRR+"%");
+                binding.AfternoonRainRate.setText(AftRR+"%");
                 //온도 측정
                 String text = temp_contents.text();
                 text = text.replace("˚", " ");
@@ -102,48 +108,38 @@ public class frag3 extends Fragment {
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
                 double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
-                AvgT = String.format("%.1f", averageT) + "˚C";
+                AvgT = String.format("%.1f",averageT) + "˚C";
                 binding.averageT.setText(AvgT);
                 //옷차림 정하기
-                if (averageT <= 4) {
-                    binding.fashion.setText(AvF[0]);
-                    TodayF = AvF[0];
-                } else if (averageT >= 5 && averageT <= 8) {
-                    binding.fashion.setText(AvF[1]);
-                    TodayF = AvF[1];
-                } else if (averageT >= 9 && averageT <= 11) {
-                    binding.fashion.setText(AvF[2]);
-                    TodayF = AvF[2];
-                } else if (averageT >= 12 && averageT <= 16) {
-                    binding.fashion.setText(AvF[3]);
-                    TodayF = AvF[3];
-                } else if (averageT >= 17 && averageT <= 19) {
-                    binding.fashion.setText(AvF[4]);
-                    TodayF = AvF[4];
-                } else if (averageT >= 20 && averageT <= 22) {
-                    binding.fashion.setText(AvF[5]);
-                    TodayF = AvF[5];
-                } else if (averageT >= 23 && averageT <= 27) {
-                    binding.fashion.setText(AvF[6]);
-                    TodayF = AvF[6];
-                } else {
-                    binding.fashion.setText(AvF[7]);
-                    TodayF = AvF[7];
-                }
+                if (averageT <= 4) {binding.fashion.setText(AvF[0]); TodayF = AvF[0];}
+                else if (averageT >= 5 && averageT <= 8) {binding.fashion.setText(AvF[1]);TodayF = AvF[1];}
+                else if (averageT >= 9 && averageT <= 11) {binding.fashion.setText(AvF[2]);TodayF = AvF[2];}
+                else if (averageT >= 12 && averageT <= 16) {binding.fashion.setText(AvF[3]);TodayF = AvF[3];}
+                else if (averageT >= 17 && averageT <= 19){ binding.fashion.setText(AvF[4]);TodayF = AvF[4];}
+                else if (averageT >= 20 && averageT <= 22) {binding.fashion.setText(AvF[5]);TodayF = AvF[5];}
+                else if (averageT >= 23 && averageT <= 27) {binding.fashion.setText(AvF[6]);TodayF = AvF[6];}
+                else {binding.fashion.setText(AvF[7]);     TodayF = AvF[7];}
 
                 //우산 여부
-                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60) {
+                if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60){
                     binding.hidegetUmb.setBackgroundColor(Color.parseColor("#00000000"));
                     UmborNot = "\n우산 챙기는 날입니다.";
-                } else binding.umbguide.setText(UmborNot);
+                }
+                else binding.umbguide.setText(UmborNot);
+
+
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }).start();
 
         binding.settimepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
@@ -155,41 +151,50 @@ public class frag3 extends Fragment {
                         editor.apply();
                         //시간 설정
                         Calendar alarmTime = Calendar.getInstance();
-                        Calendar test = Calendar.getInstance();
-                        int today = Calendar.DAY_OF_YEAR;
-                        alarmTime.set(Calendar.DAY_OF_YEAR, today);
-                        if (Calendar.HOUR_OF_DAY <= sethour && Calendar.MINUTE < setmin)
-                            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
                         alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
                         alarmTime.set(Calendar.MINUTE, setmin);
                         alarmTime.set(Calendar.SECOND, 0);
                         alarmTime.set(Calendar.MILLISECOND, 0);
+                        if (alarmTime.before(Calendar.getInstance()))
+                            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+                        Log.v("알람", "설정시간 :".concat(String.valueOf(alarmTime.getTimeInMillis())));
+                        Log.v("알람", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                         accessNotiM(alarmTime);
 
-                        // 시작할 인텐트 지정
-                        //if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
-                        Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
-                        alarmIntent.putExtra("requestCode", 3);
-                        alarmIntent.putExtra("AVGT", AvgT);
-                        alarmIntent.putExtra("UmborNot", UmborNot);
-                        alarmIntent.putExtra("TodayF", TodayF);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), 3, alarmIntent, 0);
-                        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(Context.ALARM_SERVICE);
 
-                        if (alarmManager != null) {
-                            // 버전에 따라 다르게 구현
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
-                            } else {
-                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(),
-                                        AlarmManager.INTERVAL_DAY, pendingIntent);
-                            }
-                        }
-                        binding.showsettext.setText("설정한 시간 : " + sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY) + "시" + test.get(Calendar.MINUTE) + "분");
+
+                       binding.showsettext.setText("설정한 시간 : "+alarmTime.get(Calendar.HOUR_OF_DAY) + "시 " +alarmTime.get(Calendar.MINUTE) +
+                               "분 \n 현재시간은 " + Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+"시"+Calendar.getInstance().get(Calendar.MINUTE)+"분");
                     }
-                }, sethour, setmin, false);
+                }, sethour, setmin, true);
                 timePickerDialog.show();
+
             }
         });
+
+
+    }
+    void accessNotiM(Calendar c){
+        Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
+        alarmIntent.putExtra("requestCode",3);
+        alarmIntent.putExtra("AVGT",AvgT);
+        alarmIntent.putExtra("UmborNot",UmborNot);
+        alarmIntent.putExtra("TodayF",TodayF);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), 3, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(c.getTimeInMillis(),pendingIntent);
+        if (alarmManager != null) {
+            // 버전에 따라 다르게 구현
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.v("알람","if문");
+            //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                alarmManager.setAlarmClock(ac,pendingIntent);
+            }else { Log.v("알람","else 문 ");
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
     }
 }
 

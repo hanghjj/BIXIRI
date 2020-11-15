@@ -1,12 +1,22 @@
 package com.bixiri.gproject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -34,7 +44,7 @@ import noman.googleplaces.PlacesListener;
 import noman.googleplaces.Place;
 import noman.googleplaces.PlacesException;
 
-public class ActLocation extends AppCompatActivity implements PlacesListener, OnMapReadyCallback {
+public class ActLocation extends AppCompatActivity implements PlacesListener, OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback {
     private ActivityLocationBinding binding;
     private gpsTracker tracker;
     String exactadd; //주석처리된 부분을 위한 변수
@@ -45,7 +55,7 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
     List<Marker> previous_marker = new ArrayList<>();
     HashMap<String,String> pinfo = new HashMap<String,String>();
     private GoogleMap map;
-
+    String[] locationP = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +63,8 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
         binding = ActivityLocationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //뷰 바인딩 끝
+        if(!ispermitted());//Dialogsetting();
+        else checkpermission();
 
         SupportMapFragment mapF = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapF.getMapAsync(this);
@@ -63,6 +75,7 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
         lati = tracker.getLatitude();
         longi = tracker.getLongitude();
         LatLng currentPosition = new LatLng(lati,longi);
+        binding.findrest.setText("반경 500M 이내의 음식점 탐색");
         binding.findrest.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -191,6 +204,62 @@ public class ActLocation extends AppCompatActivity implements PlacesListener, On
             }else{
                 Address address = geoResult.get(0);
                 return address.getAddressLine(0).toString();
+            }
+        }
+        public void checkpermission(){
+            int fineP = ContextCompat.checkSelfPermission(ActLocation.this, Manifest.permission.ACCESS_FINE_LOCATION);
+            int coarseP =  ContextCompat.checkSelfPermission(ActLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if(fineP == PackageManager.PERMISSION_GRANTED&&coarseP==PackageManager.PERMISSION_GRANTED){}
+            else{
+                if(ActivityCompat.shouldShowRequestPermissionRationale(ActLocation.this,locationP[0])
+                        ||ActivityCompat.shouldShowRequestPermissionRationale(ActLocation.this,locationP[1]))
+                {
+                    ActivityCompat.requestPermissions(ActLocation.this,locationP,100);
+                }
+                else{
+                    ActivityCompat.requestPermissions(ActLocation.this,locationP,100);
+                }
+            }
+        }
+        /*private void Dialogsetting(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(ActLocation.this);
+            builder.setTitle("위치 서비스 비활성화");
+            builder.setMessage("이 기능을 사용하려면 위치 서비스가 필요합니다.");
+            builder.setCancelable(true);
+            builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent settingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(settingIntent,100);
+                    Log.v("알람","위치 서비스 확인 버튼 누름");
+                }
+            });
+            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.create().show();
+        }*/
+        public boolean ispermitted(){
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grandResults){
+            if(requestCode==100&&grandResults.length==locationP.length){
+                boolean checked = true;
+                for(int result:grandResults){
+                    if(result!=PackageManager.PERMISSION_GRANTED){
+                        checked = false;
+                        break;
+                    }
+                }
+                if(checked){
+                    Toast.makeText(this,"기능을 다시 실행시켜주세요.",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         }
 /*

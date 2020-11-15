@@ -1,6 +1,5 @@
 package com.bixiri.gproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -13,10 +12,8 @@ import com.bixiri.gproject.thread.MenuCrawlingThread;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 /*
@@ -51,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        if (!permissionGrantred())
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
 
         // 미리 fragment 생성해놓고 버튼 누를시에 교체
         mainfrag = new mainfrag();
@@ -143,14 +137,5 @@ public class MainActivity extends AppCompatActivity {
             toast.cancel();
         }
 //        super.onBackPressed();
-    }
-
-    private boolean permissionGrantred() {
-        Set<String> sets = NotificationManagerCompat.getEnabledListenerPackages(this);
-        if (sets != null && sets.contains(getPackageName())) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

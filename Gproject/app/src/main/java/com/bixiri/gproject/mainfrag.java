@@ -82,6 +82,11 @@ public class mainfrag extends Fragment {
             // SubwayApiThread에서 리스트 받아온 이후로 실행할 내용
             Runnable afterRun = () -> {
                 // recyclerView에 부착하는건 메인 Thread에서만 가능하다
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 getActivity().runOnUiThread(() -> {
                     binding.recyclerviewMainSubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
                     final RecyclerViewAdapterSubwayResult adapter = new RecyclerViewAdapterSubwayResult(arrivalList);
@@ -102,6 +107,11 @@ public class mainfrag extends Fragment {
             List<BusApiThread.BusArrival> arrivalList = new ArrayList<>();
 
             Runnable afterRun = () -> {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 getActivity().runOnUiThread(() -> {
                     binding.recyclerviewMainBusResult.setLayoutManager(new LinearLayoutManager(getActivity()));
                     final RecyclerViewAdapterBusResult adapter = new RecyclerViewAdapterBusResult(arrivalList);
@@ -146,7 +156,11 @@ public class mainfrag extends Fragment {
                 menuList.add(new Menu("학생회관", stringBuilder1.toString()));
                 menuList.add(new Menu("교직원식당", stringBuilder2.toString()));
                 menuList.add(new Menu("제2기숙사 식당", stringBuilder3.toString()));
-
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 // Main Thread에서 UI 변경
                 getActivity().runOnUiThread(() -> {
                     binding.recyclerviewMainMenu.setLayoutManager(new LinearLayoutManager(getActivity()));

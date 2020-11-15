@@ -1,13 +1,17 @@
 package com.bixiri.gproject;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bixiri.gproject.database.AppDatabase;
 import com.bixiri.gproject.database.AppSharedPreference;
@@ -16,20 +20,25 @@ import com.bixiri.gproject.thread.SubwayApiThread;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-public class AlarmReceiver extends BroadcastReceiver {
-    TextToSpeech tts;
 
+public class AlarmReceiver extends BroadcastReceiver {
+    Context context1;
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v("알람", "클래스 진입");
+        Log.v("알람","클래스 진입");
         AppDatabase db = AppDatabase.getInstance(context);
         AppSharedPreference pref = AppSharedPreference.getInstance(context);
+
+        context1 = context;
         int requestCode = intent.getIntExtra("requestCode", 0);
         // 학식 메뉴 정보 받아서 푸쉬알림
         if (requestCode == 0 || requestCode == 1) {
@@ -61,9 +70,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                     stringBuilder3.append(menu).append(" ");
                 }
 
-                sendNotification(context, "menu", "학식메뉴", 1, "학생회관", stringBuilder1.toString());
-                sendNotification(context, "menu", "학식메뉴", 2, "교직원식당", stringBuilder2.toString());
-                sendNotification(context, "menu", "학식메뉴", 3, "제2기숙사", stringBuilder3.toString());
+                sendNotification(context, "menu", "학식메뉴", 1, "학생회관", stringBuilder1.toString(),2);
+                sendNotification(context, "menu", "학식메뉴", 2, "교직원식당", stringBuilder2.toString(),2);
+                sendNotification(context, "menu", "학식메뉴", 3, "제2기숙사", stringBuilder3.toString(),2);
             }).start();
         }
 
@@ -94,7 +103,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         sendNotification(context, "subway", "지하철도착정보", index, arrival.getCurrentLocation(),
                                 context.getString(R.string.recyclerview_item_subway_arrival_content1,
                                         arrival.getDestination(),
-                                        arrivalText));
+                                        arrivalText),2);
                         index++;
                     }
                 };
@@ -119,7 +128,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                                         arrival.getBusType(),
                                         arrival.getRerideNum(),
                                         arrival.getTraTime(),
-                                        arrival.getOrdDiff()));
+                                        arrival.getOrdDiff()),2);
                         index++;
                     }
                 };
@@ -128,20 +137,21 @@ public class AlarmReceiver extends BroadcastReceiver {
                 busApiThread.start();
             }
         }
-
         if (requestCode == 0 || requestCode == 3) {
             String op3T = intent.getStringExtra("AVGT");
             String op3U = intent.getStringExtra("UmborNot");
-            String op3F = intent.getStringExtra("TodayF");
+            String op3F = intent.getStringExtra("TodayF");;
 
-            if (op3T != null) {
-                sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T + "\n\n오늘의 의상 추천 " + op3F + op3U);
-            }
+            if(op3T != null)
+            sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U,3);
+
+
         }
+
     }
 
 
-    void sendNotification(Context context, String channelId, String channelName, int id, String title, String text) {
+    void sendNotification(Context context, String channelId, String channelName, int id, String title, String text,int rCode) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //        Intent notificationIntent = new Intent(context, MainActivity.class);
 //        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -157,7 +167,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setSmallIcon(R.drawable.op2_background);
+            builder.setSmallIcon(R.drawable.ic_baseline_home_24);
             NotificationChannel ch = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
 
             if (notificationManager != null) {
@@ -167,6 +177,33 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (notificationManager != null) {
             notificationManager.notify(id, builder.build());
+            Calendar nextNotifyTime = Calendar.getInstance();
+            nextNotifyTime.add(Calendar.MINUTE,30);
+            repeat(nextNotifyTime, rCode);
+        }
+
+    }
+    void repeat(Calendar calendar,int rCode){
+        Log.v("알람","다음 알람 설정 완료");
+        Log.v("알람","설정 시간 : ".concat(String.valueOf(calendar.getTimeInMillis())));
+        Toast.makeText(context1, String.valueOf(calendar.get(Calendar.DATE)).concat("일 ").
+                concat(String.valueOf(calendar.get(Calendar.HOUR))).concat("시 ").
+                concat(String.valueOf(calendar.get(Calendar.MINUTE))).
+                concat("분에 다음 알람이 설정 되었습니다."), Toast.LENGTH_LONG).show();
+        Intent alarmIntent = new Intent(context1, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context1, rCode, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context1.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(),pendingIntent);
+        if (alarmManager != null) {
+            // 버전에 따라 다르게 구현
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.v("알람","if문repeat");
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.setAlarmClock(ac,pendingIntent);
+            }else { Log.v("알람","else 문 ");
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
         }
     }
 }
