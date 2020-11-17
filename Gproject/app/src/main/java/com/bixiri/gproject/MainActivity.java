@@ -19,9 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-/*
-    TODO: 버튼 클릭 시 효과 주기
- */
+// TODO: 버튼 클릭 시 효과 주기, 버튼 눌리는 효과
 
 public class MainActivity extends AppCompatActivity {
     private long backbuttonduration = 0;

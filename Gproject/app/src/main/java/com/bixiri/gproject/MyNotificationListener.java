@@ -34,6 +34,12 @@ public class MyNotificationListener extends NotificationListenerService {
         });
     }
 
+    // TODO: 사용자가 직접 TTS 작동하는 Notification을 설정할 수 있도록
+    // com.samsung.android.incallui
+    // dk.tacit.android.foldersync.lite
+    // com.samsung.android.app.cocktailbarservice
+    // com.samsung.android.dialer
+
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
@@ -55,8 +61,10 @@ public class MyNotificationListener extends NotificationListenerService {
 //            case "com.kakao.talk":
             default:
                 mContent = sbn.getNotification().extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
-                if (mContent != null)
+                if (mContent != null){
+                    Log.d(sbn.getTag(), mContent.toString());
                     runTTS(ttsKOR, mContent.toString());
+                }
                 break;
         }
     }
