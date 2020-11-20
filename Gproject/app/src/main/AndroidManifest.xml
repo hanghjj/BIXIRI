@@ -83,8 +83,6 @@
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true" />
-<<<<<<< Updated upstream
-=======
 
         <service
             android:name=".MyNotificationListener"
@@ -94,7 +92,7 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
->>>>>>> Stashed changes
+
     </application>
 
 </manifest>
