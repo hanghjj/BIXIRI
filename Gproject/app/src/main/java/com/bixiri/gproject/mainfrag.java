@@ -206,17 +206,17 @@ public class mainfrag extends Fragment {
                     String TodayF;
                     if (averageT <= 4) {
                         TodayF = AvF[0];
-                    } else if (averageT >= 5 && averageT <= 8) {
+                    } else if (averageT > 4 && averageT <= 8) {
                         TodayF = AvF[1];
-                    } else if (averageT >= 9 && averageT <= 11) {
+                    } else if (averageT > 8 && averageT <= 11) {
                         TodayF = AvF[2];
-                    } else if (averageT >= 12 && averageT <= 16) {
+                    } else if (averageT > 11 && averageT <= 16) {
                         TodayF = AvF[3];
-                    } else if (averageT >= 17 && averageT <= 19) {
+                    } else if (averageT > 16 && averageT <= 19) {
                         TodayF = AvF[4];
-                    } else if (averageT >= 20 && averageT <= 22) {
+                    } else if (averageT > 19 && averageT <= 22) {
                         TodayF = AvF[5];
-                    } else if (averageT >= 23 && averageT <= 27) {
+                    } else if (averageT > 22 && averageT <= 27) {
                         TodayF = AvF[6];
                     } else {
                         TodayF = AvF[7];

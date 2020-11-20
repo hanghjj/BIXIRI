@@ -98,4 +98,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/settimepicker"
         android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/setA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/settimepicker"
+        android:layout_below="@id/fashion"
+        />
 </RelativeLayout>

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private frag3 frag3;
     private frag4 frag4;
     private mainfrag mainfrag;
-
     private boolean loadF(Fragment f) {
         if (f != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, f).commit();

@@ -95,21 +95,6 @@
         android:textColor="#000000"
         />
 
-    <Button
-        android:id="@+id/settimepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/getUmb"
-        android:text="시간 설정"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-    <TextView
-        android:id="@+id/showsettext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/settimepicker"
-        android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/umbguide"
@@ -121,5 +106,11 @@
         android:textColor="#000000"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
+        />
+    <Button
+        android:id="@+id/setA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fashion"
         />
 </RelativeLayout>

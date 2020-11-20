@@ -18,6 +18,8 @@ public class TimeTable2 extends Activity {
     public static Context context;
     public final int[] finishtime = new int[5];
     public final int[] mealtime = new int [5];
+    public final int[] starttime = {-1,-1,-1,-1,-1};
+    public final String[] startstring = new String[5];
     public final String[] finishstring = new String[5];
     public final String[] mealstring = new String[5];
     public int onoff;
@@ -89,27 +91,42 @@ public class TimeTable2 extends Activity {
         });
 
 
-        //수정가능/불가 상태 구현
-        binding.complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.clickable.setClickable(true);
-                onoff = 0;
-                ed.putInt("onoff",onoff);
-                ed.apply();
-            }
-        });
-        binding.change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.clickable.setClickable(false);
-                onoff = 1;
-                ed.putInt("onoff",onoff);
-                ed.apply();
-            }
-        });
 
 
+        //시작하는 시간 구하기
+        for(int i=6; i<title.length; i++){
+            if(title[i].equals("수업")){
+                switch (i%5){
+                    case 0:
+                        if(starttime[0]==-1)
+                        starttime[0] = i/5+8;
+                        break;
+                    case 1:
+                        if(starttime[1]==-1)
+                            starttime[1] = i/5+8;
+                        break;
+                    case 2:
+                        if(starttime[2]==-1)
+                            starttime[2] = i/5+8;
+                        break;
+                    case 3:
+                        if(starttime[3]==-1)
+                            starttime[3] = i/5+8;
+                        break;
+                    case 4:
+                        if(starttime[4]==-1)
+                            starttime[4] = i/5+8;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        for(int i=0; i<5; i++){
+            if(starttime[i]==-1)
+                startstring[i] = "공강";
+            else startstring[i] = String.valueOf(starttime[i]);
+        }
         //끝나는 시간 구하기
         for(int i=6; i<title.length; i++){
             if(title[i].equals("수업")){
@@ -141,6 +158,7 @@ public class TimeTable2 extends Activity {
             else finishstring[i] = Integer.toString(finishtime[i]);
         }
         //finishtime에 끝나는 시간 저장[월,화,수,목,금]
+
         //mealtime 구하기
         int mon =5,tue=6,wed=7,thu=8,fri=9,
                 monmin=999,monfirst=0,
@@ -226,8 +244,31 @@ public class TimeTable2 extends Activity {
               if(finishstring[i].equals("공강")) mealstring[i] = "공강";
 
           }
-          binding.textView.setText("식사 시간 : \n" + mealstring[0]+"\n"+mealstring[1]+"\n"+mealstring[2]+"\n"+mealstring[3]+"\n"+mealstring[4]+"\n"+
+          binding.textView.setText("시작 시간 : \n".concat(startstring[0] +"\n").concat(startstring[1] +"\n").concat(startstring[2] +"\n").concat(startstring[3] +"\n").concat(startstring[4] +"\n")+
+                  "식사 시간 : \n" + mealstring[0]+"\n"+mealstring[1]+"\n"+mealstring[2]+"\n"+mealstring[3]+"\n"+mealstring[4]+"\n"+
                             "하교 시간 : \n" + finishstring[0] +"\n"+ finishstring[1]+"\n"+finishstring[2]+"\n"+finishstring[3]+"\n"+finishstring[4]);
+        //수정가능/불가 상태 구현
+        binding.complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.clickable.setClickable(true);
+                onoff = 0;
+                ed.putInt("onoff",onoff);
+                for(int i=0;i<5;i++){
+                    if(starttime[i]!=-1)
+                    ed.putInt("start".concat(Integer.toString(i)),starttime[i]);
+                }
+                ed.apply();            }
+        });
+        binding.change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.clickable.setClickable(false);
+                onoff = 1;
+                ed.putInt("onoff",onoff);
+                ed.apply();
+            }
+        });
         binding.ReturnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

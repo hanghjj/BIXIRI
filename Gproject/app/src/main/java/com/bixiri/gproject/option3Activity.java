@@ -66,7 +66,6 @@ public class option3Activity extends AppCompatActivity {
         setmin = sharepref.getInt("op3min", 0);
         //선언 및 변수 로드
 
-        binding.showsettext.setText("설정한 시간 = " + sethour + "시 " + setmin + "분 ");
         new Thread(() -> {
             try {
                 Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%82%A0%EC%94%A8").get();
@@ -114,53 +113,6 @@ public class option3Activity extends AppCompatActivity {
         }).start();
 
         context = this;
-        binding.settimepicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(option3Activity.this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.M)
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        sethour = view.getHour();
-                        setmin = view.getMinute();
-                        editor.putInt("op3hour", sethour);
-                        editor.putInt("op3min", setmin);
-                        editor.apply();
-                        //시간 설정
-                        Calendar alarmTime = Calendar.getInstance();
-                        Calendar test = Calendar.getInstance();
-                        int today = Calendar.DAY_OF_YEAR;
-                        alarmTime.set(Calendar.DAY_OF_YEAR,today);
-                        if(Calendar.HOUR_OF_DAY<=sethour&&Calendar.MINUTE<setmin)
-                            alarmTime.add(Calendar.DAY_OF_YEAR,1);
-                        alarmTime.set(Calendar.HOUR_OF_DAY, sethour);
-                        alarmTime.set(Calendar.MINUTE, setmin);
-                        alarmTime.set(Calendar.SECOND, 0);
-                        alarmTime.set(Calendar.MILLISECOND, 0);
-                        // 시작할 인텐트 지정
-                      //  if(test.get(Calendar.HOUR_OF_DAY)<=sethour&&test.get(Calendar.MINUTE)<=setmin){
-                        Intent alarmIntent = new Intent(option3Activity.this, AlarmReceiver.class);
-                        alarmIntent.putExtra("requestCode",3);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(option3Activity.this, 3, alarmIntent, 0);
-                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                        if (alarmManager != null) {
-                            // 버전에 따라 다르게 구현
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
-                            } else {
-                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(),
-                                        AlarmManager.INTERVAL_DAY, pendingIntent);
-                            }
-                        }
-                    //}
-                        binding.showsettext.setText("설정한 시간 : "+sethour + "시 " + setmin + "분 \n 현재시간은 " + test.get(Calendar.HOUR_OF_DAY)+"시"+test.get(Calendar.MINUTE)+"분");
-                    }
-                }, sethour, setmin, false);
-                timePickerDialog.show();
-
-            }
-        });
 
 
         /* 뒤로가기 버튼

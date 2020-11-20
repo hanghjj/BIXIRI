@@ -3,11 +3,9 @@ package com.bixiri.gproject;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +24,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bixiri.gproject.databinding.ActivityOption3Binding;
+import com.bixiri.gproject.fragment.dialog.WolProfileDialogFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,8 +32,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.StringTokenizer;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class frag3 extends Fragment
@@ -53,7 +54,6 @@ public class frag3 extends Fragment
     String AvgT;
     String UmborNot = "      우산 X";
     String TodayF;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -80,12 +80,20 @@ public class frag3 extends Fragment
         binding.fashionGuide.setText("옷차림 추천");
         //알람 시간 관련 shaF
 
-        SharedPreferences sharepref = this.getActivity().getSharedPreferences("op3Time", context.MODE_PRIVATE);
+        SharedPreferences sharepref = this.getActivity().getSharedPreferences("op3Time", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharepref.edit();
+        SharedPreferences timepref = this.getActivity().getSharedPreferences("test", MODE_PRIVATE);
+        SharedPreferences.Editor timeed = timepref.edit();
+        int[] starttime  = new int[5];
+        for(int i=0;i<5;i++) {
+            starttime[i] = timepref.getInt("start".concat(Integer.toString(i)),-1);
+            if(starttime[i]!=-1)
+            starttime[i]-=1;
+        }
+
         sethour = sharepref.getInt("op3hour", 6);
         setmin = sharepref.getInt("op3min", 0);
         //선언 및 변수 로드
-        binding.showsettext.setText("설정한 시간 = " + sethour + "시 " + setmin + "분 ");
 
         new Thread(() -> {
             try {
@@ -112,12 +120,12 @@ public class frag3 extends Fragment
                 binding.averageT.setText(AvgT);
                 //옷차림 정하기
                 if (averageT <= 4) {binding.fashion.setText(AvF[0]); TodayF = AvF[0];}
-                else if (averageT >= 5 && averageT <= 8) {binding.fashion.setText(AvF[1]);TodayF = AvF[1];}
-                else if (averageT >= 9 && averageT <= 11) {binding.fashion.setText(AvF[2]);TodayF = AvF[2];}
-                else if (averageT >= 12 && averageT <= 16) {binding.fashion.setText(AvF[3]);TodayF = AvF[3];}
-                else if (averageT >= 17 && averageT <= 19){ binding.fashion.setText(AvF[4]);TodayF = AvF[4];}
-                else if (averageT >= 20 && averageT <= 22) {binding.fashion.setText(AvF[5]);TodayF = AvF[5];}
-                else if (averageT >= 23 && averageT <= 27) {binding.fashion.setText(AvF[6]);TodayF = AvF[6];}
+                else if (averageT > 4 && averageT <= 8) {binding.fashion.setText(AvF[1]);TodayF = AvF[1];}
+                else if (averageT > 8 && averageT <= 11) {binding.fashion.setText(AvF[2]);TodayF = AvF[2];}
+                else if (averageT > 11 && averageT <= 16) {binding.fashion.setText(AvF[3]);TodayF = AvF[3];}
+                else if (averageT > 16 && averageT <= 19){ binding.fashion.setText(AvF[4]);TodayF = AvF[4];}
+                else if (averageT > 19 && averageT <= 22) {binding.fashion.setText(AvF[5]);TodayF = AvF[5];}
+                else if (averageT > 22 && averageT <= 27) {binding.fashion.setText(AvF[6]);TodayF = AvF[6];}
                 else {binding.fashion.setText(AvF[7]);     TodayF = AvF[7];}
 
                 //우산 여부
@@ -135,8 +143,40 @@ public class frag3 extends Fragment
             }
 
         }).start();
-
-        binding.settimepicker.setOnClickListener(new View.OnClickListener() {
+        binding.setA.setText("평일 알람 설정");
+        binding.setA.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String text=" ";
+                String[] days ={"월요일","화요일","수요일","목요일","금요일"};
+                Calendar[] alarmTime = new Calendar[5];
+                for(int i = 0;i<5;i++){
+                    alarmTime[i] = Calendar.getInstance();
+                }
+                for(int i = 2;i<7;i++){
+                    alarmTime[i-2].set(Calendar.DAY_OF_WEEK,i);
+                    if(starttime[i-2] != -1){
+                        alarmTime[i-2].set(Calendar.HOUR_OF_DAY,starttime[i-2]);
+                        alarmTime[i-2].set(Calendar.MINUTE, 0);
+                        alarmTime[i-2].set(Calendar.SECOND, 0);
+                        alarmTime[i-2].set(Calendar.MILLISECOND, 0);
+                    }
+                    else alarmTime[i-2].set(Calendar.YEAR,1970);
+                }
+                for(int i = 2;i<7;i++){
+                    if (alarmTime[i-2].before(Calendar.getInstance())&&alarmTime[i-2].get(Calendar.DAY_OF_WEEK)==Calendar.getInstance().get(Calendar.DAY_OF_WEEK)||alarmTime[i-2].get(Calendar.DAY_OF_MONTH)<Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+                        alarmTime[i-2].add(Calendar.DAY_OF_MONTH, 7);
+                }
+                for(int i =0;i<5;i++){
+                    if(alarmTime[i].get(Calendar.YEAR)!=1970){
+                        accessNotiM(alarmTime[i],alarmTime[i].get(Calendar.DAY_OF_WEEK));
+                        text = text.concat(alarmTime[i].get(Calendar.DAY_OF_MONTH)+"일 "+days[i]+" "+alarmTime[i].get(Calendar.HOUR)+"시에 알람이 예약되었습니다.\n");
+                    }
+                }
+                Toast.makeText(getContext(),text,Toast.LENGTH_LONG).show();
+            }
+        });
+       /* binding.settimepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -159,7 +199,7 @@ public class frag3 extends Fragment
                             alarmTime.add(Calendar.DAY_OF_YEAR, 1);
                         Log.v("알람", "설정시간 :".concat(String.valueOf(alarmTime.getTimeInMillis())));
                         Log.v("알람", String.valueOf(Calendar.getInstance().getTimeInMillis()));
-                         accessNotiM(alarmTime);
+                         accessNotiM(alarmTime,3);
 
 
 
@@ -172,22 +212,22 @@ public class frag3 extends Fragment
             }
         });
 
-
+*/
     }
-    void accessNotiM(Calendar c){
+    void accessNotiM(Calendar c,int day){
         Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
         alarmIntent.putExtra("requestCode",3);
-        alarmIntent.putExtra("AVGT",AvgT);
+        alarmIntent.putExtra("day",day);
+        alarmIntent.putExtra("AvgT",AvgT);
         alarmIntent.putExtra("UmborNot",UmborNot);
         alarmIntent.putExtra("TodayF",TodayF);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), 3, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), day, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(c.getTimeInMillis(),pendingIntent);
         if (alarmManager != null) {
             // 버전에 따라 다르게 구현
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Log.v("알람","if문");
+                Log.v("알람","if문"+String.valueOf(day));
             //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
                 alarmManager.setAlarmClock(ac,pendingIntent);
             }else { Log.v("알람","else 문 ");
