@@ -4,12 +4,11 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-<<<<<<< Updated upstream
+
 import android.app.SharedElementCallback;
-=======
+
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
->>>>>>> Stashed changes
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
