@@ -87,11 +87,12 @@ public class mainfrag extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                getActivity().runOnUiThread(() -> {
-                    binding.recyclerviewMainSubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    final RecyclerViewAdapterSubwayResult adapter = new RecyclerViewAdapterSubwayResult(arrivalList);
-                    binding.recyclerviewMainSubwayResult.setAdapter(adapter);
-                });
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(() -> {
+                        binding.recyclerviewMainSubwayResult.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        final RecyclerViewAdapterSubwayResult adapter = new RecyclerViewAdapterSubwayResult(arrivalList);
+                        binding.recyclerviewMainSubwayResult.setAdapter(adapter);
+                    });
             };
 
             // Thread를 실행한다
@@ -112,11 +113,12 @@ public class mainfrag extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                getActivity().runOnUiThread(() -> {
-                    binding.recyclerviewMainBusResult.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    final RecyclerViewAdapterBusResult adapter = new RecyclerViewAdapterBusResult(arrivalList);
-                    binding.recyclerviewMainBusResult.setAdapter(adapter);
-                });
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(() -> {
+                        binding.recyclerviewMainBusResult.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        final RecyclerViewAdapterBusResult adapter = new RecyclerViewAdapterBusResult(arrivalList);
+                        binding.recyclerviewMainBusResult.setAdapter(adapter);
+                    });
             };
 
             BusApiThread busApiThread = new BusApiThread(arrivalList, busStId, busRouteId, busOrd, afterRun);
@@ -162,11 +164,12 @@ public class mainfrag extends Fragment {
                     e.printStackTrace();
                 }
                 // Main Thread에서 UI 변경
-                getActivity().runOnUiThread(() -> {
-                    binding.recyclerviewMainMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    final RecyclerViewAdapterMenu adapter = new RecyclerViewAdapterMenu(menuList);
-                    binding.recyclerviewMainMenu.setAdapter(adapter);
-                });
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(() -> {
+                        binding.recyclerviewMainMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        final RecyclerViewAdapterMenu adapter = new RecyclerViewAdapterMenu(menuList);
+                        binding.recyclerviewMainMenu.setAdapter(adapter);
+                    });
             }).start();
         }
 
@@ -222,15 +225,16 @@ public class mainfrag extends Fragment {
                         TodayF = AvF[7];
                     }
 
-                    getActivity().runOnUiThread(() -> {
-                        //우산 여부
-                        if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60) {
-                            binding.textViewMainWeatherTitle.setText("평균온도: " + AvgT + " [우산 필요]");
-                        } else {
-                            binding.textViewMainWeatherTitle.setText("평균온도: " + AvgT);
-                        }
-                        binding.textViewMainWeatherContent.setText(TodayF);
-                    });
+                    if (getActivity() != null)
+                        getActivity().runOnUiThread(() -> {
+                            //우산 여부
+                            if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60) {
+                                binding.textViewMainWeatherTitle.setText("평균온도: " + AvgT + " [우산 필요]");
+                            } else {
+                                binding.textViewMainWeatherTitle.setText("평균온도: " + AvgT);
+                            }
+                            binding.textViewMainWeatherContent.setText(TodayF);
+                        });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
