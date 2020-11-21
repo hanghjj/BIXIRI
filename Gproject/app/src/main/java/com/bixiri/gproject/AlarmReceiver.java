@@ -4,10 +4,8 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-
-import android.app.SharedElementCallback;
-
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,38 +19,45 @@ import com.bixiri.gproject.database.AppSharedPreference;
 import com.bixiri.gproject.thread.BusApiThread;
 import com.bixiri.gproject.thread.SubwayApiThread;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 import androidx.core.app.NotificationCompat;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
     Context context1;
-<<<<<<< Updated upstream
-=======
     TextToSpeech tts;
+    int firstrequestCode;
     String op3T;
     String op3U;
     String op3F;
->>>>>>> Stashed changes
+    String TodayF;
+    String AvgT;
+    String UmborNot = "우산 필요 없습니다.";
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.v("알람","클래스 진입");
         AppDatabase db = AppDatabase.getInstance(context);
         AppSharedPreference pref = AppSharedPreference.getInstance(context);
         context1 = context;
-        int daynum = intent.getIntExtra("day",-1);
-        int requestCode = intent.getIntExtra("requestCode", 0);
+        firstrequestCode = intent.getIntExtra("requestCode", 0);
+        int requestCode = firstrequestCode/10;
         Log.v("알람","코드 : ".concat(String.valueOf(requestCode)));
         // 학식 메뉴 정보 받아서 푸쉬알림
-        if (requestCode == 0 || requestCode == 1) {
+        if (requestCode == 0 || requestCode == 2) {
             // 현재 시간을 구한다
             Date date = new Date(System.currentTimeMillis());
             SimpleDateFormat dayFormat = new SimpleDateFormat("u", Locale.getDefault());
@@ -85,7 +90,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }).start();
         }
 
-        if (requestCode == 0 || requestCode == 2) {
+        if (requestCode == 0 || requestCode == 1) {
             StringBuffer result= new StringBuffer();
             {
                 String departureStation = pref.getString(R.string.key_departureStation, "");
@@ -159,10 +164,57 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
         if (requestCode == 0 || requestCode == 3) {
-            op3T = intent.getStringExtra("AvgT");
-            op3U = intent.getStringExtra("UmborNot");
-            op3F = intent.getStringExtra("TodayF");;
-            sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" + op3T+"\n\n오늘의 의상 추천 "+op3F +op3U,3);
+            String[] AvF = {" 패딩\n 두꺼운 코트\n 목도리\n + 기모제품",
+                    " 코트\n 히트텍\n 니트\n 청바지\n 레깅스",
+                    " 자켓\n 트렌치코트\n 야상\n 니트\n 스타킹\n 청바지\n 면바지",
+                    " 자켓\n 가디건\n 야상\n 맨투맨\n 니트\n 스타킹\n 청바지\n 면바지",
+                    " 얇은 니트\n 가디건\n 맨투맨\n 얇은 자켓\n 면바지\n 청바지",
+                    " 얇은 가디건\n 긴팔티\n 면바지\n 청바지\n",
+                    " 반팔\n 얇은 셔츠\n 반바지\n 면바지",
+                    " 민소매\n 반팔\n 반바지\n 치마"};
+
+            new Thread(() -> {
+                try {
+                    Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%84%9C%EC%9A%B8%EB%82%A0%EC%94%A8").get();
+                    Elements temp_contents = doc1.select(".merge");
+                    Elements rain_contents = doc1.select(".rain_rate > .num");
+
+                    //오늘 강수량 측정
+                    String rain_text = rain_contents.text();
+                    StringTokenizer Rtoken = new StringTokenizer(rain_text);
+                    String MornRR = Rtoken.nextToken(" ");
+                    String AftRR = Rtoken.nextToken(" ");
+                    //온도 측정
+
+                    String text = temp_contents.text();
+                    text = text.replace("˚", " ");
+                    text = text.replace("/", " ");
+                    StringTokenizer token = new StringTokenizer(text);
+                    String mintempT = token.nextToken(" ");
+                    String maxtempT = token.nextToken(" ");
+                    double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
+                    AvgT = "섭씨 "+ String.format("%.1f",averageT) + "도";
+                    //옷차림 정하기
+                    if (averageT <= 4) {TodayF = AvF[0];}
+                    else if (averageT > 4 && averageT <= 8) {TodayF = AvF[1];}
+                    else if (averageT > 8 && averageT <= 11) {TodayF = AvF[2];}
+                    else if (averageT > 11 && averageT <= 16) {TodayF = AvF[3];}
+                    else if (averageT > 16 && averageT <= 19){ TodayF = AvF[4];}
+                    else if (averageT > 19 && averageT <= 22) {TodayF = AvF[5];}
+                    else if (averageT > 22 && averageT <= 27) {TodayF = AvF[6];}
+                    else {TodayF = AvF[7];}
+                    if (Double.parseDouble(MornRR) >= 60 || Double.parseDouble(AftRR) >= 60){
+
+                        UmborNot = "\n우산 챙기는 날입니다.";
+                    }
+
+                    sendNotification(context, "op3", "오늘의 날씨", 0, "날씨정보", "평균온도 :" +AvgT+"\n\n오늘의 의상 추천 \n"+TodayF+"\n" +UmborNot,firstrequestCode);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }).start();
+
         }
 
     }
@@ -195,9 +247,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (notificationManager != null) {
             Log.v("알람","낫널");
             notificationManager.notify(id, builder.build());
+            if(firstrequestCode%10!=0){
             Calendar nextNotifyTime = Calendar.getInstance();
             nextNotifyTime.add(Calendar.DATE,7);
-            repeat(nextNotifyTime, rCode);
+            repeat(nextNotifyTime, rCode);}
         }
 
     }
@@ -210,9 +263,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 concat("분에 다음 알람이 설정 되었습니다."), Toast.LENGTH_LONG).show();*/
         Intent alarmIntent = new Intent(context1, AlarmReceiver.class);
         alarmIntent.putExtra("requestCode",rCode);
-        alarmIntent.putExtra("AvgT",op3T);
-        alarmIntent.putExtra("UmborNot",op3U);
-        alarmIntent.putExtra("TodayF",op3F);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context1, rCode, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmManager = (AlarmManager) context1.getSystemService(Context.ALARM_SERVICE);
         AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(),pendingIntent);

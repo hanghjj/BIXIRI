@@ -101,7 +101,7 @@
         android:layout_width="205dp"
         android:layout_height="40dp"
 
-        android:layout_toRightOf="@id/fashionGuide"
+        android:layout_toEndOf="@id/fashionGuide"
         android:layout_below="@id/Afternoon_Rain_rate"
         android:textColor="#000000"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -112,5 +112,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fashion"
+        />
+    <Button
+        android:id="@+id/delA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setA"
+        />
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hidegetUmb"
+        android:layout_toEndOf="@id/setA"
         />
 </RelativeLayout>

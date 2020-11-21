@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 public class TimeTable2 extends Activity {
     private ActivityTimeTableBinding binding; // View Binding
     public static Context context;
-    public final int[] finishtime = new int[5];
-    public final int[] mealtime = new int [5];
+    public final int[] finishtime = {-1,-1,-1,-1,-1};
+    public final int[] mealtime = {-1,-1,-1,-1,-1};
     public final int[] starttime = {-1,-1,-1,-1,-1};
     public final String[] startstring = new String[5];
     public final String[] finishstring = new String[5];
@@ -152,7 +153,7 @@ public class TimeTable2 extends Activity {
             }
         }
         for(int i=0; i<5; i++){
-            if(finishtime[i]==0){
+            if(finishtime[i]==-1){
                 finishstring[i] = "공강";
             }
             else finishstring[i] = Integer.toString(finishtime[i]);
@@ -166,81 +167,116 @@ public class TimeTable2 extends Activity {
                 wedmin=999,wedfirst=0,
                 thumin=999,thufirst=0,
                 frimin=999,frifirst=0;
-
+        boolean[] isClass = {false,false,false,false,false};
         for(;mon<title.length;mon+=5){
                     if(title[mon].equals("수업"))
-                    {   monfirst = mon;
-                        break;   }
+                    {
+                        isClass[0] = true;
+                        monfirst = mon;
+                        break;
+                    }
             }
             for(mon = monfirst; mon<title.length;mon+=5)
-            {   if(title[mon].equals("수업"))continue;
+            {
+                if(!isClass[0]) {
+                    monmin = -1;
+                    break;
+                }
+                if(title[mon].equals("수업"))continue;
                 else{
                 if(monmin>(mon/5+8))
                 monmin = (mon/5+8);
-            }}
+            }
+            }
          for(;tue<title.length;tue+=5){
                     if(title[tue].equals("수업"))
-                    {   tuefirst = tue;
-                        break;   }
+                    {
+                        isClass[1] = true;
+                        tuefirst = tue;
+                        break;
+                    }
                 }
          for(tue = tuefirst; tue<title.length;tue+=5)
-                {   if(title[tue].equals("수업"))continue;
+                {
+                    if(!isClass[1]) {
+                        tuemin = -1;
+                        break;
+                    }
+                    if(title[tue].equals("수업"))continue;
                 else{
                     if(tuemin>(tue/5+8))
                         tuemin = (tue/5+8);
                 }}
          for(;wed<title.length;wed+=5){
                         if(title[wed].equals("수업"))
-                        {   wedfirst = wed;
-                            break;   }
+                        {
+                            isClass[2] = true;
+                            wedfirst = wed;
+                            break;
+                        }
                     }
           for(wed = wedfirst; wed<title.length;wed+=5)
-                    {   if(title[wed].equals("수업"))continue;
+                    {
+                        if(!isClass[2]) {
+                            wedmin = -1;
+                            break;
+                        }
+                        if(title[wed].equals("수업"))continue;
                     else{
                         if(wedmin>(wed/5+8))
                             wedmin = (wed/5+8);
                     }}
           for(;thu<title.length;thu+=5){
                             if(title[thu].equals("수업"))
-                            {   thufirst = thu;
-                                break;   }
+                            {
+                                isClass[3] = true;
+                                thufirst = thu;
+                                break;
+                            }
                         }
           for(thu = thufirst; thu<title.length;thu+=5)
-                        {   if(title[thu].equals("수업"))continue;
+                        {
+                            if(!isClass[3]) {
+                                thumin = -1;
+                                break;
+                            }
+                            if(title[thu].equals("수업"))continue;
                         else{
                             if(thumin>(thu/5+8))
                                 thumin = (thu/5+8);
                         }}
           for(;fri<title.length;fri+=5){
                                 if(title[fri].equals("수업"))
-                                {   frifirst = fri;
-                                    break;   }
+                                {
+                                    isClass[4] = true;
+                                    frifirst = fri;
+                                    break;
+                                }
                             }
+          if(isClass[4]){
           for(fri = frifirst; fri<title.length;fri+=5)
-                            {   if(title[fri].equals("수업"))continue;
+                            {
+                                if(!isClass[4]) {
+                                    frimin = -1;
+                                    break;
+                                }
+                                if(title[fri].equals("수업"))continue;
                             else{
                                 if(frimin>(fri/5+8))
                                     frimin = (fri/5+8);
+                             }
                             }
-                            }
+          }
+          else frimin = -1;
+            mealtime[0] = monmin;
+            mealtime[1] = tuemin;
+            mealtime[2] = wedmin;
+            mealtime[3] = thumin;
+            mealtime[4] = frimin;
+            Log.v("알람",String.valueOf(mealtime[4]));
+
           for(int i=0;i<5;i++){
-              switch(i){
-                  case 0:
-                      mealstring[i] = Integer.toString(monmin);
-                      break;
-                  case 1:
-                      mealstring[i] = Integer.toString(tuemin);
-                      break;
-                  case 2:
-                      mealstring[i] = Integer.toString(wedmin);
-                      break;
-                  case 3:
-                      mealstring[i] = Integer.toString(thumin);
-                      break;
-                  case 4:
-                      mealstring[i] = Integer.toString(frimin);
-                      break;
-              }
+              mealstring[i] = Integer.toString(mealtime[i]);
               if(finishstring[i].equals("공강")) mealstring[i] = "공강";
 
           }
@@ -257,6 +293,14 @@ public class TimeTable2 extends Activity {
                 for(int i=0;i<5;i++){
                     if(starttime[i]!=-1)
                     ed.putInt("start".concat(Integer.toString(i)),starttime[i]);
+                }
+                for(int i=0;i<5;i++){
+                    if(mealtime[i]!=-1)
+                        ed.putInt("meal".concat(Integer.toString(i)),mealtime[i]);
+                }
+                for(int i=0;i<5;i++){
+                    if(finishtime[i]!=-1)
+                        ed.putInt("finish".concat(Integer.toString(i)),mealtime[i]);
                 }
                 ed.apply();            }
         });

@@ -116,7 +116,7 @@ public class frag3 extends Fragment
                 String mintempT = token.nextToken(" ");
                 String maxtempT = token.nextToken(" ");
                 double averageT = (Double.parseDouble(mintempT) * 1.2 + Double.parseDouble(maxtempT)) / 2;
-                AvgT = String.format("%.1f",averageT) + "˚C";
+                AvgT = "섭씨 "+ String.format("%.1f",averageT) + "도";
                 binding.averageT.setText(AvgT);
                 //옷차림 정하기
                 if (averageT <= 4) {binding.fashion.setText(AvF[0]); TodayF = AvF[0];}
@@ -143,6 +143,17 @@ public class frag3 extends Fragment
             }
 
         }).start();
+        binding.test.setText("1분 후 알람");
+        binding.test.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Calendar test1m = Calendar.getInstance();
+                test1m.set(Calendar.MINUTE,test1m.get(Calendar.MINUTE)+1);
+                test1m.set(Calendar.SECOND, 0);
+                test1m.set(Calendar.MILLISECOND, 0);
+                accessNotiM(test1m,30);
+            }
+        });
         binding.setA.setText("평일 알람 설정");
         binding.setA.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -169,11 +180,21 @@ public class frag3 extends Fragment
                 }
                 for(int i =0;i<5;i++){
                     if(alarmTime[i].get(Calendar.YEAR)!=1970){
-                        accessNotiM(alarmTime[i],alarmTime[i].get(Calendar.DAY_OF_WEEK));
+                        accessNotiM(alarmTime[i],30+alarmTime[i].get(Calendar.DAY_OF_WEEK));
                         text = text.concat(alarmTime[i].get(Calendar.DAY_OF_MONTH)+"일 "+days[i]+" "+alarmTime[i].get(Calendar.HOUR)+"시에 알람이 예약되었습니다.\n");
                     }
                 }
                 Toast.makeText(getContext(),text,Toast.LENGTH_LONG).show();
+            }
+        });
+        binding.delA.setText("평일 알람 해제");
+        binding.delA.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getContext(),"평일 알람이 해제되었습니다.",Toast.LENGTH_LONG).show();
+                 for(int i=2;i<7;i++){
+                     deleteAlarm(30+i);
+                 }
             }
         });
        /* binding.settimepicker.setOnClickListener(new View.OnClickListener() {
@@ -216,11 +237,7 @@ public class frag3 extends Fragment
     }
     void accessNotiM(Calendar c,int day){
         Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
-        alarmIntent.putExtra("requestCode",3);
-        alarmIntent.putExtra("day",day);
-        alarmIntent.putExtra("AvgT",AvgT);
-        alarmIntent.putExtra("UmborNot",UmborNot);
-        alarmIntent.putExtra("TodayF",TodayF);
+        alarmIntent.putExtra("requestCode",day);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(), day, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(c.getTimeInMillis(),pendingIntent);
@@ -236,5 +253,15 @@ public class frag3 extends Fragment
             }
         }
     }
+    public void deleteAlarm(int requestCode){
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        PendingIntent pendingIntent
+                = PendingIntent.getBroadcast(getContext(), requestCode, intent, 0);
+        AlarmManager manager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);
+        manager = null;
+        intent = null;
+    }
+
 }
 
