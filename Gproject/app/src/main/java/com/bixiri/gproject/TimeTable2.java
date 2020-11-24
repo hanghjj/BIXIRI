@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.bixiri.gproject.databinding.ActivityTimeTableBinding;
 
@@ -288,6 +289,7 @@ public class TimeTable2 extends Activity {
             @Override
             public void onClick(View v) {
                 binding.clickable.setClickable(true);
+                Toast.makeText(TimeTable2.this,"저장 완료! 이제 수정할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 onoff = 0;
                 ed.putInt("onoff",onoff);
                 for(int i=0;i<5;i++){
@@ -300,7 +302,7 @@ public class TimeTable2 extends Activity {
                 }
                 for(int i=0;i<5;i++){
                     if(finishtime[i]!=-1)
-                        ed.putInt("finish".concat(Integer.toString(i)),mealtime[i]);
+                        ed.putInt("finish".concat(Integer.toString(i)),finishtime[i]);
                 }
                 ed.apply();            }
         });
@@ -308,6 +310,7 @@ public class TimeTable2 extends Activity {
             @Override
             public void onClick(View v) {
                 binding.clickable.setClickable(false);
+                Toast.makeText(TimeTable2.this,"이제 수정할 수 있습니다.",Toast.LENGTH_SHORT).show();
                 onoff = 1;
                 ed.putInt("onoff",onoff);
                 ed.apply();

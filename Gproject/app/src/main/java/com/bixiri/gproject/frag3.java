@@ -158,7 +158,7 @@ public class frag3 extends Fragment
         binding.setA.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String text=" ";
+                String text="";
                 String[] days ={"월요일","화요일","수요일","목요일","금요일"};
                 Calendar[] alarmTime = new Calendar[5];
                 for(int i = 0;i<5;i++){

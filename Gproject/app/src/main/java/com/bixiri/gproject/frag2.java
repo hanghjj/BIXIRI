@@ -120,8 +120,9 @@ public class frag2 extends Fragment{
                                 binding.cafeteria3.setGravity(Gravity.CENTER_HORIZONTAL);
                             });
                     }).start();
+                    break;
                 case R.id.settingA:
-                    String text=" ";
+                    String text="";
                     String[] days ={"월요일","화요일","수요일","목요일","금요일"};
                     Calendar[] alarmTime = new Calendar[5];
                     for(int i = 0;i<5;i++){

@@ -120,7 +120,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                                 arrival.getDestination(), arrivalText)).concat("\n");
 
                         result.append(temp);
-                        Log.v("알람",result.toString());
                         index++;
                     }
                     sendNotification(context, "subway", "대중교통 도착정보", 2, "대중교통 도착정보",
@@ -155,7 +154,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                                         arrival.getOrdDiff()),2);*/
                         index++;
                         result.append(temp);
-                        Log.v("알람",result.toString());
                     }
                 };
 
