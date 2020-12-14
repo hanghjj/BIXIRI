@@ -21,6 +21,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class DeviceBootReceiver extends BroadcastReceiver {
     private Context mcontext;
     int[] starttime = new int[5];
+    int[] mealtime = new int[5];
+    int[] finishtime = new int[5];
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Objects.equals(intent.getAction(), "android.intent.action.BOOT_COMPLETED")) {
@@ -29,12 +31,60 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             SharedPreferences timepref= context.getSharedPreferences("test", MODE_PRIVATE);
             for(int i=0;i<5;i++){
                 starttime[i] = timepref.getInt("start".concat(Integer.toString(i)),-1);
+                mealtime[i] = timepref.getInt("meal".concat(Integer.toString(i)),-1);
+                finishtime[i] = timepref.getInt("finish".concat(Integer.toString(i)),-1);
             }
+            op1Aset();
+            op2Aset();
             op3Aset();
         }
     }
-    void op1Aset(){}
-    void op2Aset(){}
+    void op1Aset(){Calendar[] alarmTime = new Calendar[5];
+        for(int i = 0;i<5;i++){
+            alarmTime[i] = Calendar.getInstance();
+        }
+        for(int i = 2;i<7;i++){
+            alarmTime[i-2].set(Calendar.DAY_OF_WEEK,i);
+            if(starttime[i-2] != -1){
+                alarmTime[i-2].set(Calendar.HOUR_OF_DAY,finishtime[i-2]);
+                alarmTime[i-2].set(Calendar.MINUTE, 0);
+                alarmTime[i-2].set(Calendar.SECOND, 0);
+                alarmTime[i-2].set(Calendar.MILLISECOND, 0);
+            }
+            else alarmTime[i-2].set(Calendar.YEAR,1970);
+        }
+        for(int i = 2;i<7;i++){
+            if (alarmTime[i-2].before(Calendar.getInstance())&&alarmTime[i-2].get(Calendar.DAY_OF_WEEK)==Calendar.getInstance().get(Calendar.DAY_OF_WEEK)||alarmTime[i-2].get(Calendar.DAY_OF_MONTH)<Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+                alarmTime[i-2].add(Calendar.DAY_OF_MONTH, 7);
+        }
+        for(int i =0;i<5;i++){
+            if(alarmTime[i].get(Calendar.YEAR)!=1970){
+                accessNotiM(alarmTime[i],alarmTime[i].get(Calendar.DAY_OF_WEEK));
+            }
+        }}
+    void op2Aset(){Calendar[] alarmTime = new Calendar[5];
+        for(int i = 0;i<5;i++){
+            alarmTime[i] = Calendar.getInstance();
+        }
+        for(int i = 2;i<7;i++){
+            alarmTime[i-2].set(Calendar.DAY_OF_WEEK,i);
+            if(starttime[i-2] != -1){
+                alarmTime[i-2].set(Calendar.HOUR_OF_DAY,mealtime[i-2]);
+                alarmTime[i-2].set(Calendar.MINUTE, 0);
+                alarmTime[i-2].set(Calendar.SECOND, 0);
+                alarmTime[i-2].set(Calendar.MILLISECOND, 0);
+            }
+            else alarmTime[i-2].set(Calendar.YEAR,1970);
+        }
+        for(int i = 2;i<7;i++){
+            if (alarmTime[i-2].before(Calendar.getInstance())&&alarmTime[i-2].get(Calendar.DAY_OF_WEEK)==Calendar.getInstance().get(Calendar.DAY_OF_WEEK)||alarmTime[i-2].get(Calendar.DAY_OF_MONTH)<Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+                alarmTime[i-2].add(Calendar.DAY_OF_MONTH, 7);
+        }
+        for(int i =0;i<5;i++){
+            if(alarmTime[i].get(Calendar.YEAR)!=1970){
+                accessNotiM(alarmTime[i],alarmTime[i].get(Calendar.DAY_OF_WEEK));
+            }
+        }}
     void op3Aset(){
         Calendar[] alarmTime = new Calendar[5];
         for(int i = 0;i<5;i++){
