@@ -398,6 +398,7 @@ public class frag1 extends Fragment {
             return arrivalList.size();
         }
     }
+
     void accessNotiM(Calendar c,int day){
         Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
         alarmIntent.putExtra("requestCode",day);
@@ -416,6 +417,7 @@ public class frag1 extends Fragment {
             }
         }
     }
+
     public void deleteAlarm(int requestCode){
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         PendingIntent pendingIntent

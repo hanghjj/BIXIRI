@@ -22,7 +22,7 @@ public class MyNotificationListener extends NotificationListenerService {
         ttsKOR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                ttsKOR.setLanguage(Locale.KOREAN);
+                ttsKOR.setLanguage(Locale.KOREA);
             }
         });
 

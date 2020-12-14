@@ -1,16 +1,23 @@
 package com.bixiri.gproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.bixiri.gproject.database.AppDatabase;
 import com.bixiri.gproject.databinding.ActivityStationSubwaySelectBinding;
 import com.bixiri.gproject.databinding.RecyclerviewItemSubwayStationBinding;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +31,7 @@ public class SelectActivity extends AppCompatActivity {
     private ActivityStationSubwaySelectBinding binding;
     Intent intent;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

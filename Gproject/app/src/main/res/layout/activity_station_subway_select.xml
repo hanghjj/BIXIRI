@@ -22,9 +22,7 @@
             android:layout_height="match_parent"
             app:menu="@menu/menu_search"
             app:navigationIcon="@drawable/ic_close_24dp"
-            android:background="#000000"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat"
-            />
+            app:titleTextAppearance="@style/TextAppearance.AppCompat" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
